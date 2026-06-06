@@ -112,3 +112,9 @@ yarn dev
 - Added compact Discord-specific layout sizing.
 - Added cooler beveled board tile styling.
 - Added themed styling for the pre-game lobby/home screen.
+
+
+## v0.31
+- Fixed Railway production frontend trying to call localhost:3001.
+- Production now uses the same Railway origin for Socket.IO and API calls.
+- Solo vs Bot/Create Game buttons should work on the hosted Railway URL.

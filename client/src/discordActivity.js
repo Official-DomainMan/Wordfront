@@ -14,7 +14,15 @@ export function isDiscordEmbed() {
 
 export function getApiBaseUrl() {
   if (import.meta.env.VITE_API_BASE_URL) return import.meta.env.VITE_API_BASE_URL;
+
+  // In production/Railway/Discord, use the same origin that served the app.
+  // This keeps Socket.IO and API calls on the Railway domain instead of localhost.
+  if (import.meta.env.PROD) return "";
+
+  // Discord iframe also proxies to the same origin.
   if (isDiscordEmbed()) return "";
+
+  // Local development fallback.
   return "http://localhost:3001";
 }
 
