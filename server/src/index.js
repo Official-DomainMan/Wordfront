@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { createGame, addPlayer, getPublicGame, playWord, botMove, surrenderGame } from "./gameEngine.js";
+import { initDb, saveMatch, getLeaderboard, getRecentMatches } from "./db.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,6 +21,20 @@ const io = new Server(httpServer, { cors: { origin: "*" } });
 
 const games = new Map();
 const socketToPlayer = new Map();
+const persistedMatches = new Set();
+
+async function persistIfFinished(game) {
+  if (!game?.id || persistedMatches.has(game.id)) return;
+  if (game.status !== "finished" && !game.winner) return;
+
+  try {
+    await saveMatch(game);
+    persistedMatches.add(game.id);
+  } catch (error) {
+    console.error("Failed to persist match:", error);
+  }
+}
+
 
 
 app.post("/api/auth/exchange", async (req, res) => {
@@ -57,6 +72,26 @@ app.post("/api/auth/exchange", async (req, res) => {
 });
 
 app.get("/health", (_req, res) => res.json({ ok: true, name: "Wordfront Server" }));
+app.get("/leaderboard", async (req, res) => {
+  try {
+    const limit = Number(req.query.limit || 10);
+    res.json(await getLeaderboard(limit));
+  } catch (error) {
+    console.error("Leaderboard error:", error);
+    res.status(500).json({ error: "Could not load leaderboard." });
+  }
+});
+
+app.get("/matches/recent", async (req, res) => {
+  try {
+    const limit = Number(req.query.limit || 10);
+    res.json(await getRecentMatches(limit));
+  } catch (error) {
+    console.error("Recent matches error:", error);
+    res.status(500).json({ error: "Could not load recent matches." });
+  }
+});
+
 app.get("/games", (_req, res) => {
   const openGames = [...games.values()].filter((game) => game.status === "waiting").map((game) => getPublicGame(game));
   res.json(openGames);
@@ -65,7 +100,7 @@ app.get("/games", (_req, res) => {
 function maybeBotTurn(game) {
   const next = game.players[game.currentTurnIndex];
   if (next?.isBot && game.status === "active") {
-    setTimeout(() => {
+    setTimeout(async () => {
       try {
         botMove(game);
       } catch (error) {
@@ -73,6 +108,7 @@ function maybeBotTurn(game) {
         game.currentTurnIndex = game.players.findIndex((p) => !p.isBot);
       }
       io.to(game.id).emit("gameState", getPublicGame(game));
+      await persistIfFinished(game);
     }, 650);
   }
 }
@@ -101,6 +137,7 @@ io.on("connection", (socket) => {
       socketToPlayer.set(socket.id, { gameId: game.id, playerId: player.id });
       io.to(game.id).emit("gameState", getPublicGame(game));
       callback?.({ ok: true, game: getPublicGame(game), playerId: player.id });
+      await persistIfFinished(game);
       maybeBotTurn(game);
     } catch (error) { callback?.({ ok: false, error: error.message }); }
   });
@@ -118,7 +155,7 @@ io.on("connection", (socket) => {
     } catch (error) { callback?.({ ok: false, error: error.message }); }
   });
 
-  socket.on("playWord", ({ placements }, callback) => {
+  socket.on("playWord", async ({ placements }, callback) => {
     try {
       const session = socketToPlayer.get(socket.id);
       if (!session) throw new Error("You are not in a game.");
@@ -132,7 +169,7 @@ io.on("connection", (socket) => {
   });
 
 
-  socket.on("surrender", (_payload, callback) => {
+  socket.on("surrender", async (_payload, callback) => {
     try {
       const session = socketToPlayer.get(socket.id);
       if (!session) throw new Error("You are not in a game.");
@@ -140,6 +177,7 @@ io.on("connection", (socket) => {
       if (!game) throw new Error("Game not found.");
       surrenderGame(game, session.playerId);
       io.to(game.id).emit("gameState", getPublicGame(game));
+      await persistIfFinished(game);
       callback?.({ ok: true });
     } catch (error) { callback?.({ ok: false, error: error.message }); }
   });
@@ -157,8 +195,13 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => socketToPlayer.delete(socket.id));
 });
 
-setInterval(() => {
-  for (const game of games.values()) if (game.status === "active") io.to(game.id).emit("gameState", getPublicGame(game));
+setInterval(async () => {
+  for (const game of games.values()) {
+    if (game.status === "active") {
+      io.to(game.id).emit("gameState", getPublicGame(game));
+      await persistIfFinished(game);
+    }
+  }
 }, 1000);
 
 
@@ -169,5 +212,7 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(clientDist, "index.html"));
   });
 }
+
+await initDb();
 
 httpServer.listen(PORT, () => console.log(`Wordfront server running on http://localhost:${PORT}`));

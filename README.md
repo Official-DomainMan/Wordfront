@@ -118,3 +118,19 @@ yarn dev
 - Fixed Railway production frontend trying to call localhost:3001.
 - Production now uses the same Railway origin for Socket.IO and API calls.
 - Solo vs Bot/Create Game buttons should work on the hosted Railway URL.
+
+
+## v0.32 Postgres persistence
+- Added optional Railway Postgres persistence using `DATABASE_URL`.
+- Saves completed matches to `matches`.
+- Saves cumulative player stats to `player_stats`.
+- Adds `/leaderboard` and `/matches/recent` API routes.
+- If `DATABASE_URL` is missing, the game still runs normally without persistence.
+
+
+## v0.33 Perfect UI frame
+- Reworked the game layout to match the approved mockup.
+- Fixed cut-off side panels and top/bottom sections.
+- Made Deploy Word fully visible.
+- Improved board/card/rack spacing and visual hierarchy.
+- Added responsive Discord embed fallbacks.
