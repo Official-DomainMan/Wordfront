@@ -141,3 +141,9 @@ yarn dev
 - Fixed Deploy Word clipping.
 - Added slight height/breathing room to Lobby card so Leave Lobby is not clipped.
 - Left the rest of the v0.33 UI unchanged.
+
+
+## v0.35 Async crash fix
+- Fixed Railway crash caused by `await persistIfFinished(game)` inside a non-async socket handler.
+- Removed unnecessary persistence check immediately after joining games.
+- Keeps v0.34 rack/button UI polish.

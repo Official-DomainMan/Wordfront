@@ -128,7 +128,7 @@ io.on("connection", (socket) => {
     } catch (error) { callback?.({ ok: false, error: error.message }); }
   });
 
-  socket.on("joinGame", ({ gameId, name }, callback) => {
+  socket.on("joinGame", async ({ gameId, name }, callback) => {
     try {
       const game = games.get(String(gameId || "").toUpperCase());
       if (!game) throw new Error("Game not found.");
@@ -137,7 +137,6 @@ io.on("connection", (socket) => {
       socketToPlayer.set(socket.id, { gameId: game.id, playerId: player.id });
       io.to(game.id).emit("gameState", getPublicGame(game));
       callback?.({ ok: true, game: getPublicGame(game), playerId: player.id });
-      await persistIfFinished(game);
       maybeBotTurn(game);
     } catch (error) { callback?.({ ok: false, error: error.message }); }
   });
