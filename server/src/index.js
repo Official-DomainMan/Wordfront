@@ -5,14 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import {
-  createGame,
-  addPlayer,
-  getPublicGame,
-  playWord,
-  botMove,
-  surrenderGame,
-} from "./gameEngine.js";
+import { createGame, addPlayer, getPublicGame, playWord, botMove, surrenderGame } from "./gameEngine.js";
 import { initDb, saveMatch, getLeaderboard, getRecentMatches } from "./db.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -42,21 +35,17 @@ async function persistIfFinished(game) {
   }
 }
 
+
+
 app.post("/api/auth/exchange", async (req, res) => {
   try {
     const { code } = req.body || {};
     const clientId = process.env.DISCORD_CLIENT_ID;
     const clientSecret = process.env.DISCORD_CLIENT_SECRET;
 
-    if (!code)
-      return res.status(400).json({ error: "Missing authorization code." });
+    if (!code) return res.status(400).json({ error: "Missing authorization code." });
     if (!clientId || !clientSecret) {
-      return res
-        .status(500)
-        .json({
-          error:
-            "Missing DISCORD_CLIENT_ID or DISCORD_CLIENT_SECRET on server.",
-        });
+      return res.status(500).json({ error: "Missing DISCORD_CLIENT_ID or DISCORD_CLIENT_SECRET on server." });
     }
 
     const body = new URLSearchParams({
@@ -82,9 +71,7 @@ app.post("/api/auth/exchange", async (req, res) => {
   }
 });
 
-app.get("/health", (_req, res) =>
-  res.json({ ok: true, name: "Wordfront Server" }),
-);
+app.get("/health", (_req, res) => res.json({ ok: true, name: "Wordfront Server" }));
 app.get("/leaderboard", async (req, res) => {
   try {
     const limit = Number(req.query.limit || 10);
@@ -106,9 +93,7 @@ app.get("/matches/recent", async (req, res) => {
 });
 
 app.get("/games", (_req, res) => {
-  const openGames = [...games.values()]
-    .filter((game) => game.status === "waiting")
-    .map((game) => getPublicGame(game));
+  const openGames = [...games.values()].filter((game) => game.status === "waiting").map((game) => getPublicGame(game));
   res.json(openGames);
 });
 
@@ -119,10 +104,7 @@ function maybeBotTurn(game) {
       try {
         botMove(game);
       } catch (error) {
-        game.log.unshift({
-          type: "system",
-          text: `Bot move failed: ${error.message}. Turn returned to player.`,
-        });
+        game.log.unshift({ type: "system", text: `Bot move failed: ${error.message}. Turn returned to player.` });
         game.currentTurnIndex = game.players.findIndex((p) => !p.isBot);
       }
       io.to(game.id).emit("gameState", getPublicGame(game));
@@ -143,12 +125,10 @@ io.on("connection", (socket) => {
       socketToPlayer.set(socket.id, { gameId: game.id, playerId: player.id });
       io.to(game.id).emit("gameState", getPublicGame(game));
       callback?.({ ok: true, game: getPublicGame(game), playerId: player.id });
-    } catch (error) {
-      callback?.({ ok: false, error: error.message });
-    }
+    } catch (error) { callback?.({ ok: false, error: error.message }); }
   });
 
-  socket.on("joinGame", async ({ gameId, name }, callback) => {
+  socket.on("joinGame", ({ gameId, name }, callback) => {
     try {
       const game = games.get(String(gameId || "").toUpperCase());
       if (!game) throw new Error("Game not found.");
@@ -159,9 +139,7 @@ io.on("connection", (socket) => {
       callback?.({ ok: true, game: getPublicGame(game), playerId: player.id });
       await persistIfFinished(game);
       maybeBotTurn(game);
-    } catch (error) {
-      callback?.({ ok: false, error: error.message });
-    }
+    } catch (error) { callback?.({ ok: false, error: error.message }); }
   });
 
   socket.on("soloGame", ({ name }, callback) => {
@@ -174,9 +152,7 @@ io.on("connection", (socket) => {
       io.to(game.id).emit("gameState", getPublicGame(game));
       callback?.({ ok: true, game: getPublicGame(game), playerId: player.id });
       maybeBotTurn(game);
-    } catch (error) {
-      callback?.({ ok: false, error: error.message });
-    }
+    } catch (error) { callback?.({ ok: false, error: error.message }); }
   });
 
   socket.on("playWord", async ({ placements }, callback) => {
@@ -189,10 +165,9 @@ io.on("connection", (socket) => {
       io.to(game.id).emit("gameState", getPublicGame(game));
       callback?.({ ok: true });
       maybeBotTurn(game);
-    } catch (error) {
-      callback?.({ ok: false, error: error.message });
-    }
+    } catch (error) { callback?.({ ok: false, error: error.message }); }
   });
+
 
   socket.on("surrender", async (_payload, callback) => {
     try {
@@ -204,10 +179,9 @@ io.on("connection", (socket) => {
       io.to(game.id).emit("gameState", getPublicGame(game));
       await persistIfFinished(game);
       callback?.({ ok: true });
-    } catch (error) {
-      callback?.({ ok: false, error: error.message });
-    }
+    } catch (error) { callback?.({ ok: false, error: error.message }); }
   });
+
 
   socket.on("leaveGame", ({ gameId }, callback) => {
     try {
@@ -215,9 +189,7 @@ io.on("connection", (socket) => {
       if (id) socket.leave(id);
       socketToPlayer.delete(socket.id);
       callback?.({ ok: true });
-    } catch (error) {
-      callback?.({ ok: false, error: error.message });
-    }
+    } catch (error) { callback?.({ ok: false, error: error.message }); }
   });
 
   socket.on("disconnect", () => socketToPlayer.delete(socket.id));
@@ -232,6 +204,7 @@ setInterval(async () => {
   }
 }, 1000);
 
+
 if (process.env.NODE_ENV === "production") {
   const clientDist = path.resolve(__dirname, "../../client/dist");
   app.use(express.static(clientDist));
@@ -242,6 +215,4 @@ if (process.env.NODE_ENV === "production") {
 
 await initDb();
 
-httpServer.listen(PORT, () =>
-  console.log(`Wordfront server running on http://localhost:${PORT}`),
-);
+httpServer.listen(PORT, () => console.log(`Wordfront server running on http://localhost:${PORT}`));

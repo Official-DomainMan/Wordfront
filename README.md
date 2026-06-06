@@ -134,3 +134,10 @@ yarn dev
 - Made Deploy Word fully visible.
 - Improved board/card/rack spacing and visual hierarchy.
 - Added responsive Discord embed fallbacks.
+
+
+## v0.34 Rack/button polish
+- Moved Clear and Deploy Word to the right side of the rack area.
+- Fixed Deploy Word clipping.
+- Added slight height/breathing room to Lobby card so Leave Lobby is not clipped.
+- Left the rest of the v0.33 UI unchanged.

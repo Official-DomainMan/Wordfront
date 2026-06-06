@@ -5305,3 +5305,211 @@ body {
     font-size: 10px !important;
   }
 }
+
+
+/* v0.34 rack/buttons polish
+   Keep everything from v0.33, only fix:
+   - clear/deploy buttons on the right of rack
+   - rack letters centered
+   - leave lobby button no longer clipped
+*/
+
+.leftRail {
+  grid-template-rows: 92px 164px 198px 180px minmax(0, 1fr) 82px !important;
+}
+
+.lobbyCard {
+  padding-bottom: 14px !important;
+}
+
+.lobbyCard .ghostBtn {
+  height: 42px !important;
+  min-height: 42px !important;
+  margin-top: 10px !important;
+  line-height: 1 !important;
+}
+
+.rackCard {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: 260px minmax(0, 1fr) 240px !important;
+  grid-template-rows: 1fr !important;
+  gap: 18px !important;
+  align-items: center !important;
+  height: 170px !important;
+  padding: 18px 22px !important;
+  overflow: hidden !important;
+}
+
+.rackHeader {
+  grid-column: 1 / 2 !important;
+  grid-row: 1 !important;
+  align-self: start !important;
+  display: block !important;
+  min-width: 0 !important;
+}
+
+.rackHeader > div:first-child {
+  overflow: visible !important;
+}
+
+.rackHeader .eyebrow {
+  white-space: normal !important;
+}
+
+.rackHeader p:not(.eyebrow) {
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+.rackHeader .ghostBtn,
+.rackHeader .deployBtn,
+.rackCard .ghostBtn,
+.rackCard .deployBtn {
+  display: flex !important;
+  position: absolute !important;
+  z-index: 5 !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  margin: 0 !important;
+  border-radius: 8px !important;
+  font-weight: 950 !important;
+}
+
+.rackCard .ghostBtn {
+  right: 172px !important;
+  bottom: 24px !important;
+  width: 84px !important;
+  height: 56px !important;
+  min-height: 56px !important;
+  font-size: 13px !important;
+  padding: 0 10px !important;
+}
+
+.rackCard .deployBtn {
+  right: 22px !important;
+  bottom: 24px !important;
+  width: 138px !important;
+  height: 56px !important;
+  min-height: 56px !important;
+  font-size: 13px !important;
+  padding: 0 12px !important;
+  background: #b9ff19 !important;
+  color: #071000 !important;
+  box-shadow: 0 0 18px rgba(185,255,25,.25) !important;
+}
+
+.rack {
+  grid-column: 2 / 3 !important;
+  grid-row: 1 !important;
+  justify-self: center !important;
+  align-self: center !important;
+  display: grid !important;
+  grid-template-columns: repeat(13, 52px) !important;
+  gap: 8px !important;
+  overflow: visible !important;
+  margin-right: 0 !important;
+}
+
+.rackTile {
+  width: 52px !important;
+  height: 44px !important;
+}
+
+@media (max-width: 1500px), (max-height: 860px) {
+  .leftRail {
+    grid-template-rows: 70px 122px 156px 142px minmax(0, 1fr) 64px !important;
+  }
+
+  .lobbyCard .ghostBtn {
+    height: 34px !important;
+    min-height: 34px !important;
+    margin-top: 8px !important;
+  }
+
+  .rackCard {
+    grid-template-columns: 220px minmax(0, 1fr) 210px !important;
+    height: 128px !important;
+    padding: 10px 14px !important;
+    gap: 12px !important;
+  }
+
+  .rack {
+    grid-template-columns: repeat(13, 43px) !important;
+    gap: 6px !important;
+  }
+
+  .rackTile {
+    width: 43px !important;
+    height: 34px !important;
+  }
+
+  .rackCard .ghostBtn {
+    right: 128px !important;
+    bottom: 20px !important;
+    width: 74px !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    font-size: 11px !important;
+  }
+
+  .rackCard .deployBtn {
+    right: 14px !important;
+    bottom: 20px !important;
+    width: 104px !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    font-size: 11px !important;
+  }
+}
+
+@media (max-width: 1180px), (max-height: 700px) {
+  .leftRail {
+    grid-template-rows: 56px 96px 124px 114px minmax(0, 1fr) 52px !important;
+  }
+
+  .lobbyCard .ghostBtn {
+    height: 28px !important;
+    min-height: 28px !important;
+    margin-top: 5px !important;
+  }
+
+  .rackCard {
+    grid-template-columns: 180px minmax(0, 1fr) 172px !important;
+    height: 104px !important;
+    padding: 8px 10px !important;
+    gap: 8px !important;
+  }
+
+  .rack {
+    grid-template-columns: repeat(13, 34px) !important;
+    gap: 4px !important;
+  }
+
+  .rackTile {
+    width: 34px !important;
+    height: 28px !important;
+  }
+
+  .rackCard .ghostBtn {
+    right: 100px !important;
+    bottom: 16px !important;
+    width: 62px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    font-size: 9px !important;
+  }
+
+  .rackCard .deployBtn {
+    right: 10px !important;
+    bottom: 16px !important;
+    width: 84px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    font-size: 9px !important;
+    padding: 0 6px !important;
+  }
+}
