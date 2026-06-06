@@ -149,13 +149,9 @@ yarn dev
 - Keeps v0.34 rack/button UI polish.
 
 
-## v0.36 Responsive frame + clean turn box
-- Removed the extra directional text from the Current Turn box.
-- Added responsive frame scaling so the approved UI holds across screen sizes.
-- Board, rack, sidebars, and buttons now scale based on viewport size instead of clipping.
-
-
-## v0.37 Discord responsive fit
-- Forced Current Turn box to hide duplicate directive text.
-- Improved responsive frame sizing across screen changes.
-- Fixed rack/buttons alignment and panel clipping in Discord embeds.
+## v0.38 Minimal UI fix
+- Based on stable v0.35.
+- Hides duplicate Current Turn instruction only.
+- Anchors Clear and Deploy Word to the right of the rack.
+- Adds small Leave Lobby breathing-room fix.
+- Avoids broad responsive frame changes from v0.37.
