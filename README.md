@@ -147,3 +147,15 @@ yarn dev
 - Fixed Railway crash caused by `await persistIfFinished(game)` inside a non-async socket handler.
 - Removed unnecessary persistence check immediately after joining games.
 - Keeps v0.34 rack/button UI polish.
+
+
+## v0.36 Responsive frame + clean turn box
+- Removed the extra directional text from the Current Turn box.
+- Added responsive frame scaling so the approved UI holds across screen sizes.
+- Board, rack, sidebars, and buttons now scale based on viewport size instead of clipping.
+
+
+## v0.37 Discord responsive fit
+- Forced Current Turn box to hide duplicate directive text.
+- Improved responsive frame sizing across screen changes.
+- Fixed rack/buttons alignment and panel clipping in Discord embeds.
