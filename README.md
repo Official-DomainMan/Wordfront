@@ -155,3 +155,10 @@ yarn dev
 - Anchors Clear and Deploy Word to the right of the rack.
 - Adds small Leave Lobby breathing-room fix.
 - Avoids broad responsive frame changes from v0.37.
+
+
+## v0.39 Scaled responsive frame
+- Uses a fixed design canvas scaled uniformly to viewport.
+- Makes Discord web and Discord desktop render the same proportions.
+- Prevents independent panel/rack/button clipping across screen sizes.
+- Keeps v0.38 stable game behavior.

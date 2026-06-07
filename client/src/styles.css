@@ -5662,3 +5662,420 @@ body {
     padding: 0 5px !important;
   }
 }
+
+
+/* v0.39 Scaled responsive frame
+   Stable approach: render one consistent 1600x900 game canvas and scale it
+   uniformly to fit Discord web, Discord desktop, and smaller screens.
+*/
+
+html,
+body,
+#root,
+.app {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+body {
+  background:
+    radial-gradient(circle at 15% 0%, rgba(182,106,255,.13), transparent 24%),
+    radial-gradient(circle at 92% 18%, rgba(185,255,25,.06), transparent 26%),
+    linear-gradient(135deg, #02050b, #050914 60%, #02050b) !important;
+}
+
+/* Hide duplicate instruction in Current Turn. Rack keeps the instruction. */
+.turnCard p:not(.eyebrow) {
+  display: none !important;
+}
+
+/* Single canvas scale. This prevents separate panels from collapsing differently. */
+.gameShell {
+  width: 1600px !important;
+  height: 900px !important;
+  min-width: 1600px !important;
+  min-height: 900px !important;
+  max-width: none !important;
+  max-height: none !important;
+
+  transform-origin: top left !important;
+  transform: scale(min(calc(100vw / 1600), calc(100vh / 900))) !important;
+
+  display: grid !important;
+  grid-template-columns: 272px 1fr 220px !important;
+  grid-template-rows: 1fr !important;
+  gap: 8px !important;
+  padding: 6px !important;
+  overflow: hidden !important;
+
+  background:
+    radial-gradient(circle at 12% 0%, rgba(182,106,255,.10), transparent 24%),
+    linear-gradient(135deg, #02060d, #06101d 58%, #02050b) !important;
+}
+
+.leftRail,
+.mainStage,
+.rightRail {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.leftRail {
+  display: grid !important;
+  grid-template-rows: 76px 124px 164px 148px 1fr 70px !important;
+  gap: 8px !important;
+}
+
+.mainStage {
+  display: grid !important;
+  grid-template-rows: 82px 1fr 132px !important;
+  gap: 8px !important;
+}
+
+.rightRail {
+  display: grid !important;
+  grid-template-rows: 132px 102px 1fr !important;
+  gap: 8px !important;
+}
+
+.card,
+.brandBlock,
+.lobbyCard,
+.scoreCard,
+.botCard,
+.rulesCard,
+.controlCard,
+.legendCard,
+.boardCard,
+.rackCard,
+.turnCard,
+.timerCard {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  border-radius: 9px !important;
+}
+
+.brandBlock {
+  padding: 12px 14px !important;
+}
+
+.brandBlock .wordmark {
+  font-size: 34px !important;
+  line-height: .78 !important;
+  transform: skewX(-7deg) scaleX(.84) !important;
+  transform-origin: left center !important;
+  white-space: nowrap !important;
+}
+
+.brandBlock p {
+  margin-top: 5px !important;
+  font-size: 10px !important;
+}
+
+.lobbyCard,
+.scoreCard,
+.botCard,
+.rulesCard,
+.controlCard,
+.legendCard {
+  padding: 13px 14px !important;
+}
+
+.lobbyCard {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.lobbyCard h2 {
+  font-size: 24px !important;
+  line-height: 1 !important;
+  margin: 0 0 7px !important;
+}
+
+.lobbyCard p {
+  font-size: 14px !important;
+  line-height: 1.1 !important;
+  margin: 0 0 8px !important;
+}
+
+.lobbyCard .ghostBtn {
+  height: 34px !important;
+  min-height: 34px !important;
+  margin-top: auto !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible !important;
+}
+
+.scoreCard h3 {
+  font-size: 18px !important;
+  margin: 0 0 10px !important;
+  line-height: 1.05 !important;
+}
+
+.scoreCard label {
+  font-size: 10px !important;
+  margin-top: 8px !important;
+  margin-bottom: 5px !important;
+}
+
+.scoreCard b {
+  font-size: 24px !important;
+  line-height: 1 !important;
+}
+
+.ownedLetters,
+.letterList {
+  max-height: 26px !important;
+  overflow: hidden !important;
+}
+
+.bottomButtons {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  grid-template-rows: 1fr !important;
+  gap: 8px !important;
+  height: 70px !important;
+  align-items: center !important;
+}
+
+.bottomButtons button {
+  height: 48px !important;
+  min-height: 48px !important;
+  width: 100% !important;
+  font-size: 12px !important;
+}
+
+.topBar {
+  height: 82px !important;
+  display: grid !important;
+  grid-template-columns: 1fr 172px !important;
+  gap: 8px !important;
+}
+
+.turnCard,
+.timerCard {
+  height: 82px !important;
+  display: grid !important;
+  place-content: center !important;
+  text-align: center !important;
+  padding: 10px !important;
+}
+
+.eyebrow {
+  font-size: 11px !important;
+  line-height: 1 !important;
+  margin: 0 0 6px !important;
+  letter-spacing: .22em !important;
+}
+
+.turnCard h2 {
+  font-size: 31px !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+
+.timerCard strong {
+  font-size: 38px !important;
+  line-height: 1 !important;
+}
+
+.boardCard {
+  padding: 10px !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.board {
+  width: 560px !important;
+  height: 560px !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+.cell .tileLetter,
+.board .tileLetter {
+  font-size: 13px !important;
+  line-height: 1 !important;
+}
+
+.rackCard {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: 245px 1fr 210px !important;
+  grid-template-rows: 1fr !important;
+  height: 132px !important;
+  padding: 12px 14px !important;
+  gap: 10px !important;
+  overflow: hidden !important;
+}
+
+.rackHeader {
+  grid-column: 1 / 2 !important;
+  grid-row: 1 !important;
+  display: block !important;
+  align-self: start !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+}
+
+.rackHeader > div:first-child {
+  overflow: visible !important;
+}
+
+.rackHeader .eyebrow {
+  font-size: 11px !important;
+  line-height: 1.1 !important;
+  white-space: normal !important;
+  margin-bottom: 6px !important;
+}
+
+.rackHeader p:not(.eyebrow) {
+  display: block !important;
+  visibility: visible !important;
+  height: auto !important;
+  max-height: none !important;
+  font-size: 13px !important;
+  line-height: 1.1 !important;
+  margin: 0 !important;
+  white-space: normal !important;
+  overflow: visible !important;
+}
+
+.rack {
+  grid-column: 2 / 3 !important;
+  grid-row: 1 !important;
+  display: grid !important;
+  grid-template-columns: repeat(13, 43px) !important;
+  gap: 6px !important;
+  justify-content: center !important;
+  align-content: center !important;
+  justify-self: center !important;
+  align-self: center !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+.rackTile {
+  width: 43px !important;
+  height: 34px !important;
+}
+
+.rackTile .tileLetter {
+  font-size: 20px !important;
+}
+
+.rackHeader .ghostBtn,
+.rackHeader .deployBtn,
+.rackCard .ghostBtn,
+.rackCard .deployBtn {
+  position: absolute !important;
+  z-index: 10 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  margin: 0 !important;
+  border-radius: 8px !important;
+  bottom: 24px !important;
+  height: 46px !important;
+  min-height: 46px !important;
+  font-size: 11px !important;
+  font-weight: 950 !important;
+  padding: 0 8px !important;
+}
+
+.rackHeader .ghostBtn,
+.rackCard .ghostBtn {
+  right: 126px !important;
+  width: 72px !important;
+}
+
+.rackHeader .deployBtn,
+.rackCard .deployBtn {
+  right: 14px !important;
+  width: 104px !important;
+  background: #b9ff19 !important;
+  color: #071000 !important;
+  box-shadow: 0 0 18px rgba(185,255,25,.24) !important;
+}
+
+.rulesCard li {
+  font-size: 12px !important;
+  line-height: 1.28 !important;
+  margin-bottom: 9px !important;
+}
+
+.controlRow span {
+  font-size: 13px !important;
+}
+
+.legendCard p {
+  font-size: 12px !important;
+  line-height: 1.18 !important;
+  margin: 10px 0 !important;
+}
+
+.legend {
+  width: 13px !important;
+  height: 13px !important;
+  margin-right: 8px !important;
+}
+
+/* Shorter Discord desktop view: use a matching smaller design canvas. */
+@media (max-height: 760px) {
+  .gameShell {
+    width: 1500px !important;
+    height: 820px !important;
+    min-width: 1500px !important;
+    min-height: 820px !important;
+    transform: scale(min(calc(100vw / 1500), calc(100vh / 820))) !important;
+    grid-template-columns: 260px 1fr 210px !important;
+  }
+
+  .leftRail {
+    grid-template-rows: 70px 116px 152px 138px 1fr 64px !important;
+  }
+
+  .mainStage {
+    grid-template-rows: 74px 1fr 124px !important;
+  }
+
+  .rightRail {
+    grid-template-rows: 120px 94px 1fr !important;
+  }
+
+  .topBar,
+  .turnCard,
+  .timerCard {
+    height: 74px !important;
+  }
+
+  .board {
+    width: 520px !important;
+    height: 520px !important;
+  }
+
+  .rackCard {
+    height: 124px !important;
+  }
+
+  .rack {
+    grid-template-columns: repeat(13, 40px) !important;
+    gap: 5px !important;
+  }
+
+  .rackTile {
+    width: 40px !important;
+    height: 32px !important;
+  }
+}
