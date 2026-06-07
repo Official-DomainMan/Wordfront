@@ -157,19 +157,8 @@ yarn dev
 - Avoids broad responsive frame changes from v0.37.
 
 
-## v0.39 Scaled responsive frame
-- Uses a fixed design canvas scaled uniformly to viewport.
-- Makes Discord web and Discord desktop render the same proportions.
-- Prevents independent panel/rack/button clipping across screen sizes.
-- Keeps v0.38 stable game behavior.
-
-
-## v0.40 Fit + color normalization
-- Reduced scaled design canvas height so the rack/bottom no longer clips.
-- Hard-normalized backgrounds and panel colors across Discord web and desktop.
-
-
-## v0.41 Safe scale + dark lock
-- Centers and uniformly scales the full game frame with a safety margin.
-- Prevents bottom rack clipping on smaller screens.
-- Hard-locks dark panel/background colors for Discord web and desktop consistency.
+## v0.42 Stable responsive colors
+- Reverted from transform-based scaling to true viewport responsive grid.
+- Fixed Discord web cutoff/offset.
+- Hard-locked the dark Wordfront color palette across Discord web and desktop.
+- Keeps rack/buttons visible across screen sizes.
