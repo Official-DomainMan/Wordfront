@@ -6320,3 +6320,361 @@ body,
     padding: 0 5px !important;
   }
 }
+
+
+/* v0.47 DARK UI FINAL POLISH
+   This keeps the current responsive behavior but corrects the visual design:
+   - darker original Wordfront palette, not blue wash
+   - visible neon green/purple tile states
+   - board fits the board panel instead of getting clipped
+   - rack/deploy controls do not overlap
+*/
+
+/* Absolute final color tokens */
+:root {
+  color-scheme: dark only !important;
+  forced-color-adjust: none !important;
+
+  --wf-black: #02040a !important;
+  --wf-black-2: #03070f !important;
+  --wf-panel: #050912 !important;
+  --wf-panel-2: #070d18 !important;
+  --wf-border: rgba(112, 131, 172, .48) !important;
+  --wf-white: #ffffff !important;
+  --wf-purple: #b66cff !important;
+  --wf-purple-2: #6e20a8 !important;
+  --wf-magenta: #ec55ff !important;
+  --wf-lime: #b9ff19 !important;
+  --wf-lime-2: #79b600 !important;
+}
+
+/* Background lock across browser, Discord web, Discord desktop */
+html,
+body,
+#root,
+.app,
+.homeShell,
+.gameShell {
+  background-color: #02040a !important;
+  color: #ffffff !important;
+  filter: none !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+}
+
+body,
+.homeShell,
+.gameShell {
+  background-image:
+    radial-gradient(circle at 12% 0%, rgba(182, 106, 255, .13), transparent 24%),
+    radial-gradient(circle at 92% 18%, rgba(185, 255, 25, .045), transparent 25%),
+    linear-gradient(135deg, #02040a 0%, #040711 55%, #02040a 100%) !important;
+}
+
+/* Make all panels dark/black again */
+.card,
+.brandBlock,
+.lobbyCard,
+.scoreCard,
+.botCard,
+.rulesCard,
+.controlCard,
+.legendCard,
+.turnCard,
+.timeCard,
+.boardPanel,
+.rackCard,
+.hero {
+  background:
+    linear-gradient(180deg, #070d18 0%, #03070f 100%) !important;
+  background-color: #03070f !important;
+  border: 1px solid var(--wf-border) !important;
+  color: #ffffff !important;
+  box-shadow:
+    inset 0 0 22px rgba(182, 106, 255, .04),
+    0 8px 24px rgba(0, 0, 0, .45) !important;
+  opacity: 1 !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Keep current responsive grid, just give board/rack better room */
+.mainStage {
+  grid-template-rows:
+    clamp(60px, 9vh, 82px)
+    minmax(0, 1fr)
+    clamp(128px, 18.5vh, 158px) !important;
+}
+
+/* Text colors */
+.eyebrow,
+.rackHeader .eyebrow,
+.rulesCard h3,
+.controlCard h3,
+.legendCard h3,
+.scoreCard label {
+  color: #ec55ff !important;
+  text-shadow: 0 0 8px rgba(236, 85, 255, .35) !important;
+}
+
+.turnCard h2,
+.timeCard b,
+.controlRow span {
+  color: #b9ff19 !important;
+  text-shadow: 0 0 12px rgba(185, 255, 25, .25) !important;
+}
+
+.scoreCard h3,
+.botCard h3 {
+  color: #b9ff19 !important;
+}
+
+/* Bot card title should stay purple-ish except scorecard user title */
+.botCard h3 {
+  color: #b66cff !important;
+}
+
+/* Wordmark */
+.brandBlock .wordmark {
+  color: #ffffff !important;
+  text-shadow:
+    3px 0 0 rgba(182, 106, 255, .65),
+    0 0 10px rgba(255, 255, 255, .38),
+    0 0 24px rgba(182, 106, 255, .78) !important;
+}
+
+/* Lobby button */
+.lobbyCard .ghostBtn {
+  background: linear-gradient(180deg, rgba(86, 28, 134, .96), rgba(45, 15, 77, .96)) !important;
+  border: 1px solid #b66cff !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 0 10px rgba(182, 106, 255, .18) !important;
+}
+
+/* Board: smaller cap and extra subtraction so bottom never clips */
+.boardPanel {
+  background:
+    radial-gradient(circle at center, rgba(182, 106, 255, .035), transparent 45%),
+    linear-gradient(180deg, #050912 0%, #03070f 100%) !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: hidden !important;
+  padding: clamp(8px, .8vw, 12px) !important;
+}
+
+.battlefield {
+  width: min(
+    calc(100dvh - clamp(60px, 9vh, 82px) - clamp(128px, 18.5vh, 158px) - 60px),
+    calc(100vw - clamp(215px, 16.5vw, 300px) - clamp(170px, 14.5vw, 245px) - 72px),
+    500px
+  ) !important;
+  height: min(
+    calc(100dvh - clamp(60px, 9vh, 82px) - clamp(128px, 18.5vh, 158px) - 60px),
+    calc(100vw - clamp(215px, 16.5vw, 300px) - clamp(170px, 14.5vw, 245px) - 72px),
+    500px
+  ) !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+  overflow: visible !important;
+}
+
+/* Neutral cell: original dark 3D slate */
+.mapCell {
+  background:
+    radial-gradient(circle at 42% 35%, rgba(255, 255, 255, .11) 0 1px, transparent 2px),
+    linear-gradient(145deg, #202b3b 0%, #111827 55%, #070c15 100%) !important;
+  border: 1px solid rgba(150, 170, 205, .56) !important;
+  color: #ffffff !important;
+  box-shadow:
+    inset 1px 1px 0 rgba(255,255,255,.12),
+    inset -2px -2px 5px rgba(0,0,0,.60),
+    0 1px 2px rgba(0,0,0,.55) !important;
+}
+
+/* Letter text on board */
+.mapCell strong,
+.mapCell .tileLetter,
+.mapCell span {
+  color: #ffffff !important;
+  text-shadow:
+    0 1px 0 #000,
+    0 0 6px rgba(255,255,255,.24) !important;
+}
+
+/* Any selected/pending/captured classes get neon colors */
+.mapCell.player,
+.mapCell.you,
+.mapCell.user,
+.mapCell.owned,
+.mapCell.friendly,
+.mapCell[data-owner="player"],
+.mapCell[data-owner="you"],
+.mapCell[data-owner="host"] {
+  background:
+    linear-gradient(145deg, #4a7800 0%, #182f00 100%) !important;
+  border-color: #b9ff19 !important;
+  color: #b9ff19 !important;
+  box-shadow:
+    inset 1px 1px 0 rgba(255,255,255,.16),
+    0 0 12px rgba(185,255,25,.28) !important;
+}
+
+.mapCell.bot,
+.mapCell.enemy,
+.mapCell.rival,
+.mapCell.opponent,
+.mapCell[data-owner="bot"],
+.mapCell[data-owner="enemy"],
+.mapCell[data-owner="opponent"] {
+  background:
+    linear-gradient(145deg, #6f28a8 0%, #2a0a4b 100%) !important;
+  border-color: #b66cff !important;
+  color: #ffffff !important;
+  box-shadow:
+    inset 1px 1px 0 rgba(255,255,255,.14),
+    0 0 12px rgba(182,106,255,.30) !important;
+}
+
+.mapCell.pending,
+.mapCell.isPending,
+.mapCell.placing,
+.mapCell.preview {
+  background:
+    linear-gradient(145deg, #dfffaf 0%, #6f8f22 100%) !important;
+  border-color: #eaffc8 !important;
+  color: #0b1600 !important;
+}
+
+/* 2X tiles */
+.mapCell.multiplier,
+.mapCell.double,
+.mapCell.bonus,
+.mapCell[data-multiplier="2"],
+.mapCell:has(.multiplierText),
+.mapCell:has(.bonusText) {
+  background:
+    repeating-linear-gradient(135deg, rgba(185,255,25,.92) 0 4px, rgba(22,42,0,.98) 4px 8px) !important;
+  border-color: #b9ff19 !important;
+  box-shadow:
+    inset 1px 1px 0 rgba(255,255,255,.12),
+    0 0 12px rgba(185,255,25,.28) !important;
+}
+
+.mapCell.multiplier *,
+.mapCell.double *,
+.mapCell.bonus *,
+.mapCell[data-multiplier="2"] *,
+.multiplierText,
+.bonusText {
+  color: #b9ff19 !important;
+  text-shadow: 0 1px 0 #000, 0 0 8px rgba(185,255,25,.42) !important;
+}
+
+/* Rack: give the center more room by shrinking right control column */
+.rackCard {
+  grid-template-columns: clamp(160px, 14vw, 210px) minmax(0, 1fr) clamp(110px, 10vw, 145px) !important;
+  padding: clamp(8px, .8vw, 12px) !important;
+  overflow: hidden !important;
+}
+
+.rack {
+  max-width: min(100%, 620px) !important;
+  width: 100% !important;
+  grid-template-columns: repeat(13, minmax(0, 1fr)) !important;
+  gap: clamp(3px, .42vw, 6px) !important;
+  overflow: visible !important;
+}
+
+/* Rack tiles: restore full neon green */
+.letterTile {
+  height: clamp(30px, 4.8vh, 40px) !important;
+  background:
+    linear-gradient(145deg, #345d00 0%, #142800 100%) !important;
+  border: 1px solid #b9ff19 !important;
+  color: #b9ff19 !important;
+  box-shadow:
+    inset 1px 1px 0 rgba(255,255,255,.18),
+    inset -2px -2px 6px rgba(0,0,0,.55),
+    0 0 12px rgba(185,255,25,.22) !important;
+}
+
+.letterTile span {
+  color: #b9ff19 !important;
+  font-size: clamp(15px, 2vw, 22px) !important;
+  text-shadow: 0 1px 0 #000, 0 0 6px rgba(185,255,25,.28) !important;
+}
+
+.letterTile small {
+  color: #b9ff19 !important;
+  opacity: .95 !important;
+}
+
+/* Deploy controls: no overlap. Put inside right side column */
+.deployControls {
+  right: clamp(8px, .9vw, 12px) !important;
+  bottom: clamp(12px, 1.8vh, 18px) !important;
+  gap: 5px !important;
+}
+
+.deployControls button {
+  height: clamp(32px, 5.1vh, 40px) !important;
+  font-size: clamp(7px, .72vw, 9px) !important;
+  padding: 0 6px !important;
+}
+
+.deployControls .ghostBtn,
+.deployControls .clearBtn {
+  width: clamp(42px, 4vw, 54px) !important;
+}
+
+.deployControls .deployBtn {
+  width: clamp(70px, 6.6vw, 88px) !important;
+  background: #b9ff19 !important;
+  border-color: #b9ff19 !important;
+  color: #071000 !important;
+  opacity: 1 !important;
+  box-shadow: 0 0 14px rgba(185,255,25,.25) !important;
+}
+
+/* Small activity windows */
+@media (max-width: 1220px), (max-height: 690px) {
+  .mainStage {
+    grid-template-rows: 56px minmax(0, 1fr) 108px !important;
+  }
+
+  .battlefield {
+    width: min(
+      calc(100dvh - 56px - 108px - 56px),
+      calc(100vw - 200px - 158px - 64px),
+      420px
+    ) !important;
+    height: min(
+      calc(100dvh - 56px - 108px - 56px),
+      calc(100vw - 200px - 158px - 64px),
+      420px
+    ) !important;
+  }
+
+  .rackCard {
+    grid-template-columns: 135px minmax(0, 1fr) 96px !important;
+  }
+
+  .letterTile {
+    height: 25px !important;
+  }
+
+  .letterTile span {
+    font-size: 13px !important;
+  }
+
+  .deployControls .deployBtn {
+    width: 58px !important;
+  }
+
+  .deployControls button {
+    height: 28px !important;
+    font-size: 7px !important;
+    padding: 0 4px !important;
+  }
+}

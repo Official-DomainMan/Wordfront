@@ -160,3 +160,10 @@ yarn dev
 - Restored neon green/purple map tile styling using real class names.
 - Strengthened browser/Discord-web dark palette lock.
 - Adjusted rack/deploy controls to avoid overlap while preserving responsiveness.
+
+
+## v0.47 Dark UI final polish
+- Restored darker original Wordfront palette.
+- Restored neon green/purple board and rack tile styling.
+- Reduced board sizing so it no longer clips into rack.
+- Adjusted deploy controls to avoid overlap.
