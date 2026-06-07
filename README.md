@@ -154,3 +154,9 @@ yarn dev
 - Added early color-scheme/theme-color metadata for iframe/browser rendering.
 - Rebuilt responsive rack sizing so letters do not crop and buttons remain right-aligned.
 - Hard-locked dark Wordfront colors across Discord web and desktop.
+
+
+## v0.46 Neon tile/design fix
+- Restored neon green/purple map tile styling using real class names.
+- Strengthened browser/Discord-web dark palette lock.
+- Adjusted rack/deploy controls to avoid overlap while preserving responsiveness.
