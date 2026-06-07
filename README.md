@@ -149,8 +149,8 @@ yarn dev
 - Keeps v0.34 rack/button UI polish.
 
 
-## v0.44 Iframe responsive clean
-- Rebuilt responsive CSS from stable v0.35.
-- Uses true viewport-based iframe layout instead of fixed transform scaling.
-- Rack tiles use fractional sizing so they cannot crop.
-- Locks solid dark Wordfront colors across Discord web and desktop.
+## v0.45 Real class responsive/color fix
+- Corrected previous CSS patches to target the app's real class names: `.timeCard`, `.boardPanel`, `.battlefield`, `.mapCell`, `.letterTile`, and `.deployControls`.
+- Added early color-scheme/theme-color metadata for iframe/browser rendering.
+- Rebuilt responsive rack sizing so letters do not crop and buttons remain right-aligned.
+- Hard-locked dark Wordfront colors across Discord web and desktop.

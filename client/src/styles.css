@@ -5515,19 +5515,18 @@ body {
 }
 
 
-/* v0.44 iframe-responsive clean patch
-   Built from stable v0.35 to avoid cumulative responsive conflicts.
-
-   Why this version:
-   - Discord Activities run inside an iframe, and web/desktop can report different
-     viewport sizes.
-   - Instead of scaling a giant fixed frame, this uses a real viewport grid.
-   - Rack tiles use fractional sizing, so they cannot crop off-screen.
-   - Color palette is locked using root variables + solid backgrounds.
+/* v0.45 REAL CLASS RESPONSIVE + COLOR FIX
+   Built from stable v0.35.
+   Important correction: this patch targets the app's real class names:
+   .timeCard, .boardPanel, .battlefield, .mapCell, .letterTile, .deployControls.
+   Earlier patches targeted non-existing selectors, so web/desktop color fixes were incomplete.
 */
 
+/* Browser/iframe dark-mode + canvas lock */
 :root {
   color-scheme: dark !important;
+  forced-color-adjust: none !important;
+
   --lime: #b9ff19 !important;
   --lime-soft: rgba(185, 255, 25, .16) !important;
   --purple: #b66cff !important;
@@ -5537,11 +5536,6 @@ body {
   --line: rgba(126, 147, 188, .46) !important;
   --text-muted: #cfd6e6 !important;
   --wf-bg: #02050b !important;
-  --wf-bg-2: #050914 !important;
-  --wf-card: #050914 !important;
-  --wf-card-2: #07101d !important;
-  --wf-text: #ffffff !important;
-  forced-color-adjust: none !important;
 }
 
 *,
@@ -5552,8 +5546,7 @@ body {
 
 html,
 body,
-#root,
-.app {
+#root {
   width: 100% !important;
   height: 100% !important;
   min-width: 0 !important;
@@ -5566,14 +5559,53 @@ body,
   color: #fff !important;
 }
 
+/* Use dvh for Discord web/desktop iframe height differences. */
 body {
-  background-image:
-    radial-gradient(circle at 14% 0%, rgba(182, 106, 255, .14), transparent 24%),
-    radial-gradient(circle at 90% 18%, rgba(185, 255, 25, .045), transparent 25%),
+  height: 100dvh !important;
+  background:
+    radial-gradient(circle at 14% 0%, rgba(182, 106, 255, .11), transparent 24%),
+    radial-gradient(circle at 90% 18%, rgba(185, 255, 25, .04), transparent 25%),
     linear-gradient(135deg, #02050b 0%, #050914 58%, #02050b 100%) !important;
+  background-color: #02050b !important;
+  filter: none !important;
+  opacity: 1 !important;
 }
 
-/* Solid panels to stop Discord web/desktop tint differences */
+/* Home screen too */
+.homeShell {
+  height: 100dvh !important;
+  background:
+    radial-gradient(circle at 14% 0%, rgba(182, 106, 255, .11), transparent 24%),
+    linear-gradient(135deg, #02050b, #050914 58%, #02050b) !important;
+}
+
+/* Main game frame: true responsive iframe layout, no transform-scaling */
+.gameShell {
+  width: 100vw !important;
+  height: 100dvh !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  max-width: 100vw !important;
+  max-height: 100dvh !important;
+  padding: clamp(4px, .55vw, 8px) !important;
+  gap: clamp(5px, .55vw, 9px) !important;
+  display: grid !important;
+  grid-template-columns:
+    clamp(215px, 16.5vw, 300px)
+    minmax(0, 1fr)
+    clamp(170px, 14.5vw, 245px) !important;
+  grid-template-rows: minmax(0, 1fr) !important;
+  overflow: hidden !important;
+  background:
+    radial-gradient(circle at 14% 0%, rgba(182, 106, 255, .11), transparent 24%),
+    radial-gradient(circle at 90% 18%, rgba(185, 255, 25, .04), transparent 25%),
+    linear-gradient(135deg, #02050b 0%, #050914 58%, #02050b 100%) !important;
+  background-color: #02050b !important;
+  transform: none !important;
+  position: relative !important;
+}
+
+/* Solid panels — hits real current classes. */
 .card,
 .brandBlock,
 .lobbyCard,
@@ -5582,51 +5614,25 @@ body {
 .rulesCard,
 .controlCard,
 .legendCard,
-.boardCard,
-.rackCard,
 .turnCard,
-.timerCard {
+.timeCard,
+.boardPanel,
+.rackCard,
+.hero {
   background:
     linear-gradient(180deg, #07101d 0%, #050914 100%) !important;
   background-color: #050914 !important;
-  border: 1px solid var(--line) !important;
-  color: #fff !important;
+  border: 1px solid rgba(126, 147, 188, .46) !important;
   box-shadow:
     inset 0 0 22px rgba(182, 106, 255, .035),
     0 8px 22px rgba(0, 0, 0, .36) !important;
-  filter: none !important;
+  color: #fff !important;
   opacity: 1 !important;
+  filter: none !important;
   backdrop-filter: none !important;
   min-width: 0 !important;
   min-height: 0 !important;
   overflow: hidden !important;
-}
-
-/* The game must fill the Activity iframe, not a fake fixed-size canvas */
-.gameShell {
-  position: relative !important;
-  inset: auto !important;
-  transform: none !important;
-  width: 100vw !important;
-  height: 100dvh !important;
-  min-width: 0 !important;
-  min-height: 0 !important;
-  max-width: 100vw !important;
-  max-height: 100dvh !important;
-  display: grid !important;
-  grid-template-columns:
-    clamp(210px, 16vw, 285px)
-    minmax(0, 1fr)
-    clamp(170px, 14vw, 235px) !important;
-  grid-template-rows: minmax(0, 1fr) !important;
-  gap: clamp(5px, .55vw, 8px) !important;
-  padding: clamp(4px, .55vw, 7px) !important;
-  overflow: hidden !important;
-  background:
-    radial-gradient(circle at 14% 0%, rgba(182, 106, 255, .12), transparent 24%),
-    radial-gradient(circle at 90% 18%, rgba(185, 255, 25, .04), transparent 25%),
-    linear-gradient(135deg, #02050b 0%, #050914 58%, #02050b 100%) !important;
-  background-color: #02050b !important;
 }
 
 /* Rails */
@@ -5641,7 +5647,7 @@ body {
 .leftRail {
   display: grid !important;
   grid-template-rows:
-    clamp(56px, 8.2vh, 76px)
+    clamp(56px, 8vh, 78px)
     clamp(118px, 16vh, 148px)
     clamp(130px, 19vh, 170px)
     clamp(116px, 17vh, 152px)
@@ -5668,84 +5674,7 @@ body {
   gap: clamp(5px, .62vh, 8px) !important;
 }
 
-/* Top row */
-.topBar {
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) clamp(145px, 13vw, 190px) !important;
-  gap: clamp(5px, .55vw, 8px) !important;
-  height: 100% !important;
-}
-
-.turnCard,
-.timerCard {
-  height: 100% !important;
-  display: grid !important;
-  place-content: center !important;
-  text-align: center !important;
-  padding: clamp(6px, .8vw, 10px) !important;
-}
-
-.turnCard p:not(.eyebrow) {
-  display: none !important;
-}
-
-.eyebrow {
-  color: #ec55ff !important;
-  text-shadow: 0 0 8px rgba(236, 85, 255, .34) !important;
-  font-size: clamp(9px, .9vw, 12px) !important;
-  margin: 0 0 clamp(3px, .55vh, 6px) !important;
-}
-
-.turnCard h2 {
-  color: #b9ff19 !important;
-  text-shadow: 0 0 12px rgba(185, 255, 25, .22) !important;
-  font-size: clamp(24px, 2.7vw, 34px) !important;
-  line-height: 1 !important;
-  margin: 0 !important;
-}
-
-.timerCard strong {
-  color: #b9ff19 !important;
-  text-shadow: 0 0 12px rgba(185, 255, 25, .22) !important;
-  font-size: clamp(28px, 3.3vw, 42px) !important;
-  line-height: 1 !important;
-}
-
-/* Board */
-.boardCard {
-  display: grid !important;
-  place-items: center !important;
-  padding: clamp(6px, .7vw, 10px) !important;
-}
-
-.board {
-  width: min(
-    calc(100dvh - clamp(60px, 9vh, 82px) - clamp(118px, 17vh, 148px) - 34px),
-    calc(100vw - clamp(210px, 16vw, 285px) - clamp(170px, 14vw, 235px) - 46px),
-    560px
-  ) !important;
-  height: min(
-    calc(100dvh - clamp(60px, 9vh, 82px) - clamp(118px, 17vh, 148px) - 34px),
-    calc(100vw - clamp(210px, 16vw, 285px) - clamp(170px, 14vw, 235px) - 46px),
-    560px
-  ) !important;
-  max-width: 100% !important;
-  max-height: 100% !important;
-}
-
-.cell {
-  background:
-    radial-gradient(circle at 42% 35%, rgba(255, 255, 255, .10) 0 1px, transparent 2px),
-    linear-gradient(145deg, #202b3b, #111827 56%, #080d16) !important;
-  border-color: rgba(150, 170, 205, .50) !important;
-}
-
-.cell .tileLetter,
-.board .tileLetter {
-  color: #fff !important;
-}
-
-/* Left column */
+/* Brand/lobby left panel */
 .brandBlock,
 .lobbyCard,
 .scoreCard,
@@ -5765,6 +5694,7 @@ body {
 }
 
 .brandBlock p {
+  color: #fff !important;
   font-size: clamp(8px, .8vw, 10px) !important;
 }
 
@@ -5781,10 +5711,10 @@ body {
 }
 
 .lobbyCard p {
+  color: #fff !important;
   font-size: clamp(11px, 1.1vw, 14px) !important;
   line-height: 1.08 !important;
   margin: 0 !important;
-  color: #fff !important;
 }
 
 .lobbyCard .ghostBtn {
@@ -5825,6 +5755,7 @@ body {
   gap: clamp(5px, .7vw, 8px) !important;
   align-items: center !important;
   height: 100% !important;
+  overflow: hidden !important;
 }
 
 .bottomButtons button {
@@ -5833,7 +5764,87 @@ body {
   font-size: clamp(9px, .9vw, 12px) !important;
 }
 
-/* Rack: fractional tiles that always fit */
+/* Top row */
+.topBar {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) clamp(145px, 13vw, 190px) !important;
+  gap: clamp(5px, .55vw, 8px) !important;
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+.turnCard,
+.timeCard {
+  height: 100% !important;
+  display: grid !important;
+  place-content: center !important;
+  text-align: center !important;
+  padding: clamp(6px, .8vw, 10px) !important;
+}
+
+/* Remove duplicate current-turn directive */
+.turnCard p:last-child {
+  display: none !important;
+}
+
+.eyebrow {
+  color: #ec55ff !important;
+  text-shadow: 0 0 8px rgba(236, 85, 255, .34) !important;
+  font-size: clamp(9px, .9vw, 12px) !important;
+  margin: 0 0 clamp(3px, .55vh, 6px) !important;
+}
+
+.turnCard h2 {
+  color: #b9ff19 !important;
+  text-shadow: 0 0 12px rgba(185, 255, 25, .22) !important;
+  font-size: clamp(24px, 2.7vw, 34px) !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+
+.timeCard b {
+  color: #b9ff19 !important;
+  text-shadow: 0 0 12px rgba(185, 255, 25, .22) !important;
+  font-size: clamp(28px, 3.3vw, 42px) !important;
+  line-height: 1 !important;
+}
+
+/* Board — real classes */
+.boardPanel {
+  display: grid !important;
+  place-items: center !important;
+  padding: clamp(6px, .7vw, 10px) !important;
+}
+
+.battlefield {
+  width: min(
+    calc(100dvh - clamp(60px, 9vh, 82px) - clamp(118px, 17vh, 148px) - 34px),
+    calc(100vw - clamp(215px, 16.5vw, 300px) - clamp(170px, 14.5vw, 245px) - 46px),
+    560px
+  ) !important;
+  height: min(
+    calc(100dvh - clamp(60px, 9vh, 82px) - clamp(118px, 17vh, 148px) - 34px),
+    calc(100vw - clamp(215px, 16.5vw, 300px) - clamp(170px, 14.5vw, 245px) - 46px),
+    560px
+  ) !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+}
+
+.mapCell {
+  background:
+    radial-gradient(circle at 42% 35%, rgba(255, 255, 255, .10) 0 1px, transparent 2px),
+    linear-gradient(145deg, #202b3b, #111827 56%, #080d16) !important;
+  border-color: rgba(150, 170, 205, .50) !important;
+  color: #fff !important;
+}
+
+.mapCell strong {
+  color: #fff !important;
+}
+
+/* Rack — real classes and true fractional sizing */
 .rackCard {
   position: relative !important;
   display: grid !important;
@@ -5852,14 +5863,16 @@ body {
   min-width: 0 !important;
   overflow: visible !important;
   z-index: 2 !important;
+  display: block !important;
 }
 
 .rackHeader .eyebrow {
   color: #ec55ff !important;
   font-size: clamp(9px, .9vw, 11px) !important;
+  margin-bottom: 5px !important;
 }
 
-.rackHeader p:not(.eyebrow) {
+.rackHeader .hintLine {
   display: block !important;
   color: #fff !important;
   font-size: clamp(10px, 1vw, 13px) !important;
@@ -5867,6 +5880,7 @@ body {
   margin: 0 !important;
 }
 
+/* Center rack uses 13 equal columns, never cropped. */
 .rack {
   grid-column: 2 / 3 !important;
   grid-row: 1 !important;
@@ -5881,7 +5895,7 @@ body {
   margin: 0 !important;
 }
 
-.rackTile {
+.letterTile {
   width: 100% !important;
   min-width: 0 !important;
   height: clamp(26px, 4.4vh, 36px) !important;
@@ -5889,23 +5903,29 @@ body {
     linear-gradient(145deg, rgba(47, 83, 0, .98), rgba(10, 22, 0, .98)) !important;
   border: 1px solid #b9ff19 !important;
   color: #b9ff19 !important;
+  opacity: 1 !important;
 }
 
-.rackTile .tileLetter {
+.letterTile span {
   color: #b9ff19 !important;
   font-size: clamp(14px, 2vw, 21px) !important;
 }
 
-.rackHeader .ghostBtn,
-.rackCard .ghostBtn,
-.rackHeader .deployBtn,
-.rackCard .deployBtn {
+.letterTile small {
+  color: #b9ff19 !important;
+}
+
+.deployControls {
   position: absolute !important;
   z-index: 6 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  right: clamp(8px, 1vw, 14px) !important;
   bottom: clamp(12px, 2vh, 20px) !important;
+  display: flex !important;
+  gap: clamp(5px, .55vw, 8px) !important;
+  align-items: center !important;
+}
+
+.deployControls button {
   height: clamp(34px, 5.6vh, 46px) !important;
   min-height: 0 !important;
   border-radius: 8px !important;
@@ -5914,21 +5934,14 @@ body {
   font-size: clamp(8px, .85vw, 11px) !important;
   font-weight: 950 !important;
   margin: 0 !important;
-  padding: 0 7px !important;
+  padding: 0 9px !important;
 }
 
-.rackHeader .ghostBtn,
-.rackCard .ghostBtn {
-  right: clamp(94px, 9vw, 124px) !important;
-  width: clamp(54px, 5.5vw, 72px) !important;
-}
-
-.rackHeader .deployBtn,
-.rackCard .deployBtn {
-  right: clamp(8px, 1vw, 14px) !important;
+.deployControls .deployBtn {
   width: clamp(78px, 8vw, 104px) !important;
   background: #b9ff19 !important;
   color: #071000 !important;
+  opacity: 1 !important;
 }
 
 /* Right rail */
@@ -5942,7 +5955,7 @@ body {
   color: #b9ff19 !important;
 }
 
-/* Small Activity windows */
+/* Small iframe windows */
 @media (max-width: 1220px), (max-height: 690px) {
   .gameShell {
     grid-template-columns: 200px minmax(0, 1fr) 158px !important;
@@ -5983,28 +5996,22 @@ body {
     gap: 3px !important;
   }
 
-  .rackTile {
+  .letterTile {
     height: 25px !important;
   }
 
-  .rackHeader .ghostBtn,
-  .rackCard .ghostBtn {
-    right: 80px !important;
-    width: 48px !important;
-  }
-
-  .rackHeader .deployBtn,
-  .rackCard .deployBtn {
-    right: 7px !important;
-    width: 68px !important;
-  }
-
-  .rackHeader .ghostBtn,
-  .rackCard .ghostBtn,
-  .rackHeader .deployBtn,
-  .rackCard .deployBtn {
-    height: 30px !important;
+  .deployControls {
     bottom: 10px !important;
+    gap: 5px !important;
+  }
+
+  .deployControls button {
+    height: 30px !important;
     font-size: 7px !important;
+    padding: 0 6px !important;
+  }
+
+  .deployControls .deployBtn {
+    width: 68px !important;
   }
 }
