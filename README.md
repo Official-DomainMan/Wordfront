@@ -162,3 +162,9 @@ yarn dev
 - Fixed Discord web cutoff/offset.
 - Hard-locked the dark Wordfront color palette across Discord web and desktop.
 - Keeps rack/buttons visible across screen sizes.
+
+
+## v0.43 Rack/lobby/color lock
+- Fixed Leave Lobby visibility.
+- Prevented letter rack cropping by reserving center rack width and sizing tiles by viewport tier.
+- Strengthened dark palette lock for Discord web/browser.
