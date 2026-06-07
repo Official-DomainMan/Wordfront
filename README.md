@@ -167,3 +167,9 @@ yarn dev
 ## v0.40 Fit + color normalization
 - Reduced scaled design canvas height so the rack/bottom no longer clips.
 - Hard-normalized backgrounds and panel colors across Discord web and desktop.
+
+
+## v0.41 Safe scale + dark lock
+- Centers and uniformly scales the full game frame with a safety margin.
+- Prevents bottom rack clipping on smaller screens.
+- Hard-locks dark panel/background colors for Discord web and desktop consistency.

@@ -6219,3 +6219,384 @@ body::before, body::after, .app::before, .app::after {
     height: 38px !important;
   }
 }
+
+
+/* v0.41 safe scale + dark lock
+   The v0.40 frame was still too close to the viewport edge on smaller screens.
+   This version:
+   - scales the whole UI with a 92% safety factor
+   - centers the scaled frame
+   - hard-locks background/panel colors so Discord web and desktop match better
+   - keeps gameplay/UI structure from the stable build
+*/
+
+:root {
+  color-scheme: dark !important;
+  --wf-deep-black: #01040a;
+  --wf-bg: #020711;
+  --wf-panel: #030914;
+  --wf-panel-soft: #07101d;
+  --wf-border: rgba(116, 134, 170, .44);
+  --wf-purple: #b66cff;
+  --wf-magenta: #ec55ff;
+  --wf-lime: #b9ff19;
+  --wf-white: #ffffff;
+}
+
+/* Kill Discord/browser inherited tinting */
+html,
+body,
+#root,
+.app {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: #01040a !important;
+  background-color: #01040a !important;
+  color: #ffffff !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+/* Create a stable dark stage behind the scaled game */
+#root,
+.app {
+  position: relative !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+/* Hide duplicate instruction under Current Turn */
+.turnCard p:not(.eyebrow) {
+  display: none !important;
+}
+
+/* Fixed design canvas, centered, with safety margin.
+   The 0.92 multiplier gives room for Discord chrome, browser bars, and weird iframe measurement. */
+.gameShell {
+  width: 1500px !important;
+  height: 800px !important;
+  min-width: 1500px !important;
+  min-height: 800px !important;
+  max-width: none !important;
+  max-height: none !important;
+
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform-origin: center center !important;
+  transform:
+    translate(-50%, -50%)
+    scale(min(calc((100vw * .92) / 1500), calc((100vh * .92) / 800))) !important;
+
+  display: grid !important;
+  grid-template-columns: 260px 1fr 210px !important;
+  grid-template-rows: 1fr !important;
+  gap: 7px !important;
+  padding: 5px !important;
+  overflow: hidden !important;
+
+  background:
+    radial-gradient(circle at 12% 0%, rgba(182,106,255,.10), transparent 22%),
+    radial-gradient(circle at 88% 14%, rgba(185,255,25,.035), transparent 24%),
+    linear-gradient(135deg, #01040a 0%, #030814 62%, #01040a 100%) !important;
+  background-color: #01040a !important;
+  isolation: isolate !important;
+}
+
+/* Hard solid panels — no semi-transparent panel tinting */
+.card,
+.brandBlock,
+.lobbyCard,
+.scoreCard,
+.botCard,
+.rulesCard,
+.controlCard,
+.legendCard,
+.boardCard,
+.rackCard,
+.turnCard,
+.timerCard {
+  background:
+    linear-gradient(180deg, #07101d 0%, #030914 100%) !important;
+  background-color: #030914 !important;
+  border: 1px solid var(--wf-border) !important;
+  color: #ffffff !important;
+  box-shadow:
+    inset 0 0 22px rgba(182,106,255,.035),
+    0 8px 22px rgba(0,0,0,.38) !important;
+  opacity: 1 !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Layout rows tuned to fit inside the 1500x800 design frame */
+.leftRail {
+  display: grid !important;
+  grid-template-rows: 66px 110px 144px 130px 1fr 60px !important;
+  gap: 7px !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.mainStage {
+  display: grid !important;
+  grid-template-rows: 70px 1fr 116px !important;
+  gap: 7px !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.rightRail {
+  display: grid !important;
+  grid-template-rows: 114px 88px 1fr !important;
+  gap: 7px !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Top */
+.topBar {
+  height: 70px !important;
+  grid-template-columns: 1fr 160px !important;
+  gap: 7px !important;
+}
+
+.turnCard,
+.timerCard {
+  height: 70px !important;
+  padding: 7px !important;
+  display: grid !important;
+  place-content: center !important;
+  text-align: center !important;
+}
+
+.eyebrow {
+  color: var(--wf-magenta) !important;
+  text-shadow: 0 0 8px rgba(236,85,255,.35) !important;
+}
+
+.turnCard h2 {
+  font-size: 30px !important;
+  color: var(--wf-lime) !important;
+  text-shadow: 0 0 10px rgba(185,255,25,.18) !important;
+}
+
+.timerCard strong {
+  font-size: 36px !important;
+  color: var(--wf-lime) !important;
+  text-shadow: 0 0 10px rgba(185,255,25,.18) !important;
+}
+
+/* Board */
+.boardCard {
+  padding: 8px !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.board {
+  width: 488px !important;
+  height: 488px !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+.cell {
+  background:
+    radial-gradient(circle at 42% 35%, rgba(255,255,255,.09) 0 1px, transparent 2px),
+    linear-gradient(145deg, #1e2939 0%, #101827 56%, #070c15 100%) !important;
+  border-color: rgba(148,168,204,.50) !important;
+}
+
+.cell .tileLetter,
+.board .tileLetter {
+  color: #fff !important;
+}
+
+/* Left cards */
+.brandBlock {
+  padding: 9px 12px !important;
+}
+
+.brandBlock .wordmark {
+  font-size: 29px !important;
+  color: #fff !important;
+  text-shadow:
+    3px 0 0 rgba(182,106,255,.5),
+    0 0 20px rgba(182,106,255,.6) !important;
+}
+
+.brandBlock p {
+  font-size: 9px !important;
+}
+
+.lobbyCard,
+.scoreCard,
+.botCard,
+.rulesCard,
+.controlCard,
+.legendCard {
+  padding: 10px 12px !important;
+}
+
+.lobbyCard h2 {
+  font-size: 21px !important;
+}
+
+.lobbyCard p {
+  font-size: 13px !important;
+  color: #fff !important;
+}
+
+.lobbyCard .ghostBtn {
+  height: 30px !important;
+  min-height: 30px !important;
+}
+
+/* Rack */
+.rackCard {
+  height: 116px !important;
+  grid-template-columns: 220px 1fr 190px !important;
+  padding: 9px 12px !important;
+  gap: 8px !important;
+}
+
+.rackHeader .eyebrow {
+  font-size: 10px !important;
+  color: var(--wf-magenta) !important;
+}
+
+.rackHeader p:not(.eyebrow) {
+  font-size: 12px !important;
+  color: #fff !important;
+}
+
+.rack {
+  grid-template-columns: repeat(13, 37px) !important;
+  gap: 5px !important;
+}
+
+.rackTile {
+  width: 37px !important;
+  height: 30px !important;
+  background:
+    linear-gradient(145deg, #2f5300 0%, #142900 100%) !important;
+  border-color: var(--wf-lime) !important;
+  color: var(--wf-lime) !important;
+}
+
+.rackTile .tileLetter {
+  font-size: 18px !important;
+  color: var(--wf-lime) !important;
+}
+
+.rackHeader .ghostBtn,
+.rackCard .ghostBtn,
+.rackHeader .deployBtn,
+.rackCard .deployBtn {
+  bottom: 18px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  font-size: 10px !important;
+}
+
+.rackHeader .ghostBtn,
+.rackCard .ghostBtn {
+  right: 112px !important;
+  width: 66px !important;
+}
+
+.rackHeader .deployBtn,
+.rackCard .deployBtn {
+  right: 12px !important;
+  width: 92px !important;
+  background: var(--wf-lime) !important;
+  color: #071000 !important;
+}
+
+/* Right rail */
+.rulesCard li,
+.legendCard p {
+  color: #fff !important;
+  font-size: 12px !important;
+}
+
+.controlRow span {
+  color: var(--wf-lime) !important;
+}
+
+/* Extra compact Discord desktop/smaller monitors */
+@media (max-height: 720px), (max-width: 1280px) {
+  .gameShell {
+    width: 1420px !important;
+    height: 730px !important;
+    min-width: 1420px !important;
+    min-height: 730px !important;
+    transform:
+      translate(-50%, -50%)
+      scale(min(calc((100vw * .92) / 1420), calc((100vh * .92) / 730))) !important;
+    grid-template-columns: 246px 1fr 196px !important;
+  }
+
+  .leftRail {
+    grid-template-rows: 60px 100px 132px 120px 1fr 56px !important;
+  }
+
+  .mainStage {
+    grid-template-rows: 64px 1fr 104px !important;
+  }
+
+  .rightRail {
+    grid-template-rows: 102px 80px 1fr !important;
+  }
+
+  .topBar,
+  .turnCard,
+  .timerCard {
+    height: 64px !important;
+  }
+
+  .board {
+    width: 440px !important;
+    height: 440px !important;
+  }
+
+  .rackCard {
+    height: 104px !important;
+    grid-template-columns: 190px 1fr 174px !important;
+  }
+
+  .rack {
+    grid-template-columns: repeat(13, 34px) !important;
+    gap: 4px !important;
+  }
+
+  .rackTile {
+    width: 34px !important;
+    height: 27px !important;
+  }
+
+  .rackHeader .ghostBtn,
+  .rackCard .ghostBtn,
+  .rackHeader .deployBtn,
+  .rackCard .deployBtn {
+    bottom: 15px !important;
+    height: 36px !important;
+    font-size: 9px !important;
+  }
+
+  .rackHeader .ghostBtn,
+  .rackCard .ghostBtn {
+    right: 98px !important;
+    width: 58px !important;
+  }
+
+  .rackHeader .deployBtn,
+  .rackCard .deployBtn {
+    right: 10px !important;
+    width: 82px !important;
+  }
+}
