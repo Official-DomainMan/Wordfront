@@ -162,3 +162,8 @@ yarn dev
 - Makes Discord web and Discord desktop render the same proportions.
 - Prevents independent panel/rack/button clipping across screen sizes.
 - Keeps v0.38 stable game behavior.
+
+
+## v0.40 Fit + color normalization
+- Reduced scaled design canvas height so the rack/bottom no longer clips.
+- Hard-normalized backgrounds and panel colors across Discord web and desktop.
