@@ -149,22 +149,8 @@ yarn dev
 - Keeps v0.34 rack/button UI polish.
 
 
-## v0.38 Minimal UI fix
-- Based on stable v0.35.
-- Hides duplicate Current Turn instruction only.
-- Anchors Clear and Deploy Word to the right of the rack.
-- Adds small Leave Lobby breathing-room fix.
-- Avoids broad responsive frame changes from v0.37.
-
-
-## v0.42 Stable responsive colors
-- Reverted from transform-based scaling to true viewport responsive grid.
-- Fixed Discord web cutoff/offset.
-- Hard-locked the dark Wordfront color palette across Discord web and desktop.
-- Keeps rack/buttons visible across screen sizes.
-
-
-## v0.43 Rack/lobby/color lock
-- Fixed Leave Lobby visibility.
-- Prevented letter rack cropping by reserving center rack width and sizing tiles by viewport tier.
-- Strengthened dark palette lock for Discord web/browser.
+## v0.44 Iframe responsive clean
+- Rebuilt responsive CSS from stable v0.35.
+- Uses true viewport-based iframe layout instead of fixed transform scaling.
+- Rack tiles use fractional sizing so they cannot crop.
+- Locks solid dark Wordfront colors across Discord web and desktop.
