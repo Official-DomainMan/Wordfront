@@ -141,9 +141,9 @@ io.on("connection", (socket) => {
     } catch (error) { callback?.({ ok: false, error: error.message }); }
   });
 
-  socket.on("soloGame", ({ name }, callback) => {
+  socket.on("soloGame", ({ name, botDifficulty = "medium" }, callback) => {
     try {
-      const game = createGame({ hostName: name, solo: true });
+      const game = createGame({ hostName: name, solo: true, botDifficulty });
       games.set(game.id, game);
       const player = game.players[0];
       socket.join(game.id);

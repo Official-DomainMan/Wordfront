@@ -181,3 +181,9 @@ yarn dev
 - Added contested tile styling matching the legend.
 - Softened 2X tile styling so placed letters stay readable.
 - Fixed Clear/Deploy controls so Clear is no longer clipped.
+
+
+## v0.50 Bot difficulty + deploy controls
+- Fixed Deploy Word clipping by widening and restructuring the deploy controls area.
+- Added bot difficulty selector: Easy, Medium, Hard, Godlike.
+- Server passes bot difficulty into solo games and adjusts bot word selection behavior.

@@ -9,12 +9,13 @@ const MAP_COLS = 15;
 const STARTING_NEUTRAL_TILES = 14;
 const RARE = new Set(["Q", "X", "Z"]);
 
-export function createGame({ hostName, solo = false }) {
+export function createGame({ hostName, solo = false, botDifficulty = "medium" }) {
   const host = { id: uuid(), name: hostName || "Player 1", score: 0, isBot: false };
   const players = solo ? [host, { id: BOT_ID, name: "Wordfront Bot", score: 0, isBot: true }] : [host];
   const game = {
     id: uuid().slice(0, 6).toUpperCase(),
     status: solo ? "active" : "waiting",
+    botDifficulty: normalizeBotDifficulty(botDifficulty),
     createdAt: Date.now(),
     startedAt: solo ? Date.now() : null,
     durationSeconds: MATCH_SECONDS,
@@ -303,8 +304,65 @@ function updateTimerAndWinner(game) {
   game.log.unshift({ type: "system", text: game.winner ? `${game.winner.name} controls the front.` : "The front ends in a draw." });
 }
 
+const BOT_DIFFICULTY = {
+  easy: { maxCandidates: 28, pickFromTop: 12, skipChance: 0.24, minLength: 3, maxLength: 5 },
+  medium: { maxCandidates: 80, pickFromTop: 8, skipChance: 0.10, minLength: 3, maxLength: 7 },
+  hard: { maxCandidates: 180, pickFromTop: 4, skipChance: 0.02, minLength: 4, maxLength: 10 },
+  godlike: { maxCandidates: 420, pickFromTop: 1, skipChance: 0, minLength: 5, maxLength: 15 },
+};
+
+function normalizeBotDifficulty(level) {
+  const key = String(level || "medium").toLowerCase();
+  return BOT_DIFFICULTY[key] ? key : "medium";
+}
+
+function scoreBotCandidate(word, game, difficulty) {
+  let score = word.length * 10;
+
+  // Prefer longer and more flexible words on higher difficulties.
+  if (difficulty === "easy") score -= Math.max(0, word.length - 4) * 4;
+  if (difficulty === "hard") score += Math.max(0, word.length - 5) * 3;
+  if (difficulty === "godlike") score += Math.max(0, word.length - 5) * 7;
+
+  // Prefer endings that are easier to continue from on easy/medium,
+  // and more punishing endings on hard/godlike.
+  const last = word[word.length - 1];
+  const commonEndings = new Set(["e", "s", "t", "r", "n", "a", "o", "i"]);
+  const awkwardEndings = new Set(["q", "x", "z", "j", "k", "v", "y"]);
+  if (difficulty === "easy" && commonEndings.has(last)) score += 12;
+  if (difficulty === "medium" && commonEndings.has(last)) score += 5;
+  if (difficulty === "hard" && awkwardEndings.has(last)) score += 10;
+  if (difficulty === "godlike" && awkwardEndings.has(last)) score += 22;
+
+  return score;
+}
+
+function pickBotCandidate(candidates, game, difficulty) {
+  const config = BOT_DIFFICULTY[difficulty] || BOT_DIFFICULTY.medium;
+  const filtered = candidates
+    .filter((word) => word.length >= config.minLength && word.length <= config.maxLength)
+    .slice(0, config.maxCandidates);
+
+  if (!filtered.length) return null;
+
+  const ranked = filtered
+    .map((word) => ({ word, score: scoreBotCandidate(word, game, difficulty) }))
+    .sort((a, b) => b.score - a.score);
+
+  const pickPool = ranked.slice(0, Math.max(1, config.pickFromTop));
+  return pickPool[Math.floor(Math.random() * pickPool.length)]?.word || ranked[0].word;
+}
+
 export function botMove(game) {
-  const bot = game.players[game.currentTurnIndex];
+  
+  const botDifficulty = normalizeBotDifficulty(game.botDifficulty);
+  const botConfig = BOT_DIFFICULTY[botDifficulty] || BOT_DIFFICULTY.medium;
+  if (Math.random() < botConfig.skipChance) {
+    game.log?.unshift?.({ type: "system", text: `Bot (${botDifficulty}) hesitated and passed.` });
+    game.currentTurnIndex = game.players.findIndex((p) => !p.isBot);
+    return game;
+  }
+const bot = game.players[game.currentTurnIndex];
   if (!bot?.isBot || game.status !== "active") return null;
   const move = pickBotWordMove(game);
   if (!move) {

@@ -75,7 +75,7 @@ function App() {
     setError(""); setGame(res.game); setPlayerId(res.playerId); saveName();
   }
   function createGame() { socket.emit("createGame", { name }, handleResponse); }
-  function soloGame() { socket.emit("soloGame", { name }, handleResponse); }
+  function soloGame() { socket.emit("soloGame", { name, botDifficulty }, handleResponse); }
   function joinGame() { socket.emit("joinGame", { gameId: joinCode, name }, handleResponse); }
 
   function currentWord() { return placements.map((p) => p.letter).join(""); }
@@ -203,6 +203,22 @@ function App() {
           <label>Your callsign</label>
           <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
           <div className="actions">
+          <div className="difficultyPicker">
+            <p className="eyebrow">BOT LEVEL</p>
+            <div className="difficultyGrid">
+              {["easy", "medium", "hard", "godlike"].map((level) => (
+                <button
+                  key={level}
+                  className={botDifficulty === level ? "difficultyBtn active" : "difficultyBtn"}
+                  onClick={() => setBotDifficulty(level)}
+                  type="button"
+                >
+                  {level.toUpperCase()}
+                </button>
+              ))}
+            </div>
+          </div>
+
             <button onClick={soloGame}>Solo vs Bot</button>
             <button onClick={createGame}>Create Multiplayer Lobby</button>
           </div>
@@ -229,7 +245,7 @@ function App() {
       <aside className="leftRail">
         <section className="brandBlock">
           <h1 className="wordmark" data-text="WORDFRONT">WORDFRONT</h1>
-          <p>v0.49.0</p>
+          <p>v0.50.0</p>
         </section>
         <section className="card lobbyCard">
           <p className="eyebrow">LOBBY</p>
