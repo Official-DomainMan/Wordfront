@@ -167,3 +167,11 @@ yarn dev
 - Restored neon green/purple board and rack tile styling.
 - Reduced board sizing so it no longer clips into rack.
 - Adjusted deploy controls to avoid overlap.
+
+
+## v0.48 Board polish
+- Made board letters smaller so stability numbers remain readable.
+- Softened 2X tile brightness.
+- Restored single-dot empty grid cells.
+- Fixed Clear/Deploy button overlap with an even control grid.
+- Added left-panel height/padding fixes so the bot card no longer clips.
