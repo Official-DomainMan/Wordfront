@@ -175,3 +175,9 @@ yarn dev
 - Restored single-dot empty grid cells.
 - Fixed Clear/Deploy button overlap with an even control grid.
 - Added left-panel height/padding fixes so the bot card no longer clips.
+
+
+## v0.49 Contested + clear button fix
+- Added contested tile styling matching the legend.
+- Softened 2X tile styling so placed letters stay readable.
+- Fixed Clear/Deploy controls so Clear is no longer clipped.

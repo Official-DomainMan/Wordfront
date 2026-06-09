@@ -6884,3 +6884,175 @@ body,
     font-size: clamp(8px, 1vw, 12px) !important;
   }
 }
+
+
+/* v0.49 contested + clear button fix */
+
+/* Contested tile state: purple/yellow diagonal striping like legend */
+.mapCell.contested,
+.mapCell.isContested,
+.mapCell[data-contested="true"],
+.mapCell[data-state="contested"],
+.mapCell:has(.contestedMark),
+.mapCell:has(.contestMark) {
+  background:
+    repeating-linear-gradient(
+      135deg,
+      #b66cff 0 5px,
+      #b66cff 5px 9px,
+      #ffd65a 9px 13px,
+      #ffd65a 13px 17px
+    ) !important;
+  border-color: #f0d45a !important;
+  box-shadow:
+    inset 1px 1px 0 rgba(255,255,255,.16),
+    0 0 12px rgba(255,214,90,.26),
+    0 0 10px rgba(182,106,255,.22) !important;
+}
+
+.mapCell.contested strong,
+.mapCell.isContested strong,
+.mapCell[data-contested="true"] strong,
+.mapCell[data-state="contested"] strong,
+.mapCell.contested span,
+.mapCell.isContested span,
+.mapCell[data-contested="true"] span,
+.mapCell[data-state="contested"] span {
+  color: #ffffff !important;
+  text-shadow:
+    0 1px 1px #000,
+    0 0 5px rgba(0,0,0,.75),
+    0 0 8px rgba(255,255,255,.28) !important;
+}
+
+/* Softer 2X tiles overall, so letters win visually */
+.mapCell.multiplier,
+.mapCell.double,
+.mapCell.bonus,
+.mapCell[data-multiplier="2"],
+.mapCell:has(.multiplierText),
+.mapCell:has(.bonusText) {
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(115, 178, 0, .62) 0 4px,
+      rgba(13, 30, 0, .96) 4px 8px
+    ) !important;
+  border-color: rgba(185, 255, 25, .66) !important;
+  box-shadow:
+    inset 1px 1px 0 rgba(255,255,255,.08),
+    0 0 6px rgba(185,255,25,.12) !important;
+}
+
+/* If a placed letter is on a 2X tile, keep it readable */
+.mapCell.multiplier strong,
+.mapCell.double strong,
+.mapCell.bonus strong,
+.mapCell[data-multiplier="2"] strong,
+.mapCell.multiplier .tileLetter,
+.mapCell.double .tileLetter,
+.mapCell.bonus .tileLetter,
+.mapCell[data-multiplier="2"] .tileLetter,
+.mapCell.multiplier span:not(.multiplierText):not(.bonusText),
+.mapCell.double span:not(.multiplierText):not(.bonusText),
+.mapCell.bonus span:not(.multiplierText):not(.bonusText),
+.mapCell[data-multiplier="2"] span:not(.multiplierText):not(.bonusText) {
+  color: #ffffff !important;
+  text-shadow:
+    0 1px 1px #000,
+    0 0 6px rgba(0,0,0,.9),
+    0 0 5px rgba(255,255,255,.25) !important;
+  font-size: clamp(10px, 1.05vw, 15px) !important;
+}
+
+.multiplierText,
+.bonusText,
+.mapCell.multiplier .multiplierText,
+.mapCell.double .multiplierText,
+.mapCell.bonus .multiplierText,
+.mapCell[data-multiplier="2"] .multiplierText {
+  color: #b9ff19 !important;
+  opacity: .88 !important;
+  text-shadow: 0 1px 0 #000, 0 0 5px rgba(185,255,25,.25) !important;
+}
+
+/* Deploy controls: full clear button + deploy button, no clipping */
+.rackCard {
+  grid-template-columns: clamp(160px, 14vw, 210px) minmax(0, 1fr) clamp(190px, 16vw, 230px) !important;
+}
+
+.deployControls {
+  position: absolute !important;
+  right: clamp(10px, .9vw, 14px) !important;
+  bottom: clamp(12px, 1.8vh, 18px) !important;
+  display: grid !important;
+  grid-template-columns: minmax(70px, .75fr) minmax(100px, 1.25fr) !important;
+  width: clamp(182px, 15vw, 218px) !important;
+  gap: clamp(7px, .6vw, 10px) !important;
+  align-items: center !important;
+  overflow: visible !important;
+}
+
+.deployControls button,
+.deployControls .ghostBtn,
+.deployControls .clearBtn,
+.deployControls .deployBtn {
+  position: static !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: clamp(34px, 5.2vh, 42px) !important;
+  min-height: 0 !important;
+  border-radius: 8px !important;
+  font-size: clamp(8px, .74vw, 10px) !important;
+  line-height: 1 !important;
+  padding: 0 8px !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+.deployControls .ghostBtn,
+.deployControls .clearBtn,
+.deployControls button:first-child {
+  color: #e8edf7 !important;
+  background: rgba(16, 24, 38, .98) !important;
+  border: 1px solid rgba(126,147,188,.42) !important;
+}
+
+.deployControls .deployBtn {
+  background: #b9ff19 !important;
+  border-color: #b9ff19 !important;
+  color: #071000 !important;
+  box-shadow: 0 0 14px rgba(185,255,25,.25) !important;
+}
+
+.rack {
+  max-width: min(100%, 560px) !important;
+}
+
+@media (max-width: 1220px), (max-height: 690px) {
+  .rackCard {
+    grid-template-columns: 135px minmax(0, 1fr) 158px !important;
+  }
+
+  .deployControls {
+    width: 148px !important;
+    right: 7px !important;
+    grid-template-columns: 56px 86px !important;
+    gap: 6px !important;
+  }
+
+  .deployControls button,
+  .deployControls .deployBtn {
+    height: 29px !important;
+    font-size: 7px !important;
+    padding: 0 5px !important;
+  }
+
+  .rack {
+    max-width: min(100%, 390px) !important;
+  }
+}
