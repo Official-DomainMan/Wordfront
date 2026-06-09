@@ -7129,9 +7129,7 @@ body,
 }
 
 
-/* v0.53 Solo difficulty flow + complete deploy controls */
-
-/* Permanently reserve enough right-side space for Clear and Deploy */
+/* v0.55 clean bot difficulty flow + complete deploy controls */
 .rackCard {
   grid-template-columns: clamp(150px, 13vw, 205px) minmax(0, 1fr) clamp(250px, 21vw, 300px) !important;
 }
@@ -7182,7 +7180,6 @@ body,
   box-shadow: 0 0 14px rgba(185,255,25,.25) !important;
 }
 
-/* Solo difficulty modal */
 .soloSetupOverlay {
   position: fixed !important;
   inset: 0 !important;

@@ -306,7 +306,7 @@ function updateTimerAndWinner(game) {
 
 const BOT_DIFFICULTY = {
   easy: { maxCandidates: 25, pickFromTop: 14, skipChance: 0.25, minLength: 3, maxLength: 5 },
-  medium: { maxCandidates: 80, pickFromTop: 8, skipChance: 0.08, minLength: 5, maxLength: 7 },
+  medium: { maxCandidates: 80, pickFromTop: 8, skipChance: 0.08,  },
   hard: { maxCandidates: 180, pickFromTop: 3, skipChance: 0.01, minLength: 4, maxLength: 10 },
   godlike: { maxCandidates: 500, pickFromTop: 1, skipChance: 0, minLength: 5, maxLength: 15 },
 };

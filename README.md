@@ -191,8 +191,8 @@ yarn dev
 - Optional bot difficulty can be tested with URL query: `?bot=easy`, `?bot=medium`, `?bot=hard`, or `?bot=godlike`.
 
 
-## v0.53 Bot difficulty flow
-- Solo vs Bot now opens a required difficulty selector before starting.
-- Added Easy, Medium, Hard, and Godlike options in the UI.
-- Medium bot tuning is now 5–7 letters.
-- Fixed Clear/Deploy controls by reserving a wider action area.
+## v0.55 Clean difficulty build fix
+- Rebuilt from stable v0.52 instead of broken v0.53.
+- Added required Solo vs Bot difficulty modal cleanly outside the error block.
+- Medium bot tuning is 5–7 letters.
+- Verified the client builds successfully with Vite.

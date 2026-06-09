@@ -95,7 +95,7 @@ const [selectedLetter, setSelectedLetter] = useState(null);
       window.localStorage.setItem("wordfrontBotDifficulty", selectedBotDifficulty);
     } catch {}
     setSoloSetupOpen(false);
-    soloGame(selectedBotDifficulty);
+    startSoloGame(selectedBotDifficulty);
   }
 
   return () => { cancelled = true; };
@@ -150,7 +150,7 @@ const [selectedLetter, setSelectedLetter] = useState(null);
     setError(""); setGame(res.game); setPlayerId(res.playerId); saveName();
   }
   function createGame() { socket.emit("createGame", { name }, handleResponse); }
-  function soloGame(difficulty = selectedBotDifficulty) { socket.emit("soloGame", { name, botDifficulty: difficulty || selectedBotDifficulty || getBotDifficultySetting() }, handleResponse); }
+  function soloGame() { socket.emit("soloGame", { name, botDifficulty: getBotDifficultySetting() }, handleResponse); }
   function joinGame() { socket.emit("joinGame", { gameId: joinCode, name }, handleResponse); }
 
   function currentWord() { return placements.map((p) => p.letter).join(""); }
@@ -278,7 +278,7 @@ const [selectedLetter, setSelectedLetter] = useState(null);
           <label>Your callsign</label>
           <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
           <div className="actions">
-            <button onClick={openSoloSetup}>Solo vs Bot</button>
+            <button onClick={soloGame}>Solo vs Bot</button>
             <button onClick={createGame}>Create Multiplayer Lobby</button>
           </div>
           <div className="joinRow">
@@ -304,7 +304,7 @@ const [selectedLetter, setSelectedLetter] = useState(null);
       <aside className="leftRail">
         <section className="brandBlock">
           <h1 className="wordmark" data-text="WORDFRONT">WORDFRONT</h1>
-          <p>v0.53.0</p>
+          <p>v0.55.0</p>
         </section>
         <section className="card lobbyCard">
           <p className="eyebrow">LOBBY</p>
@@ -422,8 +422,7 @@ const [selectedLetter, setSelectedLetter] = useState(null);
       </aside>
 
 
-      {error && (
-  
+
       {soloSetupOpen && (
         <div className="soloSetupOverlay">
           <div className="soloSetupCard">
@@ -462,7 +461,8 @@ const [selectedLetter, setSelectedLetter] = useState(null);
         </div>
       )}
 
-      <div className="errorCorner" role="alert">
+      {error && (
+        <div className="errorCorner" role="alert">
           <p className="eyebrow">INVALID MOVE</p>
           <strong>{error}</strong>
         </div>
