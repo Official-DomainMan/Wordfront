@@ -4,6 +4,48 @@ import { io } from "socket.io-client";
 import "./styles.css";
 import { initDiscordActivity, getApiBaseUrl } from "./discordActivity.js";
 
+
+function getBotDifficultySetting() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const fromQuery = params.get("bot");
+    const saved = window.localStorage.getItem("wordfrontBotDifficulty");
+    const value = (fromQuery || saved || "medium").toLowerCase();
+    return ["easy", "medium", "hard", "godlike"].includes(value) ? value : "medium";
+  } catch {
+    return "medium";
+  }
+}
+
+function saveWordfrontSession(gameData, playerIdValue) {
+  try {
+    if (gameData?.id && playerIdValue) {
+      window.localStorage.setItem("wordfrontSession", JSON.stringify({
+        gameId: gameData.id,
+        playerId: playerIdValue,
+        savedAt: Date.now(),
+      }));
+    }
+  } catch {}
+}
+
+function getWordfrontSession() {
+  try {
+    const raw = window.localStorage.getItem("wordfrontSession");
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed?.gameId || !parsed?.playerId) return null;
+    if (Date.now() - Number(parsed.savedAt || 0) > 6 * 60 * 60 * 1000) {
+      window.localStorage.removeItem("wordfrontSession");
+      return null;
+    }
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+
 const SERVER_URL = getApiBaseUrl();
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -48,6 +90,22 @@ function App() {
   }
 
   useEffect(() => {
+    
+    const reattachSession = () => {
+      const saved = getWordfrontSession();
+      if (!saved) return;
+      socket.emit("reattachSession", saved, (response) => {
+        if (response?.ok) {
+          setGame(response.game);
+          setPlayerId(response.playerId || saved.playerId);
+          saveWordfrontSession(response.game, response.playerId || saved.playerId);
+        }
+      });
+    };
+
+    socket.on("connect", reattachSession);
+    socket.io?.on?.("reconnect", reattachSession);
+
     socket.on("gameState", (next) => {
       if (ignoreGameUpdatesRef.current) return;
       const boardKey = makeBoardKey(next);
@@ -75,7 +133,7 @@ function App() {
     setError(""); setGame(res.game); setPlayerId(res.playerId); saveName();
   }
   function createGame() { socket.emit("createGame", { name }, handleResponse); }
-  function soloGame() { socket.emit("soloGame", { name, botDifficulty }, handleResponse); }
+  function soloGame() { socket.emit("soloGame", { name, botDifficulty: getBotDifficultySetting() }, handleResponse); }
   function joinGame() { socket.emit("joinGame", { gameId: joinCode, name }, handleResponse); }
 
   function currentWord() { return placements.map((p) => p.letter).join(""); }
@@ -203,22 +261,6 @@ function App() {
           <label>Your callsign</label>
           <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
           <div className="actions">
-          <div className="difficultyPicker">
-            <p className="eyebrow">BOT LEVEL</p>
-            <div className="difficultyGrid">
-              {["easy", "medium", "hard", "godlike"].map((level) => (
-                <button
-                  key={level}
-                  className={botDifficulty === level ? "difficultyBtn active" : "difficultyBtn"}
-                  onClick={() => setBotDifficulty(level)}
-                  type="button"
-                >
-                  {level.toUpperCase()}
-                </button>
-              ))}
-            </div>
-          </div>
-
             <button onClick={soloGame}>Solo vs Bot</button>
             <button onClick={createGame}>Create Multiplayer Lobby</button>
           </div>
@@ -245,7 +287,7 @@ function App() {
       <aside className="leftRail">
         <section className="brandBlock">
           <h1 className="wordmark" data-text="WORDFRONT">WORDFRONT</h1>
-          <p>v0.50.0</p>
+          <p>v0.52.0</p>
         </section>
         <section className="card lobbyCard">
           <p className="eyebrow">LOBBY</p>

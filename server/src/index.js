@@ -116,6 +116,24 @@ function maybeBotTurn(game) {
 io.on("connection", (socket) => {
   socket.emit("connected", { socketId: socket.id });
 
+
+  socket.on("reattachSession", ({ gameId, playerId }, callback) => {
+    try {
+      const id = String(gameId || "").toUpperCase();
+      const game = games.get(id);
+      if (!game) throw new Error("Game not found.");
+      const player = game.players.find((p) => p.id === playerId);
+      if (!player) throw new Error("Player not found in game.");
+
+      socket.join(game.id);
+      socketToPlayer.set(socket.id, { gameId: game.id, playerId: player.id });
+      callback?.({ ok: true, game: getPublicGame(game), playerId: player.id });
+      io.to(game.id).emit("gameState", getPublicGame(game));
+    } catch (error) {
+      callback?.({ ok: false, error: error.message });
+    }
+  });
+
   socket.on("createGame", ({ name }, callback) => {
     try {
       const game = createGame({ hostName: name, solo: false });

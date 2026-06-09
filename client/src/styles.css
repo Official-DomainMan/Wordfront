@@ -7058,9 +7058,7 @@ body,
 }
 
 
-/* v0.50 deploy controls + bot difficulty */
-
-/* More reliable deploy controls: keep both buttons inside the rack panel */
+/* v0.52 stable recovery + complete deploy buttons */
 .rackCard {
   grid-template-columns: clamp(160px, 14vw, 210px) minmax(0, 1fr) clamp(220px, 18vw, 270px) !important;
 }
@@ -7102,47 +7100,8 @@ body,
   box-shadow: 0 0 14px rgba(185,255,25,.25) !important;
 }
 
-/* Keep the rack away from the widened button area */
 .rack {
   max-width: min(100%, 525px) !important;
-}
-
-/* Bot difficulty picker */
-.difficultyPicker {
-  margin: 10px 0 12px !important;
-  padding: 10px !important;
-  border: 1px solid rgba(126,147,188,.38) !important;
-  border-radius: 10px !important;
-  background: linear-gradient(180deg, rgba(7,16,29,.98), rgba(3,9,20,.98)) !important;
-}
-
-.difficultyPicker .eyebrow {
-  margin-bottom: 8px !important;
-}
-
-.difficultyGrid {
-  display: grid !important;
-  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-  gap: 7px !important;
-}
-
-.difficultyBtn {
-  height: 34px !important;
-  border-radius: 8px !important;
-  border: 1px solid rgba(182,106,255,.55) !important;
-  background: rgba(18, 26, 42, .9) !important;
-  color: #fff !important;
-  font-weight: 950 !important;
-  font-size: 10px !important;
-  letter-spacing: .06em !important;
-  cursor: pointer !important;
-}
-
-.difficultyBtn.active {
-  background: linear-gradient(145deg, #355d00, #142800) !important;
-  border-color: #b9ff19 !important;
-  color: #b9ff19 !important;
-  box-shadow: 0 0 12px rgba(185,255,25,.22) !important;
 }
 
 @media (max-width: 1220px), (max-height: 690px) {
