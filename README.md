@@ -189,3 +189,10 @@ yarn dev
 - Added safe reconnect/session reattach support.
 - Added server-side bot difficulty logic with safe default medium.
 - Optional bot difficulty can be tested with URL query: `?bot=easy`, `?bot=medium`, `?bot=hard`, or `?bot=godlike`.
+
+
+## v0.53 Bot difficulty flow
+- Solo vs Bot now opens a required difficulty selector before starting.
+- Added Easy, Medium, Hard, and Godlike options in the UI.
+- Medium bot tuning is now 5–7 letters.
+- Fixed Clear/Deploy controls by reserving a wider action area.

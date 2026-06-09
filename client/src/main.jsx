@@ -55,7 +55,10 @@ function App() {
   const [joinCode, setJoinCode] = useState("");
   const [game, setGame] = useState(null);
   const [playerId, setPlayerId] = useState(null);
-  const [selectedLetter, setSelectedLetter] = useState(null);
+  
+  const [soloSetupOpen, setSoloSetupOpen] = useState(false);
+  const [selectedBotDifficulty, setSelectedBotDifficulty] = useState("medium");
+const [selectedLetter, setSelectedLetter] = useState(null);
   const [dragLetter, setDragLetter] = useState(null);
   const [placements, setPlacements] = useState([]);
   const [error, setError] = useState("");
@@ -81,7 +84,21 @@ function App() {
         console.error(error);
         if (!cancelled) setDiscordError(error.message || "Discord Activity initialization failed.");
       });
-    return () => { cancelled = true; };
+  
+  function openSoloSetup() {
+    setSelectedBotDifficulty("medium");
+    setSoloSetupOpen(true);
+  }
+
+  function startSoloWithDifficulty() {
+    try {
+      window.localStorage.setItem("wordfrontBotDifficulty", selectedBotDifficulty);
+    } catch {}
+    setSoloSetupOpen(false);
+    soloGame(selectedBotDifficulty);
+  }
+
+  return () => { cancelled = true; };
   }, []);
 
   function makeBoardKey(next) {
@@ -133,7 +150,7 @@ function App() {
     setError(""); setGame(res.game); setPlayerId(res.playerId); saveName();
   }
   function createGame() { socket.emit("createGame", { name }, handleResponse); }
-  function soloGame() { socket.emit("soloGame", { name, botDifficulty: getBotDifficultySetting() }, handleResponse); }
+  function soloGame(difficulty = selectedBotDifficulty) { socket.emit("soloGame", { name, botDifficulty: difficulty || selectedBotDifficulty || getBotDifficultySetting() }, handleResponse); }
   function joinGame() { socket.emit("joinGame", { gameId: joinCode, name }, handleResponse); }
 
   function currentWord() { return placements.map((p) => p.letter).join(""); }
@@ -261,7 +278,7 @@ function App() {
           <label>Your callsign</label>
           <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
           <div className="actions">
-            <button onClick={soloGame}>Solo vs Bot</button>
+            <button onClick={openSoloSetup}>Solo vs Bot</button>
             <button onClick={createGame}>Create Multiplayer Lobby</button>
           </div>
           <div className="joinRow">
@@ -287,7 +304,7 @@ function App() {
       <aside className="leftRail">
         <section className="brandBlock">
           <h1 className="wordmark" data-text="WORDFRONT">WORDFRONT</h1>
-          <p>v0.52.0</p>
+          <p>v0.53.0</p>
         </section>
         <section className="card lobbyCard">
           <p className="eyebrow">LOBBY</p>
@@ -356,7 +373,7 @@ function App() {
 
         <section className="rackCard card">
           <div className="rackHeader">
-            <div><p className="eyebrow">DRAG LETTERS TO BUILD A WORD</p><span className="hintLine">{game.requiredLetter ? `Next word must start with ${game.requiredLetter}` : "Opening move: build any word."}</span></div>
+            <div><p className="eyebrow">DRAG LETTERS TO BUILD A WORD</p><span className="hintLine">{game.requiredLetter ? `Next word must start with ${game.requiredLetter}` : "Opening move"}</span></div>
             <div className="deployControls">
               <button onClick={clearPending} disabled={!placements.length}>Clear</button>
               <button className="deployBtn" onClick={deployWord} disabled={!myTurn || placements.length < 2}>Deploy Word</button>
@@ -406,7 +423,46 @@ function App() {
 
 
       {error && (
-        <div className="errorCorner" role="alert">
+  
+      {soloSetupOpen && (
+        <div className="soloSetupOverlay">
+          <div className="soloSetupCard">
+            <p className="eyebrow">SOLO VS BOT</p>
+            <h2>Choose Bot Difficulty</h2>
+            <p className="soloSetupCopy">Select a level before starting your match.</p>
+
+            <div className="difficultyGrid">
+              {[
+                { id: "easy", label: "Easy", copy: "Shorter words, more mistakes." },
+                { id: "medium", label: "Medium", copy: "Balanced 5–7 letter plays." },
+                { id: "hard", label: "Hard", copy: "Sharper words and endings." },
+                { id: "godlike", label: "Godlike", copy: "Maximum pressure." },
+              ].map((level) => (
+                <button
+                  key={level.id}
+                  type="button"
+                  className={selectedBotDifficulty === level.id ? "difficultyBtn active" : "difficultyBtn"}
+                  onClick={() => setSelectedBotDifficulty(level.id)}
+                >
+                  <strong>{level.label}</strong>
+                  <span>{level.copy}</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="soloSetupActions">
+              <button type="button" className="ghostBtn" onClick={() => setSoloSetupOpen(false)}>
+                Cancel
+              </button>
+              <button type="button" className="deployBtn" onClick={startSoloWithDifficulty}>
+                Start Game
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="errorCorner" role="alert">
           <p className="eyebrow">INVALID MOVE</p>
           <strong>{error}</strong>
         </div>
