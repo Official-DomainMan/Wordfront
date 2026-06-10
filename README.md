@@ -198,7 +198,8 @@ yarn dev
 - Verified the client builds successfully with Vite.
 
 
-## v0.57 Railway Yarn build
-- Switches Railway install/build/start commands from npm to Yarn to bypass npm `Exit handler never called`.
-- Adds `nixpacks.toml`, `railway.json`, `.yarnrc`, and root `packageManager`.
-- Uses Corepack to activate Yarn 1.22.22 on Railway.
+## v0.58 Rollup/Railway fix
+- Removes mixed npm package-lock files so Yarn does a clean install.
+- Stops ignoring optional dependencies; Rollup's native Linux package is required by Vite.
+- Explicitly adds `@rollup/rollup-linux-x64-gnu` to client optionalDependencies.
+- Railway build now removes cached node_modules before installing.
