@@ -8575,3 +8575,390 @@ body,
     padding: 0 4px !important;
   }
 }
+
+
+/* v0.63 STABLE FOOTER/RACK LAYOUT
+   Fixes the broken bottom tray from v0.62:
+   - restores a true 3-column footer: instructions / rack / actions
+   - Clear + Deploy Word have a dedicated right column
+   - rack tiles no longer overlap buttons
+   - rack tiles use stable dimensions again
+   - board/footer proportions are pulled back toward the clean stable UI
+*/
+
+/* Overall frame proportions */
+.gameShell {
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  overflow: hidden !important;
+  grid-template-columns: clamp(230px, 16vw, 285px) minmax(680px, 1fr) clamp(205px, 14vw, 270px) !important;
+  gap: clamp(6px, .55vw, 9px) !important;
+  padding: clamp(5px, .55vw, 8px) !important;
+}
+
+/* Stop side panels from creating the big stretched purple bleed */
+.leftRail,
+.rightRail,
+.mainStage {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  background: transparent !important;
+}
+
+.leftRail {
+  grid-template-rows:
+    clamp(66px, 8vh, 86px)
+    clamp(122px, 14.5vh, 152px)
+    clamp(142px, 18vh, 178px)
+    clamp(132px, 17vh, 168px)
+    minmax(0, 1fr)
+    clamp(78px, 10vh, 108px) !important;
+  gap: clamp(6px, .65vh, 9px) !important;
+}
+
+.mainStage {
+  grid-template-rows:
+    clamp(66px, 8.2vh, 84px)
+    minmax(0, 1fr)
+    clamp(126px, 15.8vh, 154px) !important;
+  gap: clamp(6px, .65vh, 9px) !important;
+}
+
+.rightRail {
+  grid-template-rows:
+    clamp(112px, 16vh, 166px)
+    clamp(88px, 11vh, 110px)
+    minmax(0, 1fr) !important;
+  gap: clamp(6px, .65vh, 9px) !important;
+}
+
+/* Brand fit */
+.brandBlock {
+  overflow: hidden !important;
+}
+
+.brandBlock .wordmark {
+  max-width: 100% !important;
+  white-space: nowrap !important;
+  font-size: clamp(24px, 2.45vw, 38px) !important;
+  transform: skewX(-7deg) scaleX(.9) !important;
+  transform-origin: left center !important;
+}
+
+/* Board shouldn't steal footer space */
+.boardCard {
+  display: grid !important;
+  place-items: center !important;
+  padding: clamp(8px, .75vw, 12px) !important;
+  overflow: hidden !important;
+}
+
+.board,
+.battlefield {
+  width: min(59vh, 100%, 560px) !important;
+  height: min(59vh, 100%, 560px) !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+}
+
+/* Footer / rack panel: guaranteed 3-column layout */
+.rackCard {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns:
+    clamp(190px, 15vw, 245px)
+    minmax(420px, 1fr)
+    clamp(230px, 18vw, 285px) !important;
+  grid-template-rows: 1fr !important;
+  align-items: center !important;
+  gap: clamp(10px, .8vw, 16px) !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  padding: clamp(10px, .85vw, 16px) !important;
+  overflow: hidden !important;
+}
+
+/* Instructions stay left */
+.rackHeader {
+  grid-column: 1 / 2 !important;
+  grid-row: 1 !important;
+  position: static !important;
+  display: block !important;
+  align-self: center !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.rackHeader > div:first-child {
+  display: block !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+}
+
+.rackHeader .eyebrow,
+.rackCard .eyebrow {
+  margin: 0 0 6px !important;
+  font-size: clamp(9px, .82vw, 12px) !important;
+  line-height: 1.08 !important;
+  letter-spacing: .24em !important;
+}
+
+.rackHeader .hintLine {
+  display: block !important;
+  color: #fff !important;
+  font-size: clamp(10px, .9vw, 13px) !important;
+  font-weight: 850 !important;
+  line-height: 1.15 !important;
+}
+
+/* Hide error row from forcing rack down */
+.rackCard .errorTop {
+  display: none !important;
+}
+
+/* Letter rack: centered, stable, and forbidden from touching actions */
+.rack {
+  grid-column: 2 / 3 !important;
+  grid-row: 1 !important;
+  display: grid !important;
+  grid-template-columns: repeat(13, clamp(31px, 2.25vw, 42px)) !important;
+  gap: clamp(4px, .38vw, 7px) !important;
+  width: max-content !important;
+  max-width: 100% !important;
+  justify-self: center !important;
+  align-self: center !important;
+  margin: 0 !important;
+  overflow: visible !important;
+}
+
+.letterTile {
+  width: clamp(31px, 2.25vw, 42px) !important;
+  min-width: clamp(31px, 2.25vw, 42px) !important;
+  max-width: clamp(31px, 2.25vw, 42px) !important;
+  height: clamp(32px, 4.3vh, 44px) !important;
+  min-height: clamp(32px, 4.3vh, 44px) !important;
+  max-height: clamp(32px, 4.3vh, 44px) !important;
+  padding: 2px 4px !important;
+  border-radius: 8px !important;
+  box-sizing: border-box !important;
+}
+
+.letterTile span {
+  font-size: clamp(15px, 1.45vw, 21px) !important;
+  line-height: .95 !important;
+}
+
+.letterTile small {
+  font-size: clamp(5px, .46vw, 7px) !important;
+  line-height: 1 !important;
+  margin-top: 1px !important;
+}
+
+/* Actions: dedicated right column, no absolute positioning, no clipping */
+.deployControls {
+  grid-column: 3 / 4 !important;
+  grid-row: 1 !important;
+  position: static !important;
+  display: grid !important;
+  grid-template-columns: minmax(78px, 94px) minmax(128px, 170px) !important;
+  gap: clamp(8px, .65vw, 12px) !important;
+  width: 100% !important;
+  max-width: 275px !important;
+  justify-self: end !important;
+  align-self: center !important;
+  overflow: visible !important;
+  z-index: 50 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.deployControls button,
+.deployControls .ghostBtn,
+.deployControls .clearBtn,
+.deployControls .deployBtn {
+  position: static !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: clamp(34px, 5vh, 44px) !important;
+  min-height: 0 !important;
+  padding: 0 8px !important;
+  border-radius: 9px !important;
+  font-size: clamp(7px, .68vw, 10px) !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  transform: none !important;
+}
+
+.deployControls .deployBtn {
+  background: #b9ff19 !important;
+  border-color: #b9ff19 !important;
+  color: #071000 !important;
+  opacity: 1 !important;
+  box-shadow: 0 0 16px rgba(185,255,25,.26) !important;
+}
+
+/* Bottom left buttons stay inside the rail */
+.bottomButtons {
+  display: grid !important;
+  grid-template-rows: 1fr 1fr !important;
+  gap: 8px !important;
+  align-self: end !important;
+  min-height: 0 !important;
+}
+
+.bottomButtons button {
+  min-height: 38px !important;
+  height: auto !important;
+}
+
+/* Medium/smaller Activity windows */
+@media (max-width: 1500px), (max-height: 820px) {
+  .gameShell {
+    grid-template-columns: clamp(210px, 16vw, 260px) minmax(560px, 1fr) clamp(165px, 13vw, 220px) !important;
+    gap: 6px !important;
+  }
+
+  .mainStage {
+    grid-template-rows:
+      clamp(58px, 8vh, 76px)
+      minmax(0, 1fr)
+      clamp(116px, 15.5vh, 142px) !important;
+  }
+
+  .board,
+  .battlefield {
+    width: min(56vh, 100%, 500px) !important;
+    height: min(56vh, 100%, 500px) !important;
+  }
+
+  .rackCard {
+    grid-template-columns: clamp(150px, 13vw, 205px) minmax(330px, 1fr) clamp(180px, 16vw, 230px) !important;
+    gap: 8px !important;
+    padding: 9px !important;
+  }
+
+  .rack {
+    grid-template-columns: repeat(13, clamp(27px, 2.15vw, 35px)) !important;
+    gap: clamp(3px, .32vw, 5px) !important;
+  }
+
+  .letterTile {
+    width: clamp(27px, 2.15vw, 35px) !important;
+    min-width: clamp(27px, 2.15vw, 35px) !important;
+    max-width: clamp(27px, 2.15vw, 35px) !important;
+    height: clamp(28px, 4vh, 36px) !important;
+    min-height: clamp(28px, 4vh, 36px) !important;
+  }
+
+  .letterTile span {
+    font-size: clamp(13px, 1.3vw, 18px) !important;
+  }
+
+  .letterTile small {
+    font-size: 5px !important;
+  }
+
+  .deployControls {
+    grid-template-columns: 62px 104px !important;
+    max-width: 174px !important;
+    gap: 6px !important;
+  }
+
+  .deployControls button,
+  .deployControls .deployBtn {
+    height: clamp(28px, 4.4vh, 36px) !important;
+    font-size: 7px !important;
+    padding: 0 4px !important;
+  }
+
+  .rackHeader .eyebrow,
+  .rackCard .eyebrow {
+    font-size: 9px !important;
+    letter-spacing: .20em !important;
+  }
+
+  .rackHeader .hintLine {
+    font-size: 10px !important;
+  }
+}
+
+/* Extra tight Discord Activity windows */
+@media (max-width: 1220px), (max-height: 700px) {
+  .gameShell {
+    grid-template-columns: 195px minmax(480px, 1fr) 160px !important;
+    padding: 4px !important;
+    gap: 5px !important;
+  }
+
+  .leftRail {
+    grid-template-rows: 52px 106px 124px 112px minmax(0, 1fr) 54px !important;
+  }
+
+  .mainStage {
+    grid-template-rows: 54px minmax(0, 1fr) 104px !important;
+  }
+
+  .rightRail {
+    grid-template-rows: 90px 72px minmax(0, 1fr) !important;
+  }
+
+  .board,
+  .battlefield {
+    width: min(51vh, 100%, 430px) !important;
+    height: min(51vh, 100%, 430px) !important;
+  }
+
+  .rackCard {
+    grid-template-columns: 112px minmax(250px, 1fr) 148px !important;
+    gap: 5px !important;
+    padding: 7px !important;
+  }
+
+  .rack {
+    grid-template-columns: repeat(13, 23px) !important;
+    gap: 2px !important;
+  }
+
+  .letterTile {
+    width: 23px !important;
+    min-width: 23px !important;
+    max-width: 23px !important;
+    height: 25px !important;
+    min-height: 25px !important;
+    padding: 1px 2px !important;
+  }
+
+  .letterTile span {
+    font-size: 11px !important;
+  }
+
+  .letterTile small {
+    font-size: 4px !important;
+  }
+
+  .deployControls {
+    grid-template-columns: 48px 82px !important;
+    max-width: 136px !important;
+    gap: 5px !important;
+  }
+
+  .deployControls button,
+  .deployControls .deployBtn {
+    height: 26px !important;
+    font-size: 6px !important;
+    padding: 0 3px !important;
+  }
+}

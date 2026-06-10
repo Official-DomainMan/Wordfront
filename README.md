@@ -231,3 +231,10 @@ yarn dev
 - Restores stable rack tile sizing/spacing.
 - Moves Clear/Deploy into a reserved right-side rack zone so Deploy Word is fully visible.
 - Stabilizes side rails and brand sizing.
+
+
+## v0.63 Stable footer layout
+- Restored a true 3-column rack footer: instructions / letter rack / actions.
+- Fixed Deploy Word and Clear by removing absolute-position overlap.
+- Stabilized rack tile dimensions so the rack no longer collides with buttons.
+- Reduced board/footer pressure to better match the cleaner earlier layout.
