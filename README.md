@@ -203,3 +203,10 @@ yarn dev
 - Stops ignoring optional dependencies; Rollup's native Linux package is required by Vite.
 - Explicitly adds `@rollup/rollup-linux-x64-gnu` to client optionalDependencies.
 - Railway build now removes cached node_modules before installing.
+
+
+## v0.59 Visible difficulty + deploy fix
+- Added visible required Bot Level selector before Solo vs Bot starts.
+- Solo games send selected difficulty to the server.
+- Medium bot tuning is 5–7 letters.
+- Deploy controls are widened so Clear and Deploy Word are fully visible.

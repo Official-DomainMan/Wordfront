@@ -7315,3 +7315,129 @@ body,
     min-height: 88px !important;
   }
 }
+
+
+/* v0.59 visible difficulty + deploy button fix */
+.rackCard {
+  grid-template-columns: clamp(150px, 13vw, 205px) minmax(0, 1fr) clamp(240px, 20vw, 300px) !important;
+}
+
+.rack {
+  max-width: min(100%, 500px) !important;
+}
+
+.deployControls {
+  position: absolute !important;
+  right: clamp(12px, 1vw, 18px) !important;
+  bottom: clamp(12px, 1.8vh, 18px) !important;
+  width: clamp(225px, 19vw, 280px) !important;
+  display: grid !important;
+  grid-template-columns: minmax(80px, 1fr) minmax(130px, 1.5fr) !important;
+  gap: clamp(8px, .75vw, 12px) !important;
+  align-items: center !important;
+  overflow: visible !important;
+  z-index: 20 !important;
+}
+
+.deployControls button,
+.deployControls .ghostBtn,
+.deployControls .clearBtn,
+.deployControls .deployBtn {
+  position: static !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: clamp(36px, 5.4vh, 44px) !important;
+  min-height: 0 !important;
+  padding: 0 8px !important;
+  border-radius: 8px !important;
+  font-size: clamp(8px, .76vw, 10px) !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+.deployControls .deployBtn {
+  background: #b9ff19 !important;
+  border-color: #b9ff19 !important;
+  color: #071000 !important;
+  opacity: 1 !important;
+  box-shadow: 0 0 14px rgba(185,255,25,.25) !important;
+}
+
+/* Required bot difficulty selector on home/lobby */
+.soloDifficultyInline {
+  width: 100% !important;
+  margin: 10px 0 12px !important;
+  padding: 10px !important;
+  border: 1px solid rgba(182,106,255,.44) !important;
+  border-radius: 10px !important;
+  background: linear-gradient(180deg, rgba(7,16,29,.98), rgba(3,9,20,.98)) !important;
+}
+
+.soloDifficultyInline .eyebrow {
+  margin: 0 0 8px !important;
+  color: #ec55ff !important;
+}
+
+.difficultyGridInline {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 7px !important;
+}
+
+.difficultyChip {
+  height: 34px !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(126,147,188,.48) !important;
+  background: #0b1525 !important;
+  color: #fff !important;
+  font-size: 10px !important;
+  font-weight: 950 !important;
+  cursor: pointer !important;
+}
+
+.difficultyChip.active {
+  border-color: #b9ff19 !important;
+  background: linear-gradient(145deg, #182f00, #071000) !important;
+  color: #b9ff19 !important;
+  box-shadow: 0 0 12px rgba(185,255,25,.2) !important;
+}
+
+@media (max-width: 1220px), (max-height: 690px) {
+  .rackCard {
+    grid-template-columns: 130px minmax(0, 1fr) 205px !important;
+  }
+
+  .rack {
+    max-width: min(100%, 320px) !important;
+  }
+
+  .deployControls {
+    width: 190px !important;
+    right: 8px !important;
+    grid-template-columns: 66px 116px !important;
+    gap: 6px !important;
+  }
+
+  .deployControls button,
+  .deployControls .deployBtn {
+    height: 31px !important;
+    font-size: 7px !important;
+    padding: 0 4px !important;
+  }
+
+  .difficultyGridInline {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .difficultyChip {
+    height: 30px !important;
+    font-size: 9px !important;
+  }
+}

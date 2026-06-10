@@ -278,6 +278,27 @@ const [selectedLetter, setSelectedLetter] = useState(null);
           <label>Your callsign</label>
           <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
           <div className="actions">
+            <div className="soloDifficultyInline">
+              <p className="eyebrow">BOT LEVEL</p>
+              <div className="difficultyGridInline">
+                {[
+                  { id: "easy", label: "Easy" },
+                  { id: "medium", label: "Medium" },
+                  { id: "hard", label: "Hard" },
+                  { id: "godlike", label: "Godlike" },
+                ].map((level) => (
+                  <button
+                    key={level.id}
+                    type="button"
+                    className={selectedBotDifficulty === level.id ? "difficultyChip active" : "difficultyChip"}
+                    onClick={() => setSelectedBotDifficulty(level.id)}
+                  >
+                    {level.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <button onClick={soloGame}>Solo vs Bot</button>
             <button onClick={createGame}>Create Multiplayer Lobby</button>
           </div>
@@ -304,7 +325,7 @@ const [selectedLetter, setSelectedLetter] = useState(null);
       <aside className="leftRail">
         <section className="brandBlock">
           <h1 className="wordmark" data-text="WORDFRONT">WORDFRONT</h1>
-          <p>v0.58.0</p>
+          <p>v0.59.0</p>
         </section>
         <section className="card lobbyCard">
           <p className="eyebrow">LOBBY</p>
