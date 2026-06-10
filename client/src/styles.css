@@ -8962,3 +8962,397 @@ body,
     padding: 0 3px !important;
   }
 }
+
+
+/* v0.64 DISCORD FRAME LOCK
+   This is specifically for Discord Activity iframe dimensions.
+   The previous patch over-reacted to max-height and shrank the board/rack/buttons.
+   This override locks the game to the clean desktop Discord proportions.
+*/
+
+/* Hard reset the Discord iframe canvas */
+html,
+body,
+#root,
+.app {
+  width: 100vw !important;
+  height: 100vh !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  background: #02040a !important;
+}
+
+/* 1550x750-ish Discord frame target */
+.gameShell {
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  display: grid !important;
+  grid-template-columns: 260px minmax(760px, 1fr) 200px !important;
+  grid-template-rows: minmax(0, 1fr) !important;
+  gap: 6px !important;
+  padding: 4px !important;
+  overflow: hidden !important;
+  transform: none !important;
+  zoom: 1 !important;
+}
+
+/* Rails */
+.leftRail {
+  display: grid !important;
+  grid-template-rows: 72px 132px 156px 152px minmax(0, 1fr) 72px !important;
+  gap: 6px !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  background: transparent !important;
+}
+
+.mainStage {
+  display: grid !important;
+  grid-template-rows: 74px minmax(0, 1fr) 128px !important;
+  gap: 6px !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+
+.rightRail {
+  display: grid !important;
+  grid-template-rows: 118px 92px minmax(0, 1fr) !important;
+  gap: 6px !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Fix clipped top-left logo */
+.brandBlock {
+  padding: 12px 14px !important;
+  overflow: hidden !important;
+}
+
+.brandBlock .wordmark {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  white-space: nowrap !important;
+  font-size: 29px !important;
+  line-height: 1 !important;
+  letter-spacing: -0.08em !important;
+  transform: skewX(-7deg) scaleX(.78) !important;
+  transform-origin: left center !important;
+  overflow: visible !important;
+}
+
+.brandBlock p {
+  margin-top: 6px !important;
+  font-size: 8px !important;
+}
+
+/* Board: stop tiny board shrink */
+.boardCard,
+.boardPanel {
+  display: grid !important;
+  place-items: center !important;
+  padding: 8px !important;
+  overflow: hidden !important;
+}
+
+.board,
+.battlefield {
+  width: min(61vh, 520px, 100%) !important;
+  height: min(61vh, 520px, 100%) !important;
+  min-width: 390px !important;
+  min-height: 390px !important;
+  max-width: 520px !important;
+  max-height: 520px !important;
+  aspect-ratio: 1 / 1 !important;
+  transform: none !important;
+  zoom: 1 !important;
+}
+
+/* Footer/rack: force exact clean 3-column layout */
+.rackCard {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: 210px minmax(500px, 1fr) 230px !important;
+  grid-template-rows: 1fr !important;
+  align-items: center !important;
+  gap: 10px !important;
+  height: 128px !important;
+  min-height: 128px !important;
+  max-height: 128px !important;
+  padding: 10px 12px !important;
+  overflow: hidden !important;
+}
+
+/* Instructions left */
+.rackHeader {
+  grid-column: 1 / 2 !important;
+  grid-row: 1 !important;
+  position: static !important;
+  align-self: center !important;
+  justify-self: stretch !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+.rackHeader .eyebrow,
+.rackCard .eyebrow {
+  font-size: 10px !important;
+  line-height: 1.05 !important;
+  letter-spacing: .22em !important;
+  margin: 0 0 8px !important;
+}
+
+.rackHeader .hintLine {
+  display: block !important;
+  font-size: 11px !important;
+  line-height: 1.15 !important;
+  color: #fff !important;
+  max-width: 180px !important;
+}
+
+/* Rack center */
+.rack {
+  grid-column: 2 / 3 !important;
+  grid-row: 1 !important;
+  display: grid !important;
+  grid-template-columns: repeat(13, 38px) !important;
+  gap: 6px !important;
+  width: max-content !important;
+  max-width: 100% !important;
+  justify-self: center !important;
+  align-self: center !important;
+  overflow: visible !important;
+  margin: 0 !important;
+  transform: none !important;
+  zoom: 1 !important;
+}
+
+.letterTile {
+  width: 38px !important;
+  min-width: 38px !important;
+  max-width: 38px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  padding: 2px 4px !important;
+  border-radius: 8px !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+}
+
+.letterTile span {
+  font-size: 18px !important;
+  line-height: .95 !important;
+}
+
+.letterTile small {
+  font-size: 6px !important;
+  line-height: 1 !important;
+}
+
+/* Actions right: no absolute positioning, no clipping, no overlap */
+.deployControls {
+  grid-column: 3 / 4 !important;
+  grid-row: 1 !important;
+  position: static !important;
+  display: grid !important;
+  grid-template-columns: 78px 136px !important;
+  gap: 10px !important;
+  width: 224px !important;
+  max-width: 224px !important;
+  justify-self: end !important;
+  align-self: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  z-index: 999 !important;
+  transform: none !important;
+}
+
+.deployControls button,
+.deployControls .ghostBtn,
+.deployControls .clearBtn,
+.deployControls .deployBtn {
+  position: static !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  max-height: 42px !important;
+  padding: 0 8px !important;
+  border-radius: 9px !important;
+  font-size: 8px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  transform: none !important;
+}
+
+.deployControls .deployBtn {
+  background: #b9ff19 !important;
+  color: #071000 !important;
+  border-color: #b9ff19 !important;
+  opacity: 1 !important;
+  box-shadow: 0 0 16px rgba(185,255,25,.30) !important;
+}
+
+/* Make sure old absolute button rules can't win */
+.rackHeader .ghostBtn,
+.rackHeader .deployBtn,
+.rackCard > .ghostBtn,
+.rackCard > .deployBtn {
+  position: static !important;
+}
+
+/* Sidebar buttons */
+.bottomButtons {
+  display: grid !important;
+  grid-template-rows: 1fr 1fr !important;
+  gap: 8px !important;
+  height: 100% !important;
+}
+
+.bottomButtons button {
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+/* Compact Discord web/mobile-ish iframe */
+@media (max-width: 1280px) {
+  .gameShell {
+    grid-template-columns: 205px minmax(560px, 1fr) 165px !important;
+  }
+
+  .brandBlock .wordmark {
+    font-size: 24px !important;
+    transform: skewX(-7deg) scaleX(.72) !important;
+  }
+
+  .mainStage {
+    grid-template-rows: 58px minmax(0, 1fr) 112px !important;
+  }
+
+  .board,
+  .battlefield {
+    width: min(56vh, 430px, 100%) !important;
+    height: min(56vh, 430px, 100%) !important;
+    min-width: 330px !important;
+    min-height: 330px !important;
+  }
+
+  .rackCard {
+    grid-template-columns: 126px minmax(325px, 1fr) 160px !important;
+    height: 112px !important;
+    min-height: 112px !important;
+    max-height: 112px !important;
+    gap: 6px !important;
+    padding: 7px !important;
+  }
+
+  .rack {
+    grid-template-columns: repeat(13, 27px) !important;
+    gap: 3px !important;
+  }
+
+  .letterTile {
+    width: 27px !important;
+    min-width: 27px !important;
+    max-width: 27px !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    max-height: 28px !important;
+  }
+
+  .letterTile span {
+    font-size: 13px !important;
+  }
+
+  .letterTile small {
+    font-size: 5px !important;
+  }
+
+  .deployControls {
+    grid-template-columns: 54px 92px !important;
+    width: 152px !important;
+    max-width: 152px !important;
+    gap: 6px !important;
+  }
+
+  .deployControls button,
+  .deployControls .deployBtn {
+    height: 30px !important;
+    min-height: 30px !important;
+    max-height: 30px !important;
+    font-size: 6px !important;
+    padding: 0 4px !important;
+  }
+}
+
+/* Important: do NOT shrink everything just because Discord iframe height is under 820px.
+   Previous max-height rules made the board/rack tiny in Discord desktop. */
+@media (max-height: 820px) and (min-width: 1281px) {
+  .gameShell {
+    grid-template-columns: 260px minmax(760px, 1fr) 200px !important;
+  }
+
+  .mainStage {
+    grid-template-rows: 74px minmax(0, 1fr) 128px !important;
+  }
+
+  .board,
+  .battlefield {
+    width: min(61vh, 520px, 100%) !important;
+    height: min(61vh, 520px, 100%) !important;
+    min-width: 390px !important;
+    min-height: 390px !important;
+  }
+
+  .rackCard {
+    grid-template-columns: 210px minmax(500px, 1fr) 230px !important;
+    height: 128px !important;
+    min-height: 128px !important;
+    max-height: 128px !important;
+  }
+
+  .rack {
+    grid-template-columns: repeat(13, 38px) !important;
+    gap: 6px !important;
+  }
+
+  .letterTile {
+    width: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+  }
+
+  .letterTile span {
+    font-size: 18px !important;
+  }
+
+  .deployControls {
+    grid-template-columns: 78px 136px !important;
+    width: 224px !important;
+    max-width: 224px !important;
+  }
+
+  .deployControls button,
+  .deployControls .deployBtn {
+    height: 42px !important;
+    min-height: 42px !important;
+    max-height: 42px !important;
+    font-size: 8px !important;
+  }
+}

@@ -238,3 +238,10 @@ yarn dev
 - Fixed Deploy Word and Clear by removing absolute-position overlap.
 - Stabilized rack tile dimensions so the rack no longer collides with buttons.
 - Reduced board/footer pressure to better match the cleaner earlier layout.
+
+
+## v0.64 Discord frame lock
+- Overrides the max-height rules that made the game tiny inside Discord desktop.
+- Locks Discord iframe layout to stable desktop proportions.
+- Fixes clipped Wordfront logo.
+- Forces rack/Clear/Deploy into a real 3-column footer with no overlap.
