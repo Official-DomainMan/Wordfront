@@ -217,3 +217,10 @@ yarn dev
 - Restyled bot difficulty selection into a larger themed selector.
 - Made Solo vs Bot and lobby controls visually stronger.
 - Increased the rack action column so Clear and Deploy Word fit fully.
+
+
+## v0.61 Visual overhaul
+- Implements mockup-inspired neon sci-fi game UI with glass panels and purple/green battlefield background.
+- Adds letter score numbers to rack tiles.
+- Reworks rack/deploy layout using grid columns so Deploy Word no longer clips.
+- Restyles board, sidebars, legend, territory bar, and home screen.

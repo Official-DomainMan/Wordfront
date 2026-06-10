@@ -48,6 +48,10 @@ function getWordfrontSession() {
 
 const SERVER_URL = getApiBaseUrl();
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const LETTER_VALUES = {
+  A: 16, B: 18, C: 18, D: 18, E: 10, F: 18, G: 10, H: 18, I: 18, J: 18, K: 18, L: 16, M: 16,
+  N: 10, O: 20, P: 20, Q: 20, R: 18, S: 16, T: 18, U: 18, V: 18, W: 18, X: 18, Y: 18, Z: 18,
+};
 
 function App() {
   const socket = useMemo(() => io(SERVER_URL), []);
@@ -150,7 +154,10 @@ const [selectedLetter, setSelectedLetter] = useState(null);
     setError(""); setGame(res.game); setPlayerId(res.playerId); saveName();
   }
   function createGame() { socket.emit("createGame", { name }, handleResponse); }
-  function soloGame() { socket.emit("soloGame", { name, botDifficulty: getBotDifficultySetting() }, handleResponse); }
+  function soloGame() {
+    try { window.localStorage.setItem("wordfrontBotDifficulty", selectedBotDifficulty); } catch {}
+    socket.emit("soloGame", { name, botDifficulty: selectedBotDifficulty || getBotDifficultySetting() }, handleResponse);
+  }
   function joinGame() { socket.emit("joinGame", { gameId: joinCode, name }, handleResponse); }
 
   function currentWord() { return placements.map((p) => p.letter).join(""); }
@@ -325,7 +332,7 @@ const [selectedLetter, setSelectedLetter] = useState(null);
       <aside className="leftRail">
         <section className="brandBlock">
           <h1 className="wordmark" data-text="WORDFRONT">WORDFRONT</h1>
-          <p>v0.60.0</p>
+          <p>v0.61.0</p>
         </section>
         <section className="card lobbyCard">
           <p className="eyebrow">LOBBY</p>
@@ -405,7 +412,7 @@ const [selectedLetter, setSelectedLetter] = useState(null);
             {LETTERS.map((letter) => (
               <button type="button" className={`letterTile ${selectedLetter === letter ? "selected" : ""}`} draggable={myTurn} disabled={!myTurn}
                 onClick={() => myTurn && setSelectedLetter(letter)} onDragStart={(e) => onDragStart(e, letter)} onDragEnd={() => setDragLetter(null)} key={letter}>
-                <span>{letter}</span>
+                <span>{letter}</span><small>{LETTER_VALUES[letter]}</small>
               </button>
             ))}
           </div>
