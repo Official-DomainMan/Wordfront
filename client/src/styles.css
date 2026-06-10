@@ -7441,3 +7441,362 @@ body,
     font-size: 9px !important;
   }
 }
+
+
+/* v0.60 lobby redesign + definitive deploy button fix
+   Built on working v0.59.
+   - Full neon cyber lobby redesign
+   - Difficulty selector restyled as cards/chips
+   - Deploy/Clear controls get a dedicated safe action zone
+*/
+
+/* -------- HOME / LOBBY REDESIGN -------- */
+
+.homeShell,
+.startShell,
+.landingShell,
+.menuShell {
+  min-height: 100dvh !important;
+  width: 100vw !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: clamp(18px, 3vw, 42px) !important;
+  overflow: hidden !important;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(236,85,255,.18), transparent 30%),
+    radial-gradient(circle at 88% 12%, rgba(185,255,25,.10), transparent 30%),
+    radial-gradient(circle at 50% 100%, rgba(182,106,255,.08), transparent 35%),
+    linear-gradient(135deg, #02040a 0%, #050914 58%, #02040a 100%) !important;
+  color: #fff !important;
+}
+
+/* Main home card */
+.homeShell .hero,
+.startShell .hero,
+.landingShell .hero,
+.menuShell .hero,
+.homeCard,
+.startCard,
+.lobbyStartCard {
+  width: min(920px, 94vw) !important;
+  max-height: 94dvh !important;
+  overflow: auto !important;
+  padding: clamp(24px, 3vw, 38px) !important;
+  border-radius: 24px !important;
+  border: 1px solid rgba(182,106,255,.58) !important;
+  background:
+    linear-gradient(180deg, rgba(7,16,29,.98), rgba(3,7,15,.98)) !important;
+  box-shadow:
+    0 0 38px rgba(182,106,255,.20),
+    0 24px 80px rgba(0,0,0,.58),
+    inset 0 0 32px rgba(185,255,25,.025) !important;
+  position: relative !important;
+}
+
+/* decorative angled slash */
+.homeShell .hero::after,
+.startShell .hero::after,
+.landingShell .hero::after,
+.menuShell .hero::after,
+.homeCard::after,
+.startCard::after,
+.lobbyStartCard::after {
+  content: "" !important;
+  position: absolute !important;
+  right: 28px !important;
+  top: 26px !important;
+  width: 54px !important;
+  height: 16px !important;
+  transform: skewX(-25deg) !important;
+  background: linear-gradient(90deg, #b66cff, #ec55ff) !important;
+  opacity: .85 !important;
+  filter: drop-shadow(0 0 12px rgba(182,106,255,.6)) !important;
+}
+
+/* Eyebrow theme text */
+.homeShell .hero > .eyebrow:first-child,
+.startShell .hero > .eyebrow:first-child,
+.landingShell .hero > .eyebrow:first-child,
+.menuShell .hero > .eyebrow:first-child {
+  color: #ec55ff !important;
+  font-size: clamp(10px, 1vw, 13px) !important;
+  letter-spacing: .34em !important;
+  text-shadow: 0 0 10px rgba(236,85,255,.4) !important;
+  margin-bottom: 8px !important;
+}
+
+/* WORDFRONT title on home screen */
+.homeShell h1,
+.startShell h1,
+.landingShell h1,
+.menuShell h1,
+.homeTitle,
+.wordfrontTitle {
+  font-size: clamp(58px, 8.2vw, 104px) !important;
+  line-height: .82 !important;
+  margin: 0 0 12px !important;
+  letter-spacing: -.06em !important;
+  font-weight: 1000 !important;
+  color: #ffffff !important;
+  text-transform: uppercase !important;
+  text-shadow:
+    4px 0 0 rgba(182,106,255,.58),
+    0 0 12px rgba(255,255,255,.35),
+    0 0 36px rgba(182,106,255,.42) !important;
+}
+
+/* Subtitle */
+.homeShell .hero > p:not(.eyebrow),
+.startShell .hero > p:not(.eyebrow),
+.landingShell .hero > p:not(.eyebrow),
+.menuShell .hero > p:not(.eyebrow),
+.homeSubtitle {
+  color: #e8edf7 !important;
+  font-weight: 800 !important;
+  margin: 0 0 22px !important;
+  font-size: clamp(13px, 1.2vw, 16px) !important;
+}
+
+/* Callsign field */
+.homeShell label,
+.startShell label,
+.landingShell label,
+.menuShell label {
+  color: #ffffff !important;
+  font-weight: 900 !important;
+}
+
+.homeShell input,
+.startShell input,
+.landingShell input,
+.menuShell input {
+  height: 54px !important;
+  border-radius: 11px !important;
+  border: 1px solid rgba(126,147,188,.56) !important;
+  background: rgba(1,4,10,.72) !important;
+  color: #fff !important;
+  padding: 0 16px !important;
+  font-size: 17px !important;
+  outline: none !important;
+  box-shadow: inset 0 0 16px rgba(0,0,0,.35) !important;
+}
+
+.homeShell input:focus,
+.startShell input:focus,
+.landingShell input:focus,
+.menuShell input:focus {
+  border-color: #b9ff19 !important;
+  box-shadow:
+    inset 0 0 16px rgba(0,0,0,.35),
+    0 0 16px rgba(185,255,25,.18) !important;
+}
+
+/* Home actions layout */
+.homeActions,
+.startActions,
+.lobbyActions {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(230px, .9fr) !important;
+  gap: 14px !important;
+  align-items: stretch !important;
+  margin-top: 14px !important;
+}
+
+/* Difficulty selector redesigned */
+.soloDifficultyInline {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 16px !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(182,106,255,.55) !important;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(182,106,255,.14), transparent 35%),
+    linear-gradient(180deg, #091321, #040914) !important;
+  box-shadow: inset 0 0 18px rgba(182,106,255,.05) !important;
+}
+
+.soloDifficultyInline .eyebrow {
+  color: #ec55ff !important;
+  margin: 0 0 10px !important;
+  letter-spacing: .25em !important;
+  text-shadow: 0 0 8px rgba(236,85,255,.38) !important;
+}
+
+.difficultyGridInline {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 9px !important;
+}
+
+.difficultyChip {
+  height: 52px !important;
+  border-radius: 11px !important;
+  border: 1px solid rgba(126,147,188,.50) !important;
+  background:
+    linear-gradient(180deg, #101b2e, #050914) !important;
+  color: #fff !important;
+  font-size: 11px !important;
+  font-weight: 1000 !important;
+  letter-spacing: .06em !important;
+  cursor: pointer !important;
+  box-shadow: inset 0 0 12px rgba(0,0,0,.32) !important;
+}
+
+.difficultyChip.active {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(185,255,25,.24), transparent 45%),
+    linear-gradient(145deg, #243f00, #071000) !important;
+  border-color: #b9ff19 !important;
+  color: #b9ff19 !important;
+  box-shadow:
+    0 0 18px rgba(185,255,25,.26),
+    inset 0 0 14px rgba(185,255,25,.08) !important;
+}
+
+/* Hero Solo button */
+.homeActions button,
+.startActions button,
+.lobbyActions button,
+.homeShell button,
+.startShell button,
+.landingShell button,
+.menuShell button {
+  border-radius: 12px !important;
+  font-weight: 1000 !important;
+}
+
+.homeActions button:has(+ *),
+.startActions button:has(+ *),
+.lobbyActions button:has(+ *) {
+  min-height: 58px !important;
+}
+
+.homeShell button,
+.startShell button,
+.landingShell button,
+.menuShell button {
+  transition: transform .12s ease, filter .12s ease, box-shadow .12s ease !important;
+}
+
+.homeShell button:hover,
+.startShell button:hover,
+.landingShell button:hover,
+.menuShell button:hover {
+  transform: translateY(-1px) !important;
+}
+
+/* Solo vs Bot button, primary visual */
+.homeShell button,
+.startShell button,
+.landingShell button,
+.menuShell button {
+  text-transform: none !important;
+}
+
+/* Join/create area */
+.homeShell .joinRow,
+.startShell .joinRow,
+.landingShell .joinRow,
+.menuShell .joinRow {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 92px !important;
+  gap: 10px !important;
+  margin-top: 14px !important;
+}
+
+/* -------- DEFINITIVE DEPLOY/CLEAR BUTTON FIX -------- */
+
+/* Reserve a large, safe right action column and shrink rack center slightly */
+.rackCard {
+  grid-template-columns: clamp(150px, 13vw, 205px) minmax(0, 1fr) clamp(285px, 23vw, 340px) !important;
+  overflow: hidden !important;
+  padding-right: clamp(14px, 1.1vw, 20px) !important;
+}
+
+.rack {
+  max-width: min(100%, 455px) !important;
+}
+
+/* Action controls stay fully inside right column */
+.deployControls {
+  position: absolute !important;
+  right: clamp(14px, 1.1vw, 20px) !important;
+  bottom: clamp(12px, 1.8vh, 18px) !important;
+  width: clamp(260px, 21vw, 320px) !important;
+  display: grid !important;
+  grid-template-columns: minmax(86px, .9fr) minmax(150px, 1.55fr) !important;
+  gap: clamp(10px, .8vw, 14px) !important;
+  align-items: center !important;
+  overflow: visible !important;
+  z-index: 30 !important;
+}
+
+.deployControls button,
+.deployControls .ghostBtn,
+.deployControls .clearBtn,
+.deployControls .deployBtn {
+  position: static !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: clamp(36px, 5.3vh, 44px) !important;
+  min-height: 0 !important;
+  padding: 0 10px !important;
+  border-radius: 9px !important;
+  font-size: clamp(8px, .72vw, 10px) !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+.deployControls .deployBtn {
+  background: #b9ff19 !important;
+  border-color: #b9ff19 !important;
+  color: #071000 !important;
+  opacity: 1 !important;
+  box-shadow: 0 0 14px rgba(185,255,25,.25) !important;
+}
+
+/* Smaller activity windows */
+@media (max-width: 1220px), (max-height: 690px) {
+  .homeActions,
+  .startActions,
+  .lobbyActions {
+    grid-template-columns: 1fr !important;
+  }
+
+  .difficultyGridInline {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .difficultyChip {
+    height: 42px !important;
+  }
+
+  .rackCard {
+    grid-template-columns: 128px minmax(0, 1fr) 230px !important;
+  }
+
+  .rack {
+    max-width: min(100%, 300px) !important;
+  }
+
+  .deployControls {
+    width: 212px !important;
+    right: 8px !important;
+    grid-template-columns: 72px 132px !important;
+    gap: 8px !important;
+  }
+
+  .deployControls button,
+  .deployControls .deployBtn {
+    height: 31px !important;
+    font-size: 7px !important;
+    padding: 0 5px !important;
+  }
+}

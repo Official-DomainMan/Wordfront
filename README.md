@@ -210,3 +210,10 @@ yarn dev
 - Solo games send selected difficulty to the server.
 - Medium bot tuning is 5–7 letters.
 - Deploy controls are widened so Clear and Deploy Word are fully visible.
+
+
+## v0.60 Lobby redesign + deploy fix
+- Redesigned the home/lobby screen to match the neon in-game Wordfront style.
+- Restyled bot difficulty selection into a larger themed selector.
+- Made Solo vs Bot and lobby controls visually stronger.
+- Increased the rack action column so Clear and Deploy Word fit fully.
