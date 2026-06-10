@@ -224,3 +224,10 @@ yarn dev
 - Adds letter score numbers to rack tiles.
 - Reworks rack/deploy layout using grid columns so Deploy Word no longer clips.
 - Restyles board, sidebars, legend, territory bar, and home screen.
+
+
+## v0.62 Layout/rack/deploy fix
+- Repairs v0.61 layout clipping.
+- Restores stable rack tile sizing/spacing.
+- Moves Clear/Deploy into a reserved right-side rack zone so Deploy Word is fully visible.
+- Stabilizes side rails and brand sizing.
