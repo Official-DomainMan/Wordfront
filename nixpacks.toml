@@ -2,10 +2,15 @@
 nixPkgs = ["nodejs_22"]
 
 [phases.install]
-cmds = ["npm --prefix client ci", "npm --prefix server install"]
+cmds = [
+  "corepack enable",
+  "corepack prepare yarn@1.22.22 --activate",
+  "yarn --cwd client install --network-timeout 600000",
+  "yarn --cwd server install --network-timeout 600000"
+]
 
 [phases.build]
-cmds = ["npm --prefix client run build"]
+cmds = ["yarn --cwd client build"]
 
 [start]
-cmd = "npm --prefix server start"
+cmd = "yarn --cwd server start"

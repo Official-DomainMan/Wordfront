@@ -198,8 +198,7 @@ yarn dev
 - Verified the client builds successfully with Vite.
 
 
-## v0.56 Railway npm install fix
-- Replaced nested `cd client && npm install && ...` build command with `npm --prefix` commands.
-- Added `nixpacks.toml` and `railway.json` so Railway uses stable install/build/start commands.
-- Pins Node 22 / npm 10 in package engines.
-- Local root build tested successfully.
+## v0.57 Railway Yarn build
+- Switches Railway install/build/start commands from npm to Yarn to bypass npm `Exit handler never called`.
+- Adds `nixpacks.toml`, `railway.json`, `.yarnrc`, and root `packageManager`.
+- Uses Corepack to activate Yarn 1.22.22 on Railway.
