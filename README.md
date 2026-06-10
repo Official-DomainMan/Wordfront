@@ -245,3 +245,10 @@ yarn dev
 - Locks Discord iframe layout to stable desktop proportions.
 - Fixes clipped Wordfront logo.
 - Forces rack/Clear/Deploy into a real 3-column footer with no overlap.
+
+
+## v0.65 Discord fixed frame
+- Hard-locks Discord Activity dimensions instead of stacking fluid viewport rules.
+- Fixes board/rack shrinking in Discord.
+- Pins Clear and Deploy Word in a dedicated non-overlapping footer action column.
+- Fixes clipped logo with scaled wordmark.
