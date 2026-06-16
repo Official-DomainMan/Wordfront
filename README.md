@@ -252,3 +252,11 @@ yarn dev
 - Fixes board/rack shrinking in Discord.
 - Pins Clear and Deploy Word in a dedicated non-overlapping footer action column.
 - Fixes clipped logo with scaled wordmark.
+
+
+## v0.66 Mockup layout polish
+- Enlarged/fitted logo section.
+- Recentered board and prevented board cutoff.
+- Rebuilt footer with fixed instruction/rack/actions columns.
+- Fixed Deploy Word clipping and placement.
+- Restored stable rack tile sizing and spacing.
