@@ -11206,3 +11206,217 @@ body,
     padding: 0 2px !important;
   }
 }
+
+
+/* v0.73 RESTORE WORKING FOOTER
+   This deliberately overrides/removes the v0.70-v0.72 duplicate deploy button strategy.
+   It restores the older working pattern:
+   [instructions] [rack] [clear + deploy]
+   using the ORIGINAL .deployControls group only.
+*/
+
+/* Disable the duplicated fixed-controls approach entirely */
+.deployControlsFixed {
+  display: none !important;
+}
+
+/* Restore any normal deployControls hidden by v0.70 */
+.rackCard .deployControls:not(.deployControlsFixed),
+.deployControls:not(.deployControlsFixed) {
+  display: grid !important;
+}
+
+/* Footer = true three columns */
+.rackCard {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns:
+    clamp(155px, 14vw, 210px)
+    minmax(0, 1fr)
+    clamp(190px, 16vw, 235px) !important;
+  grid-template-rows: 1fr !important;
+  align-items: center !important;
+  gap: clamp(8px, .8vw, 12px) !important;
+  height: var(--wf-footer) !important;
+  min-height: var(--wf-footer) !important;
+  max-height: var(--wf-footer) !important;
+  padding: clamp(9px, 1vw, 14px) !important;
+  padding-right: clamp(9px, 1vw, 14px) !important;
+  overflow: hidden !important;
+}
+
+/* Instructions left */
+.rackHeader {
+  grid-column: 1 / 2 !important;
+  grid-row: 1 !important;
+  position: static !important;
+  align-self: center !important;
+  justify-self: stretch !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.rackHeader .eyebrow,
+.rackCard .eyebrow {
+  font-size: clamp(8px, .82vw, 11px) !important;
+  line-height: 1.1 !important;
+  letter-spacing: .18em !important;
+  margin: 0 0 6px !important;
+}
+
+.rackHeader .hintLine,
+.rackCard .hintLine {
+  display: block !important;
+  font-size: clamp(9px, .9vw, 12px) !important;
+  line-height: 1.15 !important;
+  color: #fff !important;
+}
+
+/* Rack center. No forced left/right margins. */
+.rackCard .rack,
+.rack {
+  grid-column: 2 / 3 !important;
+  grid-row: 1 !important;
+  display: grid !important;
+  grid-template-columns: repeat(13, var(--wf-tile)) !important;
+  gap: var(--wf-rack-gap) !important;
+  width: var(--wf-rack-width) !important;
+  max-width: 100% !important;
+  justify-self: center !important;
+  align-self: center !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  transform: none !important;
+  zoom: 1 !important;
+}
+
+/* Normal action group on the right. This is the older working structure. */
+.rackCard .deployControls:not(.deployControlsFixed),
+.deployControls:not(.deployControlsFixed) {
+  grid-column: 3 / 4 !important;
+  grid-row: 1 !important;
+  position: static !important;
+  display: grid !important;
+  grid-template-columns: clamp(58px, 5.3vw, 76px) clamp(98px, 8.3vw, 130px) !important;
+  gap: clamp(7px, .7vw, 10px) !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  justify-self: end !important;
+  align-self: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 9999 !important;
+  transform: none !important;
+  zoom: 1 !important;
+}
+
+.rackCard .deployControls:not(.deployControlsFixed) > button,
+.rackCard .deployControls:not(.deployControlsFixed) > .ghostBtn,
+.rackCard .deployControls:not(.deployControlsFixed) > .clearBtn,
+.rackCard .deployControls:not(.deployControlsFixed) > .deployBtn,
+.deployControls:not(.deployControlsFixed) > button,
+.deployControls:not(.deployControlsFixed) > .ghostBtn,
+.deployControls:not(.deployControlsFixed) > .clearBtn,
+.deployControls:not(.deployControlsFixed) > .deployBtn {
+  position: static !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  height: clamp(32px, 5.4vh, 42px) !important;
+  min-height: 0 !important;
+  max-height: 42px !important;
+  padding: 0 6px !important;
+  border-radius: 9px !important;
+  font-size: clamp(6px, .65vw, 8px) !important;
+  line-height: 1.05 !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  text-align: center !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+/* Clear compact */
+.rackCard .deployControls:not(.deployControlsFixed) .clearBtn,
+.rackCard .deployControls:not(.deployControlsFixed) .ghostBtn,
+.deployControls:not(.deployControlsFixed) .clearBtn,
+.deployControls:not(.deployControlsFixed) .ghostBtn {
+  background: rgba(13, 22, 36, .96) !important;
+  border: 1px solid rgba(126,147,188,.48) !important;
+  color: rgba(232,237,247,.82) !important;
+}
+
+/* Deploy compact and complete */
+.rackCard .deployControls:not(.deployControlsFixed) .deployBtn,
+.deployControls:not(.deployControlsFixed) .deployBtn {
+  background: #b9ff19 !important;
+  border: 1px solid #b9ff19 !important;
+  color: #071000 !important;
+  box-shadow: 0 0 16px rgba(185,255,25,.30) !important;
+  font-weight: 1000 !important;
+  font-size: clamp(6px, .68vw, 8px) !important;
+}
+
+/* Undo old direct-child hiding from previous patches */
+.rackCard > .clearBtn,
+.rackCard > .deployBtn,
+.rackHeader .clearBtn,
+.rackHeader .deployBtn {
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  top: auto !important;
+}
+
+/* If actual controls are direct children instead of wrapped, put them in column 3 too */
+.rackCard > .clearBtn,
+.rackCard > .deployBtn {
+  grid-column: 3 / 4 !important;
+  grid-row: 1 !important;
+  position: static !important;
+}
+
+/* Narrow Discord/web frame */
+@media (max-width: 1240px) {
+  .rackCard {
+    grid-template-columns:
+      112px
+      minmax(0, 1fr)
+      132px !important;
+    padding: 7px !important;
+    gap: 5px !important;
+  }
+
+  .rackCard .deployControls:not(.deployControlsFixed),
+  .deployControls:not(.deployControlsFixed) {
+    grid-template-columns: 44px 78px !important;
+    gap: 5px !important;
+  }
+
+  .rackCard .deployControls:not(.deployControlsFixed) > button,
+  .rackCard .deployControls:not(.deployControlsFixed) > .ghostBtn,
+  .rackCard .deployControls:not(.deployControlsFixed) > .clearBtn,
+  .rackCard .deployControls:not(.deployControlsFixed) > .deployBtn,
+  .deployControls:not(.deployControlsFixed) > button,
+  .deployControls:not(.deployControlsFixed) > .ghostBtn,
+  .deployControls:not(.deployControlsFixed) > .clearBtn,
+  .deployControls:not(.deployControlsFixed) > .deployBtn {
+    height: 28px !important;
+    max-height: 28px !important;
+    padding: 0 2px !important;
+    font-size: 5px !important;
+  }
+}

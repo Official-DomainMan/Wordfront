@@ -300,3 +300,9 @@ yarn dev
 - Keeps Deploy Word visible and compact.
 - Shifts the letter rack back toward visual center/right.
 - Leaves the rest of the layout unchanged.
+
+
+## v0.73 Restore working footer
+- Removed the duplicated `deployControlsFixed` markup from v0.70+.
+- Restored the older working 3-column footer layout: instructions / rack / normal deployControls.
+- Keeps Deploy Word compact and inside the right column.
