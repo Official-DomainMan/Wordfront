@@ -280,3 +280,9 @@ yarn dev
 - Increased and stabilized left rail card/button heights so nothing clips.
 - Restored Deploy Word to the visible right footer action column.
 - Keeps v0.68/v0.67 responsiveness and leaves the rest of the layout unchanged.
+
+
+## v0.70 Deploy button markup fix
+- Adds a guaranteed `.deployControlsFixed` group inside the rack footer.
+- Hides older misplaced Clear/Deploy instances.
+- Forces the fixed Clear/Deploy group to the right footer column.

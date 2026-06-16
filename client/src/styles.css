@@ -10761,3 +10761,145 @@ body,
     min-height: 36px !important;
   }
 }
+
+
+/* v0.70 DEPLOY BUTTON MARKUP FIX
+   This patch includes a guaranteed .deployControlsFixed group in the rack footer.
+   The old deploy/clear instances are hidden, and the fixed group is placed on the right.
+*/
+
+/* Hide old direct/footer action buttons that are NOT inside the guaranteed fixed group */
+.rackCard > button.clearBtn,
+.rackCard > button.deployBtn,
+.rackCard > .clearBtn,
+.rackCard > .deployBtn,
+.rackHeader .clearBtn,
+.rackHeader .deployBtn,
+.rackHeader button.clearBtn,
+.rackHeader button.deployBtn {
+  display: none !important;
+}
+
+/* If there are old deployControls wrappers, hide them unless they are the fixed one */
+.rackCard .deployControls:not(.deployControlsFixed) {
+  display: none !important;
+}
+
+/* Make footer reserve exactly enough space for the fixed action group */
+:root {
+  --wf-action-clear: clamp(72px, 6.4vw, 94px);
+  --wf-action-deploy: clamp(142px, 11.8vw, 184px);
+  --wf-action-gap: clamp(8px, .8vw, 12px);
+  --wf-action-width: calc(var(--wf-action-clear) + var(--wf-action-deploy) + var(--wf-action-gap));
+  --wf-rack-side: calc(var(--wf-action-width) + 18px);
+}
+
+.rackCard {
+  display: grid !important;
+  grid-template-columns:
+    clamp(130px, 15vw, 220px)
+    minmax(0, 1fr)
+    var(--wf-rack-side) !important;
+  grid-template-rows: 1fr !important;
+  align-items: center !important;
+  overflow: hidden !important;
+}
+
+/* The guaranteed deploy controls: always visible on the right */
+.rackCard .deployControlsFixed {
+  grid-column: 3 / 4 !important;
+  grid-row: 1 !important;
+  position: static !important;
+  display: grid !important;
+  grid-template-columns: var(--wf-action-clear) var(--wf-action-deploy) !important;
+  gap: var(--wf-action-gap) !important;
+  width: var(--wf-action-width) !important;
+  min-width: var(--wf-action-width) !important;
+  max-width: var(--wf-action-width) !important;
+  justify-self: end !important;
+  align-self: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 2147483647 !important;
+  pointer-events: auto !important;
+  transform: none !important;
+  zoom: 1 !important;
+}
+
+.rackCard .deployControlsFixed > button,
+.rackCard .deployControlsFixed > .ghostBtn,
+.rackCard .deployControlsFixed > .clearBtn,
+.rackCard .deployControlsFixed > .deployBtn {
+  position: static !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  height: clamp(38px, 6.4vh, 54px) !important;
+  min-height: 0 !important;
+  max-height: 54px !important;
+  padding: 0 clamp(5px, .75vw, 10px) !important;
+  border-radius: clamp(8px, .75vw, 10px) !important;
+  line-height: 1.05 !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  text-align: center !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+.rackCard .deployControlsFixed .clearBtn,
+.rackCard .deployControlsFixed .ghostBtn {
+  font-size: clamp(6px, .68vw, 9px) !important;
+}
+
+.rackCard .deployControlsFixed .deployBtn {
+  font-size: clamp(8px, .78vw, 11px) !important;
+  background: #b9ff19 !important;
+  border: 1px solid #b9ff19 !important;
+  color: #071000 !important;
+  box-shadow: 0 0 18px rgba(185,255,25,.34) !important;
+  font-weight: 1000 !important;
+}
+
+/* Keep rack confined to center column */
+.rackCard .rack {
+  grid-column: 2 / 3 !important;
+  justify-self: center !important;
+  max-width: 100% !important;
+}
+
+/* Narrow Discord/web frame */
+@media (max-width: 1240px) {
+  :root {
+    --wf-action-clear: 52px;
+    --wf-action-deploy: 104px;
+    --wf-action-gap: 6px;
+    --wf-rack-side: calc(var(--wf-action-width) + 8px);
+  }
+
+  .rackCard {
+    grid-template-columns:
+      112px
+      minmax(0, 1fr)
+      var(--wf-rack-side) !important;
+  }
+
+  .rackCard .deployControlsFixed > button,
+  .rackCard .deployControlsFixed > .ghostBtn,
+  .rackCard .deployControlsFixed > .clearBtn,
+  .rackCard .deployControlsFixed > .deployBtn {
+    height: 30px !important;
+    max-height: 30px !important;
+    padding: 0 3px !important;
+    font-size: 6px !important;
+  }
+}

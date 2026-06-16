@@ -332,7 +332,7 @@ const [selectedLetter, setSelectedLetter] = useState(null);
       <aside className="leftRail">
         <section className="brandBlock">
           <h1 className="wordmark" data-text="WORDFRONT">WORDFRONT</h1>
-          <p>v0.69.0</p>
+          <p>v0.70.0</p>
         </section>
         <section className="card lobbyCard">
           <p className="eyebrow">LOBBY</p>
@@ -416,6 +416,12 @@ const [selectedLetter, setSelectedLetter] = useState(null);
               </button>
             ))}
           </div>
+
+            <div className="deployControls deployControlsFixed">
+              <button className="clearBtn ghostBtn" onClick={clearPending} disabled={!placements.length}>Clear</button>
+              <button className="deployBtn" onClick={deployWord} disabled={!myTurn || placements.length < 2}>Deploy Word</button>
+            </div>
+
         </section>
       </section>
 
