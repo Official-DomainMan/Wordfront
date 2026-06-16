@@ -10188,3 +10188,283 @@ body,
       minmax(0, 1fr) !important;
   }
 }
+
+
+/* v0.68 FINAL FOOTER ACTIONS + LEFT PANEL FIX
+   Keeps v0.67 responsiveness, but fixes:
+   - Clear/Deploy stuck under instructions/rack
+   - Deploy Word clipped
+   - Menu button clipped on left rail
+*/
+
+/* Give the left bottom controls enough space for both buttons */
+.leftRail {
+  grid-template-rows:
+    var(--wf-left-logo)
+    clamp(104px, 14.2vh, 136px)
+    clamp(126px, 18.5vh, 184px)
+    clamp(116px, 17.5vh, 164px)
+    minmax(0, 1fr)
+    clamp(96px, 15vh, 130px) !important;
+}
+
+.bottomButtons {
+  display: grid !important;
+  grid-template-rows: 1fr 1fr !important;
+  grid-template-columns: 1fr !important;
+  gap: clamp(7px, .8vh, 10px) !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  align-self: stretch !important;
+}
+
+.bottomButtons button {
+  height: 100% !important;
+  min-height: clamp(38px, 5.4vh, 52px) !important;
+  max-height: none !important;
+  padding: 0 10px !important;
+  border-radius: 10px !important;
+  overflow: visible !important;
+  font-size: clamp(10px, .95vw, 13px) !important;
+}
+
+/* More reliable footer variables.
+   The right action column is now always large enough for Clear + Deploy. */
+:root {
+  --wf-footer: clamp(122px, 18vh, 150px);
+  --wf-action-clear: clamp(74px, 6.8vw, 98px);
+  --wf-action-deploy: clamp(128px, 11vw, 176px);
+  --wf-action-gap: clamp(8px, .8vw, 12px);
+  --wf-action-width: calc(var(--wf-action-clear) + var(--wf-action-deploy) + var(--wf-action-gap));
+  --wf-rack-side: calc(var(--wf-action-width) + 22px);
+}
+
+/* Footer is explicitly 3 columns. The rack is never allowed to occupy the action column. */
+.rackCard {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns:
+    clamp(130px, 15vw, 220px)
+    minmax(0, 1fr)
+    var(--wf-rack-side) !important;
+  grid-template-rows: 1fr !important;
+  align-items: center !important;
+  gap: clamp(8px, .8vw, 14px) !important;
+  height: var(--wf-footer) !important;
+  min-height: var(--wf-footer) !important;
+  max-height: var(--wf-footer) !important;
+  padding: clamp(9px, 1vw, 15px) !important;
+  overflow: hidden !important;
+}
+
+/* Instructions left */
+.rackHeader {
+  grid-column: 1 / 2 !important;
+  grid-row: 1 !important;
+  position: static !important;
+  align-self: center !important;
+  justify-self: stretch !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.rackHeader .eyebrow,
+.rackCard .eyebrow {
+  font-size: clamp(8px, .8vw, 11px) !important;
+  line-height: 1.12 !important;
+  letter-spacing: clamp(.14em, .20vw, .24em) !important;
+  margin: 0 0 clamp(5px, .7vh, 9px) !important;
+}
+
+.rackHeader .hintLine,
+.rackCard .hintLine {
+  font-size: clamp(9px, .9vw, 13px) !important;
+  line-height: 1.15 !important;
+}
+
+/* Rack stays centered in the middle column only */
+.rack {
+  grid-column: 2 / 3 !important;
+  grid-row: 1 !important;
+  display: grid !important;
+  grid-template-columns: repeat(13, var(--wf-tile)) !important;
+  gap: var(--wf-rack-gap) !important;
+  width: var(--wf-rack-width) !important;
+  max-width: 100% !important;
+  justify-self: center !important;
+  align-self: center !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  transform: none !important;
+  zoom: 1 !important;
+}
+
+/* Critical: force action controls into the right column, not under instructions/rack */
+.deployControls {
+  grid-column: 3 / 4 !important;
+  grid-row: 1 !important;
+  position: static !important;
+  display: grid !important;
+  grid-template-columns: var(--wf-action-clear) var(--wf-action-deploy) !important;
+  gap: var(--wf-action-gap) !important;
+  width: var(--wf-action-width) !important;
+  max-width: var(--wf-action-width) !important;
+  min-width: var(--wf-action-width) !important;
+  justify-self: end !important;
+  align-self: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  z-index: 99999 !important;
+  transform: none !important;
+  zoom: 1 !important;
+}
+
+.deployControls button,
+.deployControls .ghostBtn,
+.deployControls .clearBtn,
+.deployControls .deployBtn {
+  position: static !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  height: clamp(36px, 6.4vh, 54px) !important;
+  min-height: 0 !important;
+  max-height: 54px !important;
+  padding: 0 clamp(5px, .8vw, 10px) !important;
+  border-radius: clamp(8px, .75vw, 10px) !important;
+  line-height: 1.05 !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  text-align: center !important;
+  transform: none !important;
+}
+
+.deployControls .ghostBtn,
+.deployControls .clearBtn {
+  font-size: clamp(6px, .72vw, 9px) !important;
+}
+
+.deployControls .deployBtn {
+  font-size: clamp(7px, .78vw, 10px) !important;
+  background: #b9ff19 !important;
+  border-color: #b9ff19 !important;
+  color: #071000 !important;
+  opacity: 1 !important;
+  box-shadow: 0 0 18px rgba(185,255,25,.34) !important;
+  font-weight: 1000 !important;
+}
+
+/* Neutralize any older absolute positioning or child placement. */
+.rackCard > button,
+.rackCard > .ghostBtn,
+.rackCard > .clearBtn,
+.rackCard > .deployBtn,
+.rackHeader button,
+.rackHeader .ghostBtn,
+.rackHeader .clearBtn,
+.rackHeader .deployBtn {
+  right: auto !important;
+  left: auto !important;
+  bottom: auto !important;
+  top: auto !important;
+}
+
+/* But if the actual buttons are children of deployControls, keep them in the action column. */
+.deployControls > button,
+.deployControls > .ghostBtn,
+.deployControls > .clearBtn,
+.deployControls > .deployBtn {
+  position: static !important;
+}
+
+/* Browser/Discord narrower activity width */
+@media (max-width: 1240px) {
+  :root {
+    --wf-footer: 118px;
+    --wf-action-clear: 54px;
+    --wf-action-deploy: 98px;
+    --wf-action-gap: 6px;
+    --wf-rack-side: calc(var(--wf-action-width) + 8px);
+  }
+
+  .leftRail {
+    grid-template-rows:
+      clamp(58px, 9.5vh, 78px)
+      clamp(96px, 14vh, 120px)
+      clamp(112px, 18vh, 140px)
+      clamp(104px, 17vh, 132px)
+      minmax(0, 1fr)
+      clamp(82px, 14vh, 108px) !important;
+  }
+
+  .rackCard {
+    grid-template-columns:
+      112px
+      minmax(0, 1fr)
+      var(--wf-rack-side) !important;
+    padding: 7px !important;
+    gap: 5px !important;
+  }
+
+  .deployControls button,
+  .deployControls .ghostBtn,
+  .deployControls .clearBtn,
+  .deployControls .deployBtn {
+    height: 30px !important;
+    max-height: 30px !important;
+    padding: 0 3px !important;
+  }
+
+  .deployControls .ghostBtn,
+  .deployControls .clearBtn {
+    font-size: 6px !important;
+  }
+
+  .deployControls .deployBtn {
+    font-size: 6px !important;
+  }
+
+  .bottomButtons {
+    gap: 6px !important;
+  }
+
+  .bottomButtons button {
+    min-height: 34px !important;
+    font-size: 9px !important;
+  }
+}
+
+/* Short Discord web frame */
+@media (max-height: 720px) {
+  :root {
+    --wf-footer: clamp(112px, 18.2vh, 128px);
+    --wf-action-clear: clamp(58px, 6.3vw, 78px);
+    --wf-action-deploy: clamp(104px, 10vw, 136px);
+    --wf-action-gap: clamp(6px, .75vw, 10px);
+  }
+
+  .leftRail {
+    grid-template-rows:
+      clamp(60px, 10vh, 82px)
+      clamp(102px, 14.5vh, 126px)
+      clamp(116px, 18.5vh, 148px)
+      clamp(108px, 17vh, 138px)
+      minmax(0, 1fr)
+      clamp(84px, 14.5vh, 112px) !important;
+  }
+
+  .bottomButtons button {
+    min-height: 36px !important;
+  }
+}

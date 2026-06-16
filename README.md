@@ -267,3 +267,10 @@ yarn dev
 - Board size is calculated from available iframe width/height to prevent cutoff.
 - Footer uses CSS variables for rack/action sizing so Deploy Word never overlaps the rack.
 - Deploy Word is pinned to the right action column.
+
+
+## v0.68 Footer actions + left panel fix
+- Moves Clear and Deploy Word into the right footer action column.
+- Prevents Deploy Word from overlapping the letter rack or being clipped.
+- Gives the left bottom button area enough height so Menu remains visible.
+- Keeps the v0.67 fluid responsiveness when Discord sidebar size changes.
