@@ -260,3 +260,10 @@ yarn dev
 - Rebuilt footer with fixed instruction/rack/actions columns.
 - Fixed Deploy Word clipping and placement.
 - Restored stable rack tile sizing and spacing.
+
+
+## v0.67 Discord fluid scale fix
+- Makes the entire game scale proportionally when Discord sidebar width changes.
+- Board size is calculated from available iframe width/height to prevent cutoff.
+- Footer uses CSS variables for rack/action sizing so Deploy Word never overlaps the rack.
+- Deploy Word is pinned to the right action column.
