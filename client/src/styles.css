@@ -11098,3 +11098,111 @@ body,
     min-height: 38px !important;
   }
 }
+
+
+/* v0.72 FINAL FOOTER ALIGNMENT
+   Keep v0.71 working Deploy Word.
+   Only adjust:
+   - Clear button smaller
+   - Action group narrower
+   - Rack shifted right/centered better
+   - Footer spacing balanced
+*/
+
+:root {
+  --wf-action-clear: clamp(54px, 4.6vw, 68px);
+  --wf-action-deploy: clamp(74px, 6vw, 92px);
+  --wf-action-gap: clamp(8px, .65vw, 10px);
+  --wf-action-width: calc(var(--wf-action-clear) + var(--wf-action-deploy) + var(--wf-action-gap));
+}
+
+/* Remove the huge right padding from v0.71 now that buttons are compact */
+.rackCard {
+  padding-right: clamp(130px, 11vw, 170px) !important;
+}
+
+/* Move rack back toward visual center; it was too far left */
+.rackCard .rack,
+.rack {
+  margin-left: clamp(38px, 4.2vw, 76px) !important;
+  margin-right: 0 !important;
+  justify-self: center !important;
+}
+
+/* Keep fixed buttons on the right but compact */
+.rackCard .deployControlsFixed,
+.deployControls.deployControlsFixed {
+  right: clamp(12px, .9vw, 16px) !important;
+  grid-template-columns: var(--wf-action-clear) var(--wf-action-deploy) !important;
+  gap: var(--wf-action-gap) !important;
+  width: var(--wf-action-width) !important;
+  min-width: var(--wf-action-width) !important;
+  max-width: var(--wf-action-width) !important;
+}
+
+/* Clear button smaller */
+.rackCard .deployControlsFixed .clearBtn,
+.rackCard .deployControlsFixed .ghostBtn,
+.deployControls.deployControlsFixed .clearBtn,
+.deployControls.deployControlsFixed .ghostBtn {
+  height: clamp(32px, 5vh, 42px) !important;
+  max-height: 42px !important;
+  font-size: clamp(5px, .55vw, 7px) !important;
+  padding: 0 4px !important;
+}
+
+/* Deploy Word compact but readable */
+.rackCard .deployControlsFixed .deployBtn,
+.deployControls.deployControlsFixed .deployBtn {
+  height: clamp(34px, 5.4vh, 46px) !important;
+  max-height: 46px !important;
+  font-size: clamp(6px, .62vw, 8px) !important;
+  padding: 0 5px !important;
+  line-height: 1.05 !important;
+  word-break: normal !important;
+}
+
+/* Make the instruction column slightly narrower so rack can sit better */
+.rackHeader {
+  max-width: clamp(118px, 13vw, 170px) !important;
+}
+
+.rackHeader .eyebrow,
+.rackCard .eyebrow {
+  letter-spacing: clamp(.12em, .18vw, .20em) !important;
+}
+
+/* Narrow Discord/web frame */
+@media (max-width: 1240px) {
+  :root {
+    --wf-action-clear: 42px;
+    --wf-action-deploy: 72px;
+    --wf-action-gap: 5px;
+  }
+
+  .rackCard {
+    padding-right: 128px !important;
+  }
+
+  .rackCard .rack,
+  .rack {
+    margin-left: 28px !important;
+  }
+
+  .rackCard .deployControlsFixed,
+  .deployControls.deployControlsFixed {
+    right: 7px !important;
+  }
+
+  .rackCard .deployControlsFixed .clearBtn,
+  .rackCard .deployControlsFixed .ghostBtn,
+  .rackCard .deployControlsFixed .deployBtn,
+  .deployControls.deployControlsFixed .clearBtn,
+  .deployControls.deployControlsFixed .ghostBtn,
+  .deployControls.deployControlsFixed .deployBtn {
+    height: 28px !important;
+    max-height: 28px !important;
+    font-size: 5px !important;
+    padding: 0 2px !important;
+  }
+}

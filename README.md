@@ -293,3 +293,10 @@ yarn dev
 - Shrinks the Clear button so it no longer dominates the footer.
 - Makes Deploy Word visible and fully inside the panel.
 - Leaves the rest of the responsive layout unchanged.
+
+
+## v0.72 Final footer alignment
+- Shrinks Clear button.
+- Keeps Deploy Word visible and compact.
+- Shifts the letter rack back toward visual center/right.
+- Leaves the rest of the layout unchanged.
