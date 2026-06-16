@@ -10903,3 +10903,198 @@ body,
     font-size: 6px !important;
   }
 }
+
+
+/* v0.71 FINAL FOOTER BUTTONS FIX
+   Fixes v0.70 bottom-right action area:
+   - Clear is no longer huge
+   - Deploy Word is forced back inside the footer
+   - Both buttons sit on the right edge of the rack panel without clipping
+   - Rack stays centered and unchanged
+*/
+
+/* Keep rack panel as the positioning parent */
+.rackCard {
+  position: relative !important;
+  overflow: hidden !important;
+  padding-right: clamp(220px, 18vw, 270px) !important;
+}
+
+/* Make sure the letter rack doesn't run under the buttons */
+.rackCard .rack,
+.rack {
+  justify-self: center !important;
+  margin-right: clamp(32px, 3vw, 60px) !important;
+}
+
+/* Hide any old misplaced action groups except the fixed one */
+.rackCard .deployControls:not(.deployControlsFixed),
+.rackCard > button.clearBtn,
+.rackCard > button.deployBtn,
+.rackCard > .clearBtn,
+.rackCard > .deployBtn,
+.rackHeader .clearBtn,
+.rackHeader .deployBtn {
+  display: none !important;
+}
+
+/* The guaranteed fixed action group is now absolutely pinned INSIDE the rack card. */
+.rackCard .deployControlsFixed,
+.deployControls.deployControlsFixed {
+  position: absolute !important;
+  right: clamp(12px, 1vw, 18px) !important;
+  bottom: 50% !important;
+  transform: translateY(50%) !important;
+  display: grid !important;
+  grid-template-columns: clamp(62px, 5vw, 76px) clamp(108px, 8.8vw, 136px) !important;
+  gap: clamp(7px, .65vw, 10px) !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: auto !important;
+  justify-self: auto !important;
+  align-self: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 2147483647 !important;
+  pointer-events: auto !important;
+  zoom: 1 !important;
+}
+
+/* Buttons: compact, complete, readable */
+.rackCard .deployControlsFixed > button,
+.rackCard .deployControlsFixed > .ghostBtn,
+.rackCard .deployControlsFixed > .clearBtn,
+.rackCard .deployControlsFixed > .deployBtn,
+.deployControls.deployControlsFixed > button,
+.deployControls.deployControlsFixed > .ghostBtn,
+.deployControls.deployControlsFixed > .clearBtn,
+.deployControls.deployControlsFixed > .deployBtn {
+  position: static !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  height: clamp(34px, 5.5vh, 46px) !important;
+  min-height: 0 !important;
+  max-height: 46px !important;
+  padding: 0 6px !important;
+  border-radius: 9px !important;
+  line-height: 1.05 !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  text-align: center !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+/* Clear specifically stays small */
+.rackCard .deployControlsFixed .clearBtn,
+.rackCard .deployControlsFixed .ghostBtn,
+.deployControls.deployControlsFixed .clearBtn,
+.deployControls.deployControlsFixed .ghostBtn {
+  font-size: clamp(6px, .62vw, 8px) !important;
+  background: rgba(13, 22, 36, .96) !important;
+  border: 1px solid rgba(126,147,188,.48) !important;
+  color: rgba(232,237,247,.82) !important;
+}
+
+/* Deploy Word is visible and not cut off */
+.rackCard .deployControlsFixed .deployBtn,
+.deployControls.deployControlsFixed .deployBtn {
+  font-size: clamp(7px, .70vw, 9px) !important;
+  background: #b9ff19 !important;
+  border: 1px solid #b9ff19 !important;
+  color: #071000 !important;
+  box-shadow: 0 0 18px rgba(185,255,25,.34) !important;
+  font-weight: 1000 !important;
+}
+
+/* If the deploy label wraps, make it intentional and centered */
+.rackCard .deployControlsFixed .deployBtn,
+.deployControls.deployControlsFixed .deployBtn {
+  word-break: normal !important;
+}
+
+/* Left panel minor rescue from screenshot: keep Menu visible */
+.leftRail {
+  grid-template-rows:
+    var(--wf-left-logo)
+    var(--wf-left-lobby)
+    var(--wf-left-score)
+    var(--wf-left-bot)
+    minmax(0, 1fr)
+    clamp(112px, 18vh, 142px) !important;
+}
+
+.bottomButtons {
+  overflow: visible !important;
+}
+
+.bottomButtons button {
+  min-height: 42px !important;
+  overflow: visible !important;
+}
+
+/* Narrow Discord/web frame */
+@media (max-width: 1240px) {
+  .rackCard {
+    padding-right: 166px !important;
+  }
+
+  .rackCard .rack,
+  .rack {
+    margin-right: 24px !important;
+  }
+
+  .rackCard .deployControlsFixed,
+  .deployControls.deployControlsFixed {
+    right: 8px !important;
+    grid-template-columns: 48px 94px !important;
+    gap: 6px !important;
+  }
+
+  .rackCard .deployControlsFixed > button,
+  .rackCard .deployControlsFixed > .ghostBtn,
+  .rackCard .deployControlsFixed > .clearBtn,
+  .rackCard .deployControlsFixed > .deployBtn,
+  .deployControls.deployControlsFixed > button,
+  .deployControls.deployControlsFixed > .ghostBtn,
+  .deployControls.deployControlsFixed > .clearBtn,
+  .deployControls.deployControlsFixed > .deployBtn {
+    height: 30px !important;
+    max-height: 30px !important;
+    padding: 0 3px !important;
+  }
+
+  .rackCard .deployControlsFixed .clearBtn,
+  .rackCard .deployControlsFixed .ghostBtn,
+  .rackCard .deployControlsFixed .deployBtn,
+  .deployControls.deployControlsFixed .clearBtn,
+  .deployControls.deployControlsFixed .ghostBtn,
+  .deployControls.deployControlsFixed .deployBtn {
+    font-size: 6px !important;
+  }
+
+  .leftRail {
+    grid-template-rows:
+      var(--wf-left-logo)
+      var(--wf-left-lobby)
+      var(--wf-left-score)
+      var(--wf-left-bot)
+      minmax(0, 1fr)
+      104px !important;
+  }
+
+  .bottomButtons button {
+    min-height: 38px !important;
+  }
+}

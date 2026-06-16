@@ -286,3 +286,10 @@ yarn dev
 - Adds a guaranteed `.deployControlsFixed` group inside the rack footer.
 - Hides older misplaced Clear/Deploy instances.
 - Forces the fixed Clear/Deploy group to the right footer column.
+
+
+## v0.71 Final footer buttons fix
+- Pins the fixed Clear/Deploy controls inside the rack footer using absolute positioning.
+- Shrinks the Clear button so it no longer dominates the footer.
+- Makes Deploy Word visible and fully inside the panel.
+- Leaves the rest of the responsive layout unchanged.

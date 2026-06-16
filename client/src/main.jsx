@@ -332,7 +332,7 @@ const [selectedLetter, setSelectedLetter] = useState(null);
       <aside className="leftRail">
         <section className="brandBlock">
           <h1 className="wordmark" data-text="WORDFRONT">WORDFRONT</h1>
-          <p>v0.70.0</p>
+          <p>v0.71.0</p>
         </section>
         <section className="card lobbyCard">
           <p className="eyebrow">LOBBY</p>
