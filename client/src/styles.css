@@ -10468,3 +10468,296 @@ body,
     min-height: 36px !important;
   }
 }
+
+
+/* v0.69 LEFT PANEL + DEPLOY RESTORE
+   Keep v0.68 responsive layout, only fix:
+   - left panel/card clipping
+   - bottom menu visibility
+   - Deploy Word disappearing/clipping
+*/
+
+/* Give left rail more usable card/button space without changing the main board/rack. */
+:root {
+  --wf-left-logo: clamp(72px, 10.8vh, 94px);
+  --wf-left-lobby: clamp(118px, 17vh, 150px);
+  --wf-left-score: clamp(132px, 19.5vh, 172px);
+  --wf-left-bot: clamp(124px, 18.5vh, 164px);
+  --wf-left-buttons: clamp(104px, 17vh, 136px);
+  --wf-action-clear: clamp(70px, 6.4vw, 94px);
+  --wf-action-deploy: clamp(138px, 11.6vw, 180px);
+  --wf-action-gap: clamp(8px, .8vw, 12px);
+  --wf-action-width: calc(var(--wf-action-clear) + var(--wf-action-deploy) + var(--wf-action-gap));
+  --wf-rack-side: calc(var(--wf-action-width) + 20px);
+}
+
+/* Left rail: cards fit and lower buttons are fully visible. */
+.leftRail {
+  grid-template-rows:
+    var(--wf-left-logo)
+    var(--wf-left-lobby)
+    var(--wf-left-score)
+    var(--wf-left-bot)
+    minmax(0, 1fr)
+    var(--wf-left-buttons) !important;
+  gap: var(--wf-gap) !important;
+  overflow: hidden !important;
+}
+
+.brandBlock,
+.lobbyCard,
+.scoreCard,
+.botCard {
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+.brandBlock {
+  padding: clamp(10px, 1vw, 15px) !important;
+}
+
+.brandBlock .wordmark {
+  font-size: clamp(29px, 2.7vw, 40px) !important;
+  width: 350px !important;
+  transform: scaleX(.62) skewX(-7deg) !important;
+  transform-origin: left center !important;
+}
+
+.lobbyCard,
+.scoreCard,
+.botCard {
+  padding: clamp(10px, 1vw, 15px) !important;
+}
+
+.lobbyCard h2,
+.scoreCard b,
+.botCard b {
+  line-height: 1 !important;
+}
+
+.lobbyCard h2 {
+  font-size: clamp(22px, 2vw, 30px) !important;
+  margin: 0 0 4px !important;
+}
+
+.lobbyCard p {
+  font-size: clamp(12px, 1.05vw, 16px) !important;
+  margin: 0 0 10px !important;
+}
+
+.lobbyCard .ghostBtn,
+.lobbyCard button {
+  height: clamp(34px, 5.3vh, 46px) !important;
+  min-height: 0 !important;
+  margin-top: clamp(7px, 1vh, 12px) !important;
+  font-size: clamp(9px, .9vw, 12px) !important;
+}
+
+.scoreCard h3,
+.botCard h3 {
+  font-size: clamp(15px, 1.45vw, 21px) !important;
+  line-height: 1.05 !important;
+  margin: 0 0 clamp(6px, .8vh, 10px) !important;
+}
+
+.scoreCard label,
+.botCard label {
+  font-size: clamp(8px, .72vw, 10px) !important;
+  margin: clamp(5px, .7vh, 8px) 0 3px !important;
+}
+
+.scoreCard b,
+.botCard b {
+  font-size: clamp(20px, 2vw, 28px) !important;
+}
+
+.bottomButtons {
+  display: grid !important;
+  grid-template-rows: 1fr 1fr !important;
+  grid-template-columns: 1fr !important;
+  gap: clamp(7px, .9vh, 10px) !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  padding: 0 !important;
+}
+
+.bottomButtons button {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100% !important;
+  min-height: 40px !important;
+  max-height: none !important;
+  padding: 0 10px !important;
+  border-radius: 10px !important;
+  font-size: clamp(10px, .95vw, 13px) !important;
+  overflow: visible !important;
+}
+
+/* Footer: keep existing rack, but make action column large and visible. */
+.rackCard {
+  grid-template-columns:
+    clamp(130px, 15vw, 220px)
+    minmax(0, 1fr)
+    var(--wf-rack-side) !important;
+  overflow: hidden !important;
+}
+
+/* Deploy controls restored to the right footer column. */
+.deployControls {
+  grid-column: 3 / 4 !important;
+  grid-row: 1 !important;
+  position: static !important;
+  display: grid !important;
+  grid-template-columns: var(--wf-action-clear) var(--wf-action-deploy) !important;
+  gap: var(--wf-action-gap) !important;
+  width: var(--wf-action-width) !important;
+  min-width: var(--wf-action-width) !important;
+  max-width: var(--wf-action-width) !important;
+  justify-self: end !important;
+  align-self: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 999999 !important;
+  transform: none !important;
+  zoom: 1 !important;
+}
+
+.deployControls button,
+.deployControls .ghostBtn,
+.deployControls .clearBtn,
+.deployControls .deployBtn {
+  position: static !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  height: clamp(36px, 6.1vh, 52px) !important;
+  min-height: 0 !important;
+  max-height: 52px !important;
+  padding: 0 clamp(5px, .75vw, 10px) !important;
+  border-radius: clamp(8px, .75vw, 10px) !important;
+  line-height: 1.05 !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  text-align: center !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+.deployControls .ghostBtn,
+.deployControls .clearBtn {
+  font-size: clamp(6px, .68vw, 9px) !important;
+}
+
+.deployControls .deployBtn {
+  font-size: clamp(7px, .76vw, 10px) !important;
+  background: #b9ff19 !important;
+  border-color: #b9ff19 !important;
+  color: #071000 !important;
+  box-shadow: 0 0 18px rgba(185,255,25,.34) !important;
+  font-weight: 1000 !important;
+}
+
+/* Neutralize older direct child positioning that could hide/move Deploy. */
+.rackCard > button,
+.rackCard > .ghostBtn,
+.rackCard > .clearBtn,
+.rackCard > .deployBtn,
+.rackHeader button,
+.rackHeader .ghostBtn,
+.rackHeader .clearBtn,
+.rackHeader .deployBtn {
+  right: auto !important;
+  left: auto !important;
+  bottom: auto !important;
+  top: auto !important;
+}
+
+.deployControls > button,
+.deployControls > .ghostBtn,
+.deployControls > .clearBtn,
+.deployControls > .deployBtn {
+  position: static !important;
+}
+
+/* Discord narrow/short view adjustments: preserve menu + deploy. */
+@media (max-width: 1240px) {
+  :root {
+    --wf-left-logo: 68px;
+    --wf-left-lobby: 112px;
+    --wf-left-score: 122px;
+    --wf-left-bot: 112px;
+    --wf-left-buttons: 92px;
+    --wf-action-clear: 52px;
+    --wf-action-deploy: 100px;
+    --wf-action-gap: 6px;
+    --wf-rack-side: calc(var(--wf-action-width) + 8px);
+  }
+
+  .leftRail {
+    grid-template-rows:
+      var(--wf-left-logo)
+      var(--wf-left-lobby)
+      var(--wf-left-score)
+      var(--wf-left-bot)
+      minmax(0, 1fr)
+      var(--wf-left-buttons) !important;
+  }
+
+  .lobbyCard,
+  .scoreCard,
+  .botCard {
+    padding: 9px !important;
+  }
+
+  .rackCard {
+    grid-template-columns:
+      112px
+      minmax(0, 1fr)
+      var(--wf-rack-side) !important;
+  }
+
+  .deployControls button,
+  .deployControls .ghostBtn,
+  .deployControls .clearBtn,
+  .deployControls .deployBtn {
+    height: 30px !important;
+    max-height: 30px !important;
+    padding: 0 3px !important;
+  }
+
+  .deployControls .ghostBtn,
+  .deployControls .clearBtn,
+  .deployControls .deployBtn {
+    font-size: 6px !important;
+  }
+
+  .bottomButtons button {
+    min-height: 36px !important;
+    font-size: 9px !important;
+  }
+}
+
+@media (max-height: 720px) {
+  :root {
+    --wf-left-logo: clamp(62px, 10vh, 78px);
+    --wf-left-lobby: clamp(100px, 15vh, 124px);
+    --wf-left-score: clamp(112px, 18vh, 142px);
+    --wf-left-bot: clamp(104px, 17vh, 132px);
+    --wf-left-buttons: clamp(86px, 14.5vh, 112px);
+  }
+
+  .bottomButtons button {
+    min-height: 36px !important;
+  }
+}

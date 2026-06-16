@@ -274,3 +274,9 @@ yarn dev
 - Prevents Deploy Word from overlapping the letter rack or being clipped.
 - Gives the left bottom button area enough height so Menu remains visible.
 - Keeps the v0.67 fluid responsiveness when Discord sidebar size changes.
+
+
+## v0.69 Left panel + deploy restore
+- Increased and stabilized left rail card/button heights so nothing clips.
+- Restored Deploy Word to the visible right footer action column.
+- Keeps v0.68/v0.67 responsiveness and leaves the rest of the layout unchanged.
