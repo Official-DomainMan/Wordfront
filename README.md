@@ -306,3 +306,9 @@ yarn dev
 - Removed the duplicated `deployControlsFixed` markup from v0.70+.
 - Restored the older working 3-column footer layout: instructions / rack / normal deployControls.
 - Keeps Deploy Word compact and inside the right column.
+
+
+## v0.74 Fixed canvas scale
+- Renders the game internally at 1600x900 and scales the entire game as one unit.
+- Prevents Discord sidebar resizing from rearranging the UI.
+- Restores a fixed footer with instructions / rack / Clear+Deploy controls.
