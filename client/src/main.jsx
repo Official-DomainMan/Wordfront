@@ -57,7 +57,6 @@ function App() {
   const socket = useMemo(() => io(SERVER_URL), []);
   const [name, setName] = useState(localStorage.getItem("wordfrontName") || "Domain");
   const [joinCode, setJoinCode] = useState("");
-    const [wfFixedCanvasScale, setWfFixedCanvasScale] = useState(1);
 const [game, setGame] = useState(null);
   const [playerId, setPlayerId] = useState(null);
   
@@ -102,32 +101,7 @@ const [selectedLetter, setSelectedLetter] = useState(null);
     setSoloSetupOpen(false);
     startSoloGame(selectedBotDifficulty);
   }
-
-
-  useEffect(() => {
-    const DESIGN_WIDTH = 1600;
-    const DESIGN_HEIGHT = 900;
-
-    function updateFixedCanvasScale() {
-      const width = Math.max(1, window.innerWidth || DESIGN_WIDTH);
-      const height = Math.max(1, window.innerHeight || DESIGN_HEIGHT);
-      const scale = Math.min(width / DESIGN_WIDTH, height / DESIGN_HEIGHT);
-      document.documentElement.style.setProperty("--wf-canvas-scale", String(scale));
-      document.documentElement.style.setProperty("--wf-canvas-left", `${Math.max(0, (width - DESIGN_WIDTH * scale) / 2)}px`);
-      document.documentElement.style.setProperty("--wf-canvas-top", `${Math.max(0, (height - DESIGN_HEIGHT * scale) / 2)}px`);
-      setWfFixedCanvasScale(scale);
-    }
-
-    updateFixedCanvasScale();
-    window.addEventListener("resize", updateFixedCanvasScale);
-    window.addEventListener("orientationchange", updateFixedCanvasScale);
-    return () => {
-      window.removeEventListener("resize", updateFixedCanvasScale);
-      window.removeEventListener("orientationchange", updateFixedCanvasScale);
-    };
-  }, []);
-
-  return () => { cancelled = true; };
+return () => { cancelled = true; };
   }, []);
 
   function makeBoardKey(next) {
@@ -353,11 +327,11 @@ const [selectedLetter, setSelectedLetter] = useState(null);
   const rivalPercent = 100 - myPercent;
 
   return (
-    <main className="gameShell fixedGameCanvas" style={{ "--wf-scale-state": wfFixedCanvasScale }}>
+    <main className="gameShell fixedGameCanvas">
       <aside className="leftRail">
         <section className="brandBlock">
           <h1 className="wordmark" data-text="WORDFRONT">WORDFRONT</h1>
-          <p>v0.74.0</p>
+          <p>v0.75.0</p>
         </section>
         <section className="card lobbyCard">
           <p className="eyebrow">LOBBY</p>

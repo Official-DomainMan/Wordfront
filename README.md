@@ -312,3 +312,9 @@ yarn dev
 - Renders the game internally at 1600x900 and scales the entire game as one unit.
 - Prevents Discord sidebar resizing from rearranging the UI.
 - Restores a fixed footer with instructions / rack / Clear+Deploy controls.
+
+
+## v0.75 Safe CSS-only fixed canvas
+- Removes the v0.74 React/JS scale injection that could black-screen Discord.
+- Uses CSS-only scaling for the fixed 1600x900 canvas.
+- Keeps normal Clear/Deploy controls.
