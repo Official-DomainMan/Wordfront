@@ -331,7 +331,7 @@ return () => { cancelled = true; };
       <aside className="leftRail">
         <section className="brandBlock">
           <h1 className="wordmark" data-text="WORDFRONT">WORDFRONT</h1>
-          <p>v0.78.0</p>
+          <p>v0.79.0</p>
         </section>
         <section className="card lobbyCard">
           <p className="eyebrow">LOBBY</p>
@@ -341,7 +341,7 @@ return () => { cancelled = true; };
         </section>
         <section className="card scoreCard youCard">
           <p className="eyebrow">SCOREBOARD</p>
-          <h3>♛ {me?.name || "You"} <span>(YOU)</span></h3>
+          <h3>♛ {me?.name || "You"} <span></span></h3>
           <label>Territory</label><b>{me?.score || 0}</b>
           <label>Letters</label>
           <div className="ownedLetters">{ownedLetters(game, playerId).length ? ownedLetters(game, playerId).map((l) => <i key={l}>{l}</i>) : <em>—</em>}</div>

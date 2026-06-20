@@ -330,3 +330,10 @@ yarn dev
 - Removes fixed-canvas JS/CSS transform systems that caused black screens in Discord.
 - Restores a normal Discord-safe grid layout.
 - Keeps footer/rack/deploy controls stable with standard responsive CSS.
+
+
+## v0.79 Final UI polish
+- Removed `(YOU)`.
+- Hid Leave Lobby.
+- Restored Deploy Word in bottom-right footer.
+- Made current-turn name smaller and board slightly larger.
