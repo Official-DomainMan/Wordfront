@@ -318,3 +318,9 @@ yarn dev
 - Removes the v0.74 React/JS scale injection that could black-screen Discord.
 - Uses CSS-only scaling for the fixed 1600x900 canvas.
 - Keeps normal Clear/Deploy controls.
+
+
+## v0.76 Fixed canvas position fix
+- Keeps CSS-only fixed canvas scaling.
+- Pins the 1600x900 canvas to top-left instead of centering it off-screen.
+- Preserves the normal footer Deploy Word controls.
