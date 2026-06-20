@@ -143,50 +143,7 @@ return () => { cancelled = true; };
         setDragLetter(null);
       }
     });
-  
-  useEffect(() => {
-    const DESIGN_WIDTH = 1600;
-    const DESIGN_HEIGHT = 900;
-    let rafId = 0;
-
-    function getViewportSize() {
-      const doc = document.documentElement;
-      const body = document.body;
-      const vv = window.visualViewport;
-      const widths = [window.innerWidth, doc?.clientWidth, body?.clientWidth, vv?.width].filter((v) => Number.isFinite(v) && v > 0);
-      const heights = [window.innerHeight, doc?.clientHeight, body?.clientHeight, vv?.height].filter((v) => Number.isFinite(v) && v > 0);
-      return { width: Math.max(1, Math.min(...widths)), height: Math.max(1, Math.min(...heights)) };
-    }
-
-    function updateWordfrontCanvasScaleV077() {
-      cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        const { width, height } = getViewportSize();
-        const scale = Math.min((width - 8) / DESIGN_WIDTH, (height - 8) / DESIGN_HEIGHT);
-        const safeScale = Math.max(0.1, scale);
-        document.documentElement.style.setProperty("--wf-js-scale", String(safeScale));
-        document.documentElement.style.setProperty("--wf-js-left", `${Math.max(0, (width - DESIGN_WIDTH * safeScale) / 2)}px`);
-        document.documentElement.style.setProperty("--wf-js-top", `${Math.max(0, (height - DESIGN_HEIGHT * safeScale) / 2)}px`);
-      });
-    }
-
-    updateWordfrontCanvasScaleV077();
-    const observer = new ResizeObserver(updateWordfrontCanvasScaleV077);
-    observer.observe(document.documentElement);
-    if (document.body) observer.observe(document.body);
-    window.addEventListener("resize", updateWordfrontCanvasScaleV077);
-    window.addEventListener("orientationchange", updateWordfrontCanvasScaleV077);
-    window.visualViewport?.addEventListener("resize", updateWordfrontCanvasScaleV077);
-    return () => {
-      cancelAnimationFrame(rafId);
-      observer.disconnect();
-      window.removeEventListener("resize", updateWordfrontCanvasScaleV077);
-      window.removeEventListener("orientationchange", updateWordfrontCanvasScaleV077);
-      window.visualViewport?.removeEventListener("resize", updateWordfrontCanvasScaleV077);
-    };
-  }, []);
-
-  return () => socket.off("gameState");
+    return () => socket.off("gameState");
   }, [socket]);
 
   function saveName() { localStorage.setItem("wordfrontName", name.trim() || "Player"); }
@@ -370,11 +327,11 @@ return () => { cancelled = true; };
   const rivalPercent = 100 - myPercent;
 
   return (
-    <main className="gameShell fixedGameCanvas">
+    <main className="gameShell">
       <aside className="leftRail">
         <section className="brandBlock">
           <h1 className="wordmark" data-text="WORDFRONT">WORDFRONT</h1>
-          <p>v0.77.0</p>
+          <p>v0.78.0</p>
         </section>
         <section className="card lobbyCard">
           <p className="eyebrow">LOBBY</p>

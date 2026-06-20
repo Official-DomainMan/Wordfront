@@ -326,6 +326,7 @@ yarn dev
 - Preserves the normal footer Deploy Word controls.
 
 
-## v0.77 Discord resize scale
-- Adds safe JS resize measurement using ResizeObserver and visualViewport.
-- Scales the fixed 1600x900 canvas as one unit based on the actual Discord iframe size.
+## v0.78 Black screen rollback
+- Removes fixed-canvas JS/CSS transform systems that caused black screens in Discord.
+- Restores a normal Discord-safe grid layout.
+- Keeps footer/rack/deploy controls stable with standard responsive CSS.
