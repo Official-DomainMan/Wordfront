@@ -324,3 +324,8 @@ yarn dev
 - Keeps CSS-only fixed canvas scaling.
 - Pins the 1600x900 canvas to top-left instead of centering it off-screen.
 - Preserves the normal footer Deploy Word controls.
+
+
+## v0.77 Discord resize scale
+- Adds safe JS resize measurement using ResizeObserver and visualViewport.
+- Scales the fixed 1600x900 canvas as one unit based on the actual Discord iframe size.

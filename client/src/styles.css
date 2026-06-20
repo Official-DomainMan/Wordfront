@@ -11786,3 +11786,65 @@ body,
   color: #071000 !important;
   font-weight: 1000 !important;
 }
+
+
+/* v0.77 DISCORD RESIZE SCALE FINAL
+   Fixed 1600x900 canvas, scaled by JS from actual iframe/window dimensions.
+*/
+:root {
+  --wf-js-scale: min(calc((100vw - 8px) / 1600), calc((100vh - 8px) / 900));
+  --wf-js-left: 0px;
+  --wf-js-top: 0px;
+}
+html, body, #root, .app {
+  width: 100vw !important;
+  height: 100vh !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: linear-gradient(135deg, #02040a 0%, #050914 52%, #02040a 100%) !important;
+}
+.gameShell, .gameShell.fixedGameCanvas {
+  position: fixed !important;
+  left: var(--wf-js-left) !important;
+  top: var(--wf-js-top) !important;
+  width: 1600px !important;
+  height: 900px !important;
+  min-width: 1600px !important;
+  min-height: 900px !important;
+  max-width: none !important;
+  max-height: none !important;
+  box-sizing: border-box !important;
+  display: grid !important;
+  grid-template-columns: 280px 1fr 250px !important;
+  grid-template-rows: 1fr !important;
+  gap: 8px !important;
+  padding: 8px !important;
+  overflow: hidden !important;
+  transform: scale(var(--wf-js-scale)) !important;
+  transform-origin: top left !important;
+  zoom: 1 !important;
+}
+.leftRail { display:grid !important; grid-template-rows:88px 140px 180px 160px minmax(0,1fr) 108px !important; gap:8px !important; overflow:hidden !important; min-width:0 !important; background:transparent !important; }
+.mainStage { display:grid !important; grid-template-rows:88px minmax(0,1fr) 150px !important; gap:8px !important; overflow:hidden !important; min-width:0 !important; background:transparent !important; }
+.rightRail { display:grid !important; grid-template-rows:160px 112px minmax(0,1fr) !important; gap:8px !important; overflow:hidden !important; min-width:0 !important; background:transparent !important; }
+.brandBlock,.lobbyCard,.scoreCard,.botCard,.rulesCard,.controlCard,.legendCard,.turnCard,.timeCard,.boardPanel,.boardCard,.rackCard { box-sizing:border-box !important; overflow:hidden !important; }
+.topBar { display:grid !important; grid-template-columns:1fr 200px !important; gap:8px !important; height:100% !important; }
+.turnCard,.timeCard { display:grid !important; place-content:center !important; text-align:center !important; padding:8px !important; }
+.turnCard h2,.timeCard b { font-size:46px !important; line-height:.9 !important; margin:0 !important; }
+.boardPanel,.boardCard { display:grid !important; place-items:center !important; padding:10px !important; overflow:hidden !important; }
+.battlefield,.board { width:560px !important; height:560px !important; min-width:560px !important; min-height:560px !important; max-width:560px !important; max-height:560px !important; aspect-ratio:1/1 !important; transform:none !important; }
+.rackCard { position:relative !important; display:grid !important; grid-template-columns:215px 1fr 240px !important; grid-template-rows:1fr !important; align-items:center !important; gap:12px !important; height:150px !important; min-height:150px !important; max-height:150px !important; padding:14px 16px !important; overflow:hidden !important; }
+.rackHeader { grid-column:1/2 !important; grid-row:1 !important; position:static !important; align-self:center !important; margin:0 !important; padding:0 !important; overflow:hidden !important; }
+.rackHeader .eyebrow,.rackCard .eyebrow { font-size:11px !important; line-height:1.12 !important; letter-spacing:.22em !important; margin:0 0 8px !important; }
+.rackHeader .hintLine,.rackCard .hintLine { font-size:13px !important; line-height:1.2 !important; max-width:200px !important; }
+.rackCard .rack,.rack { grid-column:2/3 !important; grid-row:1 !important; display:grid !important; grid-template-columns:repeat(13,40px) !important; gap:6px !important; width:592px !important; max-width:592px !important; justify-self:center !important; align-self:center !important; margin:0 !important; overflow:visible !important; transform:none !important; }
+.letterTile { width:40px !important; min-width:40px !important; max-width:40px !important; height:40px !important; min-height:40px !important; max-height:40px !important; padding:3px 5px !important; border-radius:9px !important; }
+.letterTile span { font-size:20px !important; line-height:.9 !important; }
+.letterTile small { font-size:6px !important; line-height:1 !important; }
+.deployControlsFixed { display:none !important; }
+.rackCard .deployControls:not(.deployControlsFixed), .deployControls:not(.deployControlsFixed) { grid-column:3/4 !important; grid-row:1 !important; position:static !important; display:grid !important; grid-template-columns:78px 140px !important; gap:10px !important; width:228px !important; max-width:228px !important; justify-self:end !important; align-self:center !important; margin:0 !important; padding:0 !important; overflow:visible !important; opacity:1 !important; visibility:visible !important; z-index:9999 !important; transform:none !important; }
+.rackCard .deployControls:not(.deployControlsFixed)>button,.rackCard .deployControls:not(.deployControlsFixed)>.ghostBtn,.rackCard .deployControls:not(.deployControlsFixed)>.clearBtn,.rackCard .deployControls:not(.deployControlsFixed)>.deployBtn,.deployControls:not(.deployControlsFixed)>button,.deployControls:not(.deployControlsFixed)>.ghostBtn,.deployControls:not(.deployControlsFixed)>.clearBtn,.deployControls:not(.deployControlsFixed)>.deployBtn { position:static !important; box-sizing:border-box !important; display:flex !important; align-items:center !important; justify-content:center !important; width:100% !important; height:44px !important; min-height:44px !important; max-height:44px !important; padding:0 8px !important; border-radius:9px !important; font-size:8px !important; line-height:1.05 !important; white-space:normal !important; overflow:visible !important; text-align:center !important; opacity:1 !important; visibility:visible !important; }
+.rackCard .deployControls:not(.deployControlsFixed) .deployBtn,.deployControls:not(.deployControlsFixed) .deployBtn { background:#b9ff19 !important; border:1px solid #b9ff19 !important; color:#071000 !important; font-weight:1000 !important; font-size:9px !important; }
