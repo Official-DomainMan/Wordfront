@@ -332,7 +332,7 @@ return () => { cancelled = true; };
       <aside className="leftRail">
         <section className="brandBlock">
           <h1 className="wordmark" data-text="WORDFRONT">WORDFRONT</h1>
-          <p>v0.83.0</p>
+          <p>v0.84.0</p>
         </section>
         <section className="card lobbyCard">
           <p className="eyebrow">LOBBY</p>
@@ -507,7 +507,6 @@ return () => { cancelled = true; };
                 <h3>Goal</h3>
                 <p>Build words on the board to claim territory. Whoever controls the most territory has the advantage.</p>
               </section>
-
               <section>
                 <h3>Turns</h3>
                 <ul>
@@ -516,7 +515,6 @@ return () => { cancelled = true; };
                   <li>After each word, the next word must start with the last letter played.</li>
                 </ul>
               </section>
-
               <section>
                 <h3>Territory</h3>
                 <ul>
@@ -525,20 +523,18 @@ return () => { cancelled = true; };
                   <li>Contested tiles are being fought over by both sides.</li>
                 </ul>
               </section>
-
               <section>
                 <h3>Special Tiles</h3>
                 <ul>
                   <li><strong>2X Influence</strong> gives extra control value.</li>
                   <li><strong>Fresh Capture</strong> marks newly claimed territory.</li>
-                  <li><strong>Pending Word</strong> shows letters you are placing before deployment.</li>
+                  <li><strong>Pending Word</strong> shows letters before deployment.</li>
                 </ul>
               </section>
-
               <section>
                 <h3>Actions</h3>
                 <ul>
-                  <li><strong>Clear</strong> removes your pending letters before submitting.</li>
+                  <li><strong>Clear</strong> removes pending letters.</li>
                   <li><strong>Deploy Word</strong> locks in your word and ends your turn.</li>
                   <li><strong>Surrender</strong> ends the match.</li>
                 </ul>

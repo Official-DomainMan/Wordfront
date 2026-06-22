@@ -332,31 +332,8 @@ yarn dev
 - Keeps footer/rack/deploy controls stable with standard responsive CSS.
 
 
-## v0.79 Final UI polish
-- Removed `(YOU)`.
-- Hid Leave Lobby.
-- Restored Deploy Word in bottom-right footer.
-- Made current-turn name smaller and board slightly larger.
-
-
-## v0.80 Deploy Word restored
-- Adds a real restored Clear + Deploy Word group directly after the rack markup.
-- Keeps v0.79 scale/responsiveness unchanged.
-
-
-## v0.81 Footer perfect fit
-- Keeps v0.79/v0.80 launch-safe responsiveness.
-- Rebuilds footer actions so Clear and Deploy Word are both visible, aligned, and even-height.
-- Does not reintroduce fixed canvas or transform scaling.
-
-
-## v0.82 Footer controls hard fix
-- Investigated why buttons vanished: old `.deployControls` CSS rules were hiding/clipping every new group.
-- Added a new uniquely named footer action dock that old rules do not target.
-- Keeps v0.78/v0.79 responsive shell intact.
-
-
-## v0.83 Menu help popup
-- Menu button now opens a How to Play popup.
-- Help modal explains goal, turns, territory, special tiles, and actions.
-- Keeps v0.82 footer controls and responsive layout intact.
+## v0.84 Stable design + Help rebuild
+- Rebuilt from v0.78 stable visual base.
+- Restores consistent web/Discord neon design with normal responsive CSS.
+- Keeps working Clear/Deploy controls using unique footer action classes.
+- Keeps Menu → Help popup.
