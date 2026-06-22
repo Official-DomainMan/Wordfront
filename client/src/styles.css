@@ -12311,3 +12311,202 @@ button.leaveLobby,
     font-size: 5px !important;
   }
 }
+
+
+/* v0.81 FOOTER PERFECT FIT
+   Based on the working v0.80/v0.78 layout.
+   Do not alter shell scaling/responsiveness.
+   Only fixes the footer controls to match the mockup:
+   rack centered, Clear + Deploy Word equal height, both fully visible on right.
+*/
+
+/* Preserve launch-safe layout: no fixed canvas/transform experiments */
+.gameShell {
+  position: static !important;
+  transform: none !important;
+  zoom: 1 !important;
+}
+
+/* Hide Leave Lobby as requested */
+.lobbyCard .ghostBtn,
+.lobbyCard button,
+.lobbyCard a,
+button.leaveLobby,
+.leaveLobby,
+.leaveLobbyBtn {
+  display: none !important;
+}
+
+/* Smaller current turn label/name so the board has room */
+.turnCard h2 {
+  font-size: clamp(34px, 3.05vw, 44px) !important;
+  line-height: .9 !important;
+}
+
+/* Slightly larger board without affecting overall responsive shell */
+.battlefield,
+.board {
+  width: min(64vh, 580px, 100%) !important;
+  height: min(64vh, 580px, 100%) !important;
+  max-width: 580px !important;
+  max-height: 580px !important;
+}
+
+/* Footer: instruction / rack / buttons */
+.rackCard {
+  display: grid !important;
+  grid-template-columns: clamp(175px, 14.5vw, 230px) minmax(0, 1fr) clamp(260px, 18vw, 320px) !important;
+  grid-template-rows: 1fr !important;
+  align-items: center !important;
+  gap: clamp(10px, .85vw, 14px) !important;
+  padding: clamp(10px, 1vw, 14px) clamp(14px, 1.1vw, 18px) !important;
+  overflow: hidden !important;
+}
+
+/* Left footer instructions */
+.rackHeader {
+  grid-column: 1 / 2 !important;
+  grid-row: 1 !important;
+  position: static !important;
+  align-self: center !important;
+  justify-self: stretch !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.rackHeader .eyebrow,
+.rackCard .eyebrow {
+  font-size: clamp(8px, .82vw, 11px) !important;
+  line-height: 1.12 !important;
+  letter-spacing: .18em !important;
+  margin: 0 0 6px !important;
+}
+
+.rackHeader .hintLine,
+.rackCard .hintLine {
+  display: block !important;
+  font-size: clamp(9px, .9vw, 12px) !important;
+  line-height: 1.15 !important;
+}
+
+/* Center rack */
+.rackCard .rack,
+.rack {
+  grid-column: 2 / 3 !important;
+  grid-row: 1 !important;
+  justify-self: center !important;
+  align-self: center !important;
+  margin: 0 !important;
+  overflow: visible !important;
+}
+
+/* Remove old broken deploy groups, keep only this one */
+.deployControls:not(.wfFooterActions),
+.deployControlsFixed {
+  display: none !important;
+}
+
+/* Right footer actions: same height, both complete */
+.rackCard .wfFooterActions {
+  grid-column: 3 / 4 !important;
+  grid-row: 1 !important;
+  position: static !important;
+  display: grid !important;
+  grid-template-columns: minmax(92px, 1fr) minmax(132px, 1.25fr) !important;
+  gap: clamp(10px, .85vw, 14px) !important;
+  width: 100% !important;
+  max-width: 300px !important;
+  justify-self: end !important;
+  align-self: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 999999 !important;
+  transform: none !important;
+}
+
+.rackCard .wfFooterActions > button {
+  position: static !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: clamp(38px, 5.8vh, 50px) !important;
+  min-height: 38px !important;
+  max-height: 50px !important;
+  padding: 0 10px !important;
+  border-radius: 10px !important;
+  font-size: clamp(8px, .72vw, 11px) !important;
+  line-height: 1.05 !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-align: center !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.rackCard .wfFooterActions .clearBtn {
+  background: rgba(13,22,36,.96) !important;
+  border: 1px solid rgba(126,147,188,.58) !important;
+  color: rgba(232,237,247,.90) !important;
+  font-weight: 900 !important;
+}
+
+.rackCard .wfFooterActions .deployBtn {
+  background: #b9ff19 !important;
+  border: 1px solid #b9ff19 !important;
+  color: #071000 !important;
+  box-shadow: 0 0 18px rgba(185,255,25,.34) !important;
+  font-weight: 1000 !important;
+}
+
+/* Left bottom buttons fully visible */
+.leftRail {
+  grid-template-rows: clamp(72px, 10vh, 88px) clamp(106px, 15vh, 128px) clamp(140px, 20vh, 178px) clamp(126px, 18vh, 160px) minmax(0, 1fr) clamp(104px, 15vh, 126px) !important;
+}
+
+.bottomButtons {
+  display: grid !important;
+  grid-template-rows: 1fr 1fr !important;
+  gap: 8px !important;
+  height: 100% !important;
+  overflow: visible !important;
+}
+
+.bottomButtons button {
+  min-height: 40px !important;
+  height: 100% !important;
+  border-radius: 10px !important;
+  font-size: clamp(10px, .95vw, 13px) !important;
+  overflow: visible !important;
+}
+
+/* Smaller Discord/browser width fallback */
+@media (max-width: 1240px) {
+  .rackCard {
+    grid-template-columns: 122px minmax(0, 1fr) 190px !important;
+    gap: 6px !important;
+    padding: 7px !important;
+  }
+
+  .rackCard .wfFooterActions {
+    grid-template-columns: 72px 106px !important;
+    gap: 7px !important;
+    max-width: 185px !important;
+  }
+
+  .rackCard .wfFooterActions > button {
+    height: 30px !important;
+    min-height: 30px !important;
+    max-height: 30px !important;
+    padding: 0 5px !important;
+    font-size: 6px !important;
+    border-radius: 8px !important;
+  }
+}

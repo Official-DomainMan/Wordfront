@@ -342,3 +342,9 @@ yarn dev
 ## v0.80 Deploy Word restored
 - Adds a real restored Clear + Deploy Word group directly after the rack markup.
 - Keeps v0.79 scale/responsiveness unchanged.
+
+
+## v0.81 Footer perfect fit
+- Keeps v0.79/v0.80 launch-safe responsiveness.
+- Rebuilds footer actions so Clear and Deploy Word are both visible, aligned, and even-height.
+- Does not reintroduce fixed canvas or transform scaling.
