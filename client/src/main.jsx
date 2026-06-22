@@ -57,6 +57,7 @@ function App() {
   const socket = useMemo(() => io(SERVER_URL), []);
   const [name, setName] = useState(localStorage.getItem("wordfrontName") || "Domain");
   const [joinCode, setJoinCode] = useState("");
+  const [helpOpen, setHelpOpen] = useState(false);
 const [game, setGame] = useState(null);
   const [playerId, setPlayerId] = useState(null);
   
@@ -331,7 +332,7 @@ return () => { cancelled = true; };
       <aside className="leftRail">
         <section className="brandBlock">
           <h1 className="wordmark" data-text="WORDFRONT">WORDFRONT</h1>
-          <p>v0.82.0</p>
+          <p>v0.83.0</p>
         </section>
         <section className="card lobbyCard">
           <p className="eyebrow">LOBBY</p>
@@ -484,6 +485,64 @@ return () => { cancelled = true; };
               <button type="button" className="deployBtn" onClick={startSoloWithDifficulty}>
                 Start Game
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+
+      {helpOpen && (
+        <div className="wfHelpOverlay" role="dialog" aria-modal="true" aria-labelledby="wf-help-title">
+          <div className="wfHelpModal">
+            <div className="wfHelpHeader">
+              <div>
+                <p className="eyebrow">FIELD MANUAL</p>
+                <h2 id="wf-help-title">How to Play Wordfront</h2>
+              </div>
+              <button type="button" className="wfHelpClose" onClick={() => setHelpOpen(false)} aria-label="Close help">×</button>
+            </div>
+
+            <div className="wfHelpBody">
+              <section>
+                <h3>Goal</h3>
+                <p>Build words on the board to claim territory. Whoever controls the most territory has the advantage.</p>
+              </section>
+
+              <section>
+                <h3>Turns</h3>
+                <ul>
+                  <li>Drag letters from your rack onto the grid.</li>
+                  <li>Build one complete word each turn.</li>
+                  <li>After each word, the next word must start with the last letter played.</li>
+                </ul>
+              </section>
+
+              <section>
+                <h3>Territory</h3>
+                <ul>
+                  <li>Green tiles are your territory.</li>
+                  <li>Purple tiles are your rival or the bot.</li>
+                  <li>Contested tiles are being fought over by both sides.</li>
+                </ul>
+              </section>
+
+              <section>
+                <h3>Special Tiles</h3>
+                <ul>
+                  <li><strong>2X Influence</strong> gives extra control value.</li>
+                  <li><strong>Fresh Capture</strong> marks newly claimed territory.</li>
+                  <li><strong>Pending Word</strong> shows letters you are placing before deployment.</li>
+                </ul>
+              </section>
+
+              <section>
+                <h3>Actions</h3>
+                <ul>
+                  <li><strong>Clear</strong> removes your pending letters before submitting.</li>
+                  <li><strong>Deploy Word</strong> locks in your word and ends your turn.</li>
+                  <li><strong>Surrender</strong> ends the match.</li>
+                </ul>
+              </section>
             </div>
           </div>
         </div>

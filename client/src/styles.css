@@ -12696,3 +12696,117 @@ button.leaveLobby,
     border-radius: 8px !important;
   }
 }
+
+
+/* v0.83 MENU HELP POPUP */
+.wfHelpOverlay {
+  position: fixed !important;
+  inset: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: 24px !important;
+  background: rgba(0, 0, 0, .68) !important;
+  backdrop-filter: blur(8px) !important;
+  z-index: 2147483647 !important;
+}
+
+.wfHelpModal {
+  width: min(760px, calc(100vw - 48px)) !important;
+  max-height: min(760px, calc(100vh - 48px)) !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(182, 106, 255, .62) !important;
+  border-radius: 18px !important;
+  background:
+    radial-gradient(circle at top left, rgba(182,106,255,.18), transparent 38%),
+    linear-gradient(180deg, rgba(7,16,29,.98), rgba(3,7,15,.98)) !important;
+  box-shadow:
+    0 0 34px rgba(182,106,255,.28),
+    inset 0 0 30px rgba(185,255,25,.04) !important;
+  color: #fff !important;
+}
+
+.wfHelpHeader {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  padding: 24px 26px 14px !important;
+  border-bottom: 1px solid rgba(126,147,188,.28) !important;
+}
+
+.wfHelpHeader .eyebrow {
+  margin: 0 0 8px !important;
+  color: #ec55ff !important;
+  letter-spacing: .28em !important;
+  font-size: 12px !important;
+}
+
+.wfHelpHeader h2 {
+  margin: 0 !important;
+  color: #b9ff19 !important;
+  font-size: 34px !important;
+  line-height: 1 !important;
+  text-shadow: 0 0 18px rgba(185,255,25,.28) !important;
+}
+
+.wfHelpClose {
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(126,147,188,.58) !important;
+  background: rgba(13,22,36,.96) !important;
+  color: #fff !important;
+  font-size: 28px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+}
+
+.wfHelpBody {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+  padding: 20px 26px 26px !important;
+  overflow: auto !important;
+  max-height: calc(min(760px, 100vh - 48px) - 112px) !important;
+}
+
+.wfHelpBody section {
+  border: 1px solid rgba(126,147,188,.28) !important;
+  border-radius: 14px !important;
+  padding: 16px !important;
+  background: rgba(4, 9, 18, .56) !important;
+}
+
+.wfHelpBody h3 {
+  margin: 0 0 8px !important;
+  color: #ec55ff !important;
+  font-size: 15px !important;
+  letter-spacing: .12em !important;
+  text-transform: uppercase !important;
+}
+
+.wfHelpBody p,
+.wfHelpBody li {
+  font-size: 14px !important;
+  line-height: 1.45 !important;
+  color: rgba(255,255,255,.92) !important;
+}
+
+.wfHelpBody p,
+.wfHelpBody ul {
+  margin: 0 !important;
+}
+
+.wfHelpBody ul {
+  padding-left: 18px !important;
+}
+
+.wfHelpBody strong {
+  color: #b9ff19 !important;
+}
+
+@media (max-width: 760px) {
+  .wfHelpBody {
+    grid-template-columns: 1fr !important;
+  }
+}

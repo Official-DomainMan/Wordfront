@@ -354,3 +354,9 @@ yarn dev
 - Investigated why buttons vanished: old `.deployControls` CSS rules were hiding/clipping every new group.
 - Added a new uniquely named footer action dock that old rules do not target.
 - Keeps v0.78/v0.79 responsive shell intact.
+
+
+## v0.83 Menu help popup
+- Menu button now opens a How to Play popup.
+- Help modal explains goal, turns, territory, special tiles, and actions.
+- Keeps v0.82 footer controls and responsive layout intact.
