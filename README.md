@@ -337,3 +337,8 @@ yarn dev
 - Hid Leave Lobby.
 - Restored Deploy Word in bottom-right footer.
 - Made current-turn name smaller and board slightly larger.
+
+
+## v0.80 Deploy Word restored
+- Adds a real restored Clear + Deploy Word group directly after the rack markup.
+- Keeps v0.79 scale/responsiveness unchanged.

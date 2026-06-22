@@ -331,7 +331,7 @@ return () => { cancelled = true; };
       <aside className="leftRail">
         <section className="brandBlock">
           <h1 className="wordmark" data-text="WORDFRONT">WORDFRONT</h1>
-          <p>v0.79.0</p>
+          <p>v0.80.0</p>
         </section>
         <section className="card lobbyCard">
           <p className="eyebrow">LOBBY</p>
@@ -401,11 +401,7 @@ return () => { cancelled = true; };
         <section className="rackCard card">
           <div className="rackHeader">
             <div><p className="eyebrow">DRAG LETTERS TO BUILD A WORD</p><span className="hintLine">{game.requiredLetter ? `Next word must start with ${game.requiredLetter}` : "Opening move"}</span></div>
-            <div className="deployControls">
-              <button onClick={clearPending} disabled={!placements.length}>Clear</button>
-              <button className="deployBtn" onClick={deployWord} disabled={!myTurn || placements.length < 2}>Deploy Word</button>
-            </div>
-          </div>
+</div>
           <p className="error errorTop">{error || ""}</p>
           <div className="rack">
             {LETTERS.map((letter) => (
@@ -415,6 +411,11 @@ return () => { cancelled = true; };
               </button>
             ))}
           </div>
+            <div className="deployControls wfDeployRestored">
+              <button type="button" className="clearBtn ghostBtn" onClick={clearPending}>CLEAR</button>
+              <button type="button" className="deployBtn" onClick={deployWord}>DEPLOY WORD</button>
+            </div>
+
 </section>
       </section>
 
