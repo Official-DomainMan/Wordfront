@@ -348,3 +348,9 @@ yarn dev
 - Keeps v0.79/v0.80 launch-safe responsiveness.
 - Rebuilds footer actions so Clear and Deploy Word are both visible, aligned, and even-height.
 - Does not reintroduce fixed canvas or transform scaling.
+
+
+## v0.82 Footer controls hard fix
+- Investigated why buttons vanished: old `.deployControls` CSS rules were hiding/clipping every new group.
+- Added a new uniquely named footer action dock that old rules do not target.
+- Keeps v0.78/v0.79 responsive shell intact.

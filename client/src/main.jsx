@@ -331,7 +331,7 @@ return () => { cancelled = true; };
       <aside className="leftRail">
         <section className="brandBlock">
           <h1 className="wordmark" data-text="WORDFRONT">WORDFRONT</h1>
-          <p>v0.81.0</p>
+          <p>v0.82.0</p>
         </section>
         <section className="card lobbyCard">
           <p className="eyebrow">LOBBY</p>
@@ -411,9 +411,9 @@ return () => { cancelled = true; };
               </button>
             ))}
           </div>
-            <div className="deployControls wfFooterActions">
-              <button type="button" className="clearBtn ghostBtn" onClick={clearPending}>CLEAR</button>
-              <button type="button" className="deployBtn" onClick={deployWord}>DEPLOY WORD</button>
+            <div className="wfFooterActionDock" aria-label="Word actions">
+              <button type="button" className="wfClearButton" onClick={clearPending}>CLEAR</button>
+              <button type="button" className="wfDeployButton" onClick={deployWord}>DEPLOY WORD</button>
             </div>
 
 </section>
