@@ -97,7 +97,7 @@ app.get("/games", (_req, res) => {
   res.json(openGames);
 });
 
-async async function maybeBotTurn(game) {
+async function maybeBotTurn(game) {
   const next = game.players[game.currentTurnIndex];
   if (next?.isBot && game.status === "active") {
     setTimeout(async () => {
