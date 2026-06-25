@@ -337,3 +337,9 @@ yarn dev
 - Restores consistent web/Discord neon design with normal responsive CSS.
 - Keeps working Clear/Deploy controls using unique footer action classes.
 - Keeps Menu → Help popup.
+
+
+## v0.85 Aspect-locked design fix
+- Locks the game to a centered 16:9 stage so Railway/web and Discord Activity use the same visual proportions.
+- Forces theme colors through CSS variables and `color-scheme: dark`.
+- Keeps working Clear/Deploy buttons and Menu → Help popup.
