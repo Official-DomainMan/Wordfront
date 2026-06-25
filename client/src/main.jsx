@@ -109,7 +109,7 @@ return () => { cancelled = true; };
   useEffect(() => {
     let rafId = 0;
 
-    function updateWordfrontResponsiveFrameV087() {
+    function updateWordfrontResponsiveFrameV089() {
       cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
         const root = document.documentElement;
@@ -121,10 +121,10 @@ return () => { cancelled = true; };
       });
     }
 
-    updateWordfrontResponsiveFrameV087();
+    updateWordfrontResponsiveFrameV089();
 
     const observer = typeof ResizeObserver !== "undefined"
-      ? new ResizeObserver(updateWordfrontResponsiveFrameV087)
+      ? new ResizeObserver(updateWordfrontResponsiveFrameV089)
       : null;
 
     if (observer) {
@@ -132,16 +132,16 @@ return () => { cancelled = true; };
       if (document.body) observer.observe(document.body);
     }
 
-    window.addEventListener("resize", updateWordfrontResponsiveFrameV087);
-    window.addEventListener("orientationchange", updateWordfrontResponsiveFrameV087);
-    window.visualViewport?.addEventListener("resize", updateWordfrontResponsiveFrameV087);
+    window.addEventListener("resize", updateWordfrontResponsiveFrameV089);
+    window.addEventListener("orientationchange", updateWordfrontResponsiveFrameV089);
+    window.visualViewport?.addEventListener("resize", updateWordfrontResponsiveFrameV089);
 
     return () => {
       cancelAnimationFrame(rafId);
       observer?.disconnect();
-      window.removeEventListener("resize", updateWordfrontResponsiveFrameV087);
-      window.removeEventListener("orientationchange", updateWordfrontResponsiveFrameV087);
-      window.visualViewport?.removeEventListener("resize", updateWordfrontResponsiveFrameV087);
+      window.removeEventListener("resize", updateWordfrontResponsiveFrameV089);
+      window.removeEventListener("orientationchange", updateWordfrontResponsiveFrameV089);
+      window.visualViewport?.removeEventListener("resize", updateWordfrontResponsiveFrameV089);
     };
   }, []);
 
@@ -372,7 +372,7 @@ return () => { cancelled = true; };
       <aside className="leftRail">
         <section className="brandBlock">
           <h1 className="wordmark" data-text="WORDFRONT">WORDFRONT</h1>
-          <p>v0.88.0</p>
+          <p>v0.89.0</p>
         </section>
         <section className="card lobbyCard">
           <p className="eyebrow">LOBBY</p>

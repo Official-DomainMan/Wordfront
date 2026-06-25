@@ -346,13 +346,7 @@ yarn dev
 - Fixes solo bot turn by awaiting bot move and re-emitting game state after player word.
 
 
-## v0.87 Responsive Stabilization
-- Clean rebuilt CSS system for Discord iframe responsiveness.
-- Safe ResizeObserver reflow hook.
-- No fixed canvas, transform scale, or aspect-ratio wrapper.
-- Keeps working Clear/Deploy buttons, Help popup, and bot-turn fix.
-
-
-## v0.88 Async crash fix
-- Fixes Railway crash caused by duplicate `async async function maybeBotTurn(game)`.
-- Keeps v0.87 responsive stabilization unchanged.
+## v0.89 Design restored + stabilization
+- Rebuilt from the pre-stabilization visual base so the old Wordfront UI/font/design returns.
+- Keeps the ResizeObserver stabilization behavior from v0.87 so Discord/Railway resize consistently.
+- Keeps working footer buttons, Help popup, and async bot/server fix.
