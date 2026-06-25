@@ -12511,15 +12511,12 @@ button.leaveLobby,
 }
 
 
-/* v0.85 ASPECT-LOCKED DESIGN
-   The problem was viewport-responsive grid math:
-   Railway/full-browser and Discord iframe had different aspect ratios,
-   so the game proportioned itself differently.
-   This uses a 16:9 stage centered in the available viewport, WITHOUT transform scaling.
-   No fixed canvas. No JS scale. No black-screen risk.
+/* v0.86 STABLE UI RESTORE + BOT FIX BUILD
+   Reverts the v0.85 16:9 aspect-lock that smushed the UI.
+   Keeps the known launch-safe responsive grid from v0.78/v0.84.
+   Keeps footer buttons via unique .wfFooterActionDock.
 */
 
-/* Hard theme tokens so Discord/browser color/theme cannot drift */
 :root {
   color-scheme: dark !important;
   --wf-bg-0: #02040a;
@@ -12528,7 +12525,6 @@ button.leaveLobby,
   --wf-panel-1: rgba(3,7,15,.96);
   --wf-border: rgba(126,147,188,.52);
   --wf-purple: #ec55ff;
-  --wf-purple-2: #b66aff;
   --wf-green: #b9ff19;
   --wf-white: #ffffff;
 }
@@ -12552,30 +12548,29 @@ body,
   forced-color-adjust: none !important;
 }
 
-/* 16:9 stage: same visual proportions in Railway and Discord */
+/* DO NOT aspect-lock; use stable normal viewport layout */
 .gameShell {
-  position: relative !important;
-  width: min(100vw, calc(100vh * 16 / 9)) !important;
-  height: min(100vh, calc(100vw * 9 / 16)) !important;
-  aspect-ratio: 16 / 9 !important;
-  margin: auto !important;
+  position: static !important;
+  width: 100vw !important;
+  height: 100vh !important;
   min-width: 0 !important;
   min-height: 0 !important;
   max-width: 100vw !important;
   max-height: 100vh !important;
   display: grid !important;
-  grid-template-columns: 16.25% minmax(0, 1fr) 15.25% !important;
+  grid-template-columns: clamp(250px, 16.5vw, 285px) minmax(760px, 1fr) clamp(220px, 15vw, 260px) !important;
   grid-template-rows: minmax(0, 1fr) !important;
-  gap: .38% !important;
-  padding: .35% !important;
+  gap: 6px !important;
+  padding: 4px !important;
   overflow: hidden !important;
   transform: none !important;
   zoom: 1 !important;
   box-sizing: border-box !important;
   background: transparent !important;
+  aspect-ratio: auto !important;
+  margin: 0 !important;
 }
 
-/* All child proportions now depend on the locked stage, not raw viewport */
 .leftRail,
 .mainStage,
 .rightRail {
@@ -12587,23 +12582,22 @@ body,
 
 .leftRail {
   display: grid !important;
-  grid-template-rows: 10.2% 14.8% 20.3% 18.4% minmax(0, 1fr) 14.6% !important;
-  gap: .75% !important;
+  grid-template-rows: clamp(72px, 10vh, 88px) clamp(106px, 15vh, 128px) clamp(140px, 20vh, 178px) clamp(126px, 18vh, 160px) minmax(0, 1fr) clamp(104px, 15vh, 126px) !important;
+  gap: 6px !important;
 }
 
 .mainStage {
   display: grid !important;
-  grid-template-rows: 10.2% minmax(0, 1fr) 17.6% !important;
-  gap: .75% !important;
+  grid-template-rows: clamp(72px, 10vh, 88px) minmax(0, 1fr) clamp(128px, 18vh, 150px) !important;
+  gap: 6px !important;
 }
 
 .rightRail {
   display: grid !important;
-  grid-template-rows: 18.8% 13.2% minmax(0, 1fr) !important;
-  gap: .75% !important;
+  grid-template-rows: clamp(126px, 18vh, 160px) clamp(92px, 13vh, 112px) minmax(0, 1fr) !important;
+  gap: 6px !important;
 }
 
-/* Hard color + panel normalization */
 .brandBlock,
 .lobbyCard,
 .scoreCard,
@@ -12615,8 +12609,7 @@ body,
 .timeCard,
 .boardPanel,
 .boardCard,
-.rackCard,
-.card {
+.rackCard {
   box-sizing: border-box !important;
   overflow: hidden !important;
   background:
@@ -12624,13 +12617,10 @@ body,
     linear-gradient(180deg, var(--wf-panel-0), var(--wf-panel-1)) !important;
   border: 1px solid var(--wf-border) !important;
   border-radius: 10px !important;
-  box-shadow:
-    inset 0 0 26px rgba(182,106,255,.025),
-    0 8px 24px rgba(0,0,0,.34) !important;
   color: var(--wf-white) !important;
 }
 
-/* Hide Leave Lobby only */
+/* Hide purple Leave Lobby only */
 .lobbyCard .ghostBtn,
 .lobbyCard button,
 .lobbyCard a,
@@ -12641,7 +12631,7 @@ button.leaveLobby,
 }
 
 .brandBlock {
-  padding: 5.5% 6% !important;
+  padding: 14px 16px !important;
   display: grid !important;
   align-content: center !important;
 }
@@ -12651,7 +12641,7 @@ button.leaveLobby,
   width: 360px !important;
   max-width: none !important;
   white-space: nowrap !important;
-  font-size: clamp(28px, 2.55vw, 42px) !important;
+  font-size: clamp(30px, 2.8vw, 42px) !important;
   line-height: .86 !important;
   letter-spacing: -.10em !important;
   transform: scaleX(.62) skewX(-7deg) !important;
@@ -12663,46 +12653,10 @@ button.leaveLobby,
     0 0 28px rgba(182,106,255,.55) !important;
 }
 
-.brandBlock p {
-  font-size: clamp(7px, .55vw, 9px) !important;
-}
-
-.lobbyCard,
-.scoreCard,
-.botCard {
-  padding: 5.5% 6% !important;
-}
-
-.eyebrow {
-  color: var(--wf-purple) !important;
-  letter-spacing: .26em !important;
-  text-shadow: 0 0 10px rgba(236,85,255,.36) !important;
-}
-
-.lobbyCard h2 {
-  font-size: clamp(20px, 1.9vw, 28px) !important;
-  line-height: 1 !important;
-  margin: 0 0 4px !important;
-}
-
-.scoreCard h3,
-.botCard h3 {
-  color: var(--wf-green) !important;
-  font-size: clamp(15px, 1.25vw, 20px) !important;
-  line-height: 1.05 !important;
-}
-
-.scoreCard b,
-.botCard b {
-  font-size: clamp(19px, 1.8vw, 28px) !important;
-  color: var(--wf-white) !important;
-}
-
-/* Top */
 .topBar {
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr) 18.2% !important;
-  gap: .75% !important;
+  grid-template-columns: minmax(0, 1fr) clamp(170px, 12vw, 205px) !important;
+  gap: 6px !important;
   height: 100% !important;
 }
 
@@ -12711,11 +12665,11 @@ button.leaveLobby,
   display: grid !important;
   place-content: center !important;
   text-align: center !important;
-  padding: 1% !important;
+  padding: 8px !important;
 }
 
 .turnCard h2 {
-  font-size: clamp(32px, 3vw, 44px) !important;
+  font-size: clamp(34px, 3.05vw, 44px) !important;
   line-height: .9 !important;
   margin: 0 !important;
   color: var(--wf-green) !important;
@@ -12723,26 +12677,25 @@ button.leaveLobby,
 }
 
 .timeCard b {
-  font-size: clamp(32px, 3vw, 46px) !important;
+  font-size: clamp(34px, 3.1vw, 46px) !important;
   line-height: .9 !important;
   color: var(--wf-green) !important;
 }
 
-/* Board */
 .boardPanel,
 .boardCard {
   display: grid !important;
   place-items: center !important;
-  padding: .8% !important;
+  padding: 8px !important;
   overflow: hidden !important;
 }
 
 .battlefield,
 .board {
-  width: min(67vh, 45vw, 600px) !important;
-  height: min(67vh, 45vw, 600px) !important;
-  max-width: 600px !important;
-  max-height: 600px !important;
+  width: min(64vh, 580px, 100%) !important;
+  height: min(64vh, 580px, 100%) !important;
+  max-width: 580px !important;
+  max-height: 580px !important;
   min-width: 0 !important;
   min-height: 0 !important;
   aspect-ratio: 1 / 1 !important;
@@ -12753,11 +12706,11 @@ button.leaveLobby,
 .rackCard {
   position: relative !important;
   display: grid !important;
-  grid-template-columns: 17.5% minmax(0, 1fr) 23.5% !important;
+  grid-template-columns: clamp(175px, 14.5vw, 230px) minmax(0, 1fr) clamp(250px, 17vw, 310px) !important;
   grid-template-rows: 1fr !important;
   align-items: center !important;
-  gap: 1% !important;
-  padding: 1% 1.3% !important;
+  gap: clamp(10px, .85vw, 14px) !important;
+  padding: clamp(10px, 1vw, 14px) clamp(14px, 1.1vw, 18px) !important;
   overflow: hidden !important;
 }
 
@@ -12774,7 +12727,7 @@ button.leaveLobby,
 
 .rackHeader .eyebrow,
 .rackCard .eyebrow {
-  font-size: clamp(8px, .78vw, 11px) !important;
+  font-size: clamp(8px, .82vw, 11px) !important;
   line-height: 1.12 !important;
   letter-spacing: .18em !important;
   margin: 0 0 6px !important;
@@ -12782,7 +12735,7 @@ button.leaveLobby,
 
 .rackHeader .hintLine,
 .rackCard .hintLine {
-  font-size: clamp(9px, .82vw, 12px) !important;
+  font-size: clamp(9px, .9vw, 12px) !important;
   line-height: 1.15 !important;
 }
 
@@ -12791,8 +12744,8 @@ button.leaveLobby,
   grid-column: 2 / 3 !important;
   grid-row: 1 !important;
   display: grid !important;
-  grid-template-columns: repeat(13, clamp(29px, 2.2vw, 40px)) !important;
-  gap: clamp(3px, .34vw, 6px) !important;
+  grid-template-columns: repeat(13, clamp(29px, 2.25vw, 40px)) !important;
+  gap: clamp(3px, .38vw, 6px) !important;
   width: max-content !important;
   max-width: 100% !important;
   justify-self: center !important;
@@ -12803,34 +12756,17 @@ button.leaveLobby,
 }
 
 .letterTile {
-  width: clamp(29px, 2.2vw, 40px) !important;
-  min-width: clamp(29px, 2.2vw, 40px) !important;
-  max-width: clamp(29px, 2.2vw, 40px) !important;
-  height: clamp(29px, 4.6vh, 40px) !important;
-  min-height: clamp(29px, 4.6vh, 40px) !important;
-  max-height: clamp(29px, 4.6vh, 40px) !important;
+  width: clamp(29px, 2.25vw, 40px) !important;
+  min-width: clamp(29px, 2.25vw, 40px) !important;
+  max-width: clamp(29px, 2.25vw, 40px) !important;
+  height: clamp(29px, 4.8vh, 40px) !important;
+  min-height: clamp(29px, 4.8vh, 40px) !important;
+  max-height: clamp(29px, 4.8vh, 40px) !important;
   padding: 2px 4px !important;
   border-radius: 8px !important;
-  background: linear-gradient(145deg, #365f00 0%, #132700 100%) !important;
-  border: 1px solid var(--wf-green) !important;
-  color: var(--wf-green) !important;
-  box-shadow:
-    inset 1px 1px 0 rgba(255,255,255,.20),
-    inset -2px -2px 6px rgba(0,0,0,.55),
-    0 0 14px rgba(185,255,25,.24) !important;
 }
 
-.letterTile span {
-  font-size: clamp(14px, 1.25vw, 20px) !important;
-  line-height: .9 !important;
-  color: var(--wf-green) !important;
-}
-
-.letterTile small {
-  font-size: clamp(5px, .42vw, 6px) !important;
-}
-
-/* Old systems off */
+/* old controls off */
 .deployControls,
 .deployControlsFixed,
 .wfFooterActions,
@@ -12838,7 +12774,7 @@ button.leaveLobby,
   display: none !important;
 }
 
-/* Working footer dock */
+/* working action dock */
 .rackCard .wfFooterActionDock,
 .wfFooterActionDock {
   grid-column: 3 / 4 !important;
@@ -12846,10 +12782,10 @@ button.leaveLobby,
   position: static !important;
   display: grid !important;
   grid-template-columns: 1fr 1.22fr !important;
-  gap: 5% !important;
+  gap: clamp(10px, .8vw, 14px) !important;
   width: min(100%, 285px) !important;
   max-width: 285px !important;
-  min-width: 180px !important;
+  min-width: 220px !important;
   justify-self: end !important;
   align-self: center !important;
   margin: 0 !important;
@@ -12873,12 +12809,12 @@ button.leaveLobby,
   width: 100% !important;
   min-width: 0 !important;
   max-width: none !important;
-  height: clamp(34px, 5.2vh, 48px) !important;
-  min-height: 34px !important;
-  max-height: 48px !important;
+  height: clamp(38px, 5.8vh, 50px) !important;
+  min-height: 38px !important;
+  max-height: 50px !important;
   padding: 0 10px !important;
   border-radius: 10px !important;
-  font-size: clamp(7px, .68vw, 10px) !important;
+  font-size: clamp(8px, .72vw, 11px) !important;
   line-height: 1.05 !important;
   white-space: nowrap !important;
   overflow: visible !important;
@@ -12903,7 +12839,6 @@ button.leaveLobby,
   font-weight: 1000 !important;
 }
 
-/* Menu buttons visible */
 .bottomButtons {
   display: grid !important;
   grid-template-rows: 1fr 1fr !important;
@@ -12913,7 +12848,7 @@ button.leaveLobby,
 }
 
 .bottomButtons button {
-  min-height: 36px !important;
+  min-height: 40px !important;
   height: 100% !important;
   border-radius: 10px !important;
   font-size: clamp(10px, .95vw, 13px) !important;
@@ -12941,7 +12876,6 @@ button.leaveLobby,
   background:
     radial-gradient(circle at top left, rgba(182,106,255,.18), transparent 38%),
     linear-gradient(180deg, rgba(7,16,29,.98), rgba(3,7,15,.98)) !important;
-  box-shadow: 0 0 34px rgba(182,106,255,.28), inset 0 0 30px rgba(185,255,25,.04) !important;
   color: #fff !important;
 }
 
@@ -13003,26 +12937,28 @@ button.leaveLobby,
   color: rgba(255,255,255,.92) !important;
 }
 
-/* Small viewport fallback keeps the same 16:9 stage proportion */
 @media (max-width: 1240px) {
   .rackCard {
-    grid-template-columns: 14% minmax(0, 1fr) 24% !important;
-    gap: .65% !important;
-    padding: .75% !important;
+    grid-template-columns: 122px minmax(0, 1fr) 190px !important;
+    gap: 6px !important;
+    padding: 7px !important;
   }
 
   .rackCard .wfFooterActionDock,
   .wfFooterActionDock {
-    min-width: 150px !important;
-    width: 100% !important;
+    grid-template-columns: 72px 106px !important;
+    gap: 7px !important;
+    width: 185px !important;
+    min-width: 185px !important;
+    max-width: 185px !important;
   }
 
   .wfFooterActionDock > button,
   .wfClearButton,
   .wfDeployButton {
-    height: clamp(28px, 4.8vh, 36px) !important;
-    min-height: 28px !important;
-    max-height: 36px !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    max-height: 30px !important;
     padding: 0 5px !important;
     font-size: 6px !important;
     border-radius: 8px !important;

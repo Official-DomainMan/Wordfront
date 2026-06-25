@@ -339,7 +339,8 @@ yarn dev
 - Keeps Menu → Help popup.
 
 
-## v0.85 Aspect-locked design fix
-- Locks the game to a centered 16:9 stage so Railway/web and Discord Activity use the same visual proportions.
-- Forces theme colors through CSS variables and `color-scheme: dark`.
-- Keeps working Clear/Deploy buttons and Menu → Help popup.
+## v0.86 Stable UI + bot turn fix
+- Reverts v0.85 aspect-lock that smushed the UI.
+- Restores stable responsive layout.
+- Keeps working Clear/Deploy buttons and Menu Help popup.
+- Fixes solo bot turn by awaiting bot move and re-emitting game state after player word.

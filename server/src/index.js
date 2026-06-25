@@ -97,7 +97,7 @@ app.get("/games", (_req, res) => {
   res.json(openGames);
 });
 
-function maybeBotTurn(game) {
+async function maybeBotTurn(game) {
   const next = game.players[game.currentTurnIndex];
   if (next?.isBot && game.status === "active") {
     setTimeout(async () => {
@@ -181,7 +181,8 @@ io.on("connection", (socket) => {
       playWord(game, session.playerId, placements);
       io.to(game.id).emit("gameState", getPublicGame(game));
       callback?.({ ok: true });
-      maybeBotTurn(game);
+      await maybeBotTurn(game);
+      io.to(game.id).emit("gameState", getPublicGame(game));
     } catch (error) { callback?.({ ok: false, error: error.message }); }
   });
 
