@@ -344,3 +344,10 @@ yarn dev
 - Restores stable responsive layout.
 - Keeps working Clear/Deploy buttons and Menu Help popup.
 - Fixes solo bot turn by awaiting bot move and re-emitting game state after player word.
+
+
+## v0.87 Responsive Stabilization
+- Clean rebuilt CSS system for Discord iframe responsiveness.
+- Safe ResizeObserver reflow hook.
+- No fixed canvas, transform scale, or aspect-ratio wrapper.
+- Keeps working Clear/Deploy buttons, Help popup, and bot-turn fix.
