@@ -104,48 +104,7 @@ const [selectedLetter, setSelectedLetter] = useState(null);
   }
 return () => { cancelled = true; };
   }, []);
-
-
-  useEffect(() => {
-    let rafId = 0;
-
-    function updateWordfrontResponsiveFrameV089() {
-      cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        const root = document.documentElement;
-        const width = Math.max(1, root.clientWidth || window.innerWidth || 1);
-        const height = Math.max(1, root.clientHeight || window.innerHeight || 1);
-        root.style.setProperty("--wf-vw", `${width}px`);
-        root.style.setProperty("--wf-vh", `${height}px`);
-        root.dataset.wfAspect = width / height < 1.55 ? "tall" : width / height > 2.05 ? "wide" : "balanced";
-      });
-    }
-
-    updateWordfrontResponsiveFrameV089();
-
-    const observer = typeof ResizeObserver !== "undefined"
-      ? new ResizeObserver(updateWordfrontResponsiveFrameV089)
-      : null;
-
-    if (observer) {
-      observer.observe(document.documentElement);
-      if (document.body) observer.observe(document.body);
-    }
-
-    window.addEventListener("resize", updateWordfrontResponsiveFrameV089);
-    window.addEventListener("orientationchange", updateWordfrontResponsiveFrameV089);
-    window.visualViewport?.addEventListener("resize", updateWordfrontResponsiveFrameV089);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      observer?.disconnect();
-      window.removeEventListener("resize", updateWordfrontResponsiveFrameV089);
-      window.removeEventListener("orientationchange", updateWordfrontResponsiveFrameV089);
-      window.visualViewport?.removeEventListener("resize", updateWordfrontResponsiveFrameV089);
-    };
-  }, []);
-
-  function makeBoardKey(next) {
+function makeBoardKey(next) {
     if (!next?.map) return "";
     return next.map.flat().map((cell) => `${cell.row}:${cell.col}:${cell.letter || ""}:${cell.ownerId || ""}`).join("|");
   }
@@ -184,7 +143,53 @@ return () => { cancelled = true; };
         setDragLetter(null);
       }
     });
-    return () => socket.off("gameState");
+  
+  useEffect(() => {
+    let rafId = 0;
+
+    function updateWordfrontFrameV100() {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const root = document.documentElement;
+        const shell = document.querySelector(".gameShell") || document.body || root;
+        const width = Math.max(1, shell.clientWidth || root.clientWidth || window.innerWidth || 1);
+        const height = Math.max(1, shell.clientHeight || root.clientHeight || window.innerHeight || 1);
+        const aspect = width / height;
+
+        root.style.setProperty("--wf-frame-w", `${width}px`);
+        root.style.setProperty("--wf-frame-h", `${height}px`);
+        root.classList.toggle("wf-compact", width < 1280 || height < 760);
+        root.classList.toggle("wf-short", height < 690);
+        root.classList.toggle("wf-narrow", width < 1120);
+        root.classList.toggle("wf-ultra-narrow", width < 980);
+        root.dataset.wfAspect = aspect < 1.55 ? "tall" : aspect > 2.05 ? "wide" : "balanced";
+      });
+    }
+
+    updateWordfrontFrameV100();
+
+    const observer = typeof ResizeObserver !== "undefined" ? new ResizeObserver(updateWordfrontFrameV100) : null;
+    if (observer) {
+      observer.observe(document.documentElement);
+      if (document.body) observer.observe(document.body);
+      const rootNode = document.getElementById("root");
+      if (rootNode) observer.observe(rootNode);
+    }
+
+    window.addEventListener("resize", updateWordfrontFrameV100);
+    window.addEventListener("orientationchange", updateWordfrontFrameV100);
+    window.visualViewport?.addEventListener("resize", updateWordfrontFrameV100);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      observer?.disconnect();
+      window.removeEventListener("resize", updateWordfrontFrameV100);
+      window.removeEventListener("orientationchange", updateWordfrontFrameV100);
+      window.visualViewport?.removeEventListener("resize", updateWordfrontFrameV100);
+    };
+  }, []);
+
+  return () => socket.off("gameState");
   }, [socket]);
 
   function saveName() { localStorage.setItem("wordfrontName", name.trim() || "Player"); }
@@ -372,7 +377,7 @@ return () => { cancelled = true; };
       <aside className="leftRail">
         <section className="brandBlock">
           <h1 className="wordmark" data-text="WORDFRONT">WORDFRONT</h1>
-          <p>v0.89.0</p>
+          <p>v1.0.0</p>
         </section>
         <section className="card lobbyCard">
           <p className="eyebrow">LOBBY</p>

@@ -350,3 +350,10 @@ yarn dev
 - Rebuilt from the pre-stabilization visual base so the old Wordfront UI/font/design returns.
 - Keeps the ResizeObserver stabilization behavior from v0.87 so Discord/Railway resize consistently.
 - Keeps working footer buttons, Help popup, and async bot/server fix.
+
+
+## Wordfront v1.0 Layout Foundation
+- Rebuilt UI layout layer as one clean responsive CSS system.
+- Preserves Wordfront neon visual design.
+- Uses ResizeObserver only for iframe/container size classes.
+- No transform scaling, no fixed canvas, no forced 16:9 wrapper.
