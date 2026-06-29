@@ -350,3 +350,8 @@ yarn dev
 - Rebuilt from the pre-stabilization visual base so the old Wordfront UI/font/design returns.
 - Keeps the ResizeObserver stabilization behavior from v0.87 so Discord/Railway resize consistently.
 - Keeps working footer buttons, Help popup, and async bot/server fix.
+
+
+## v0.90 Small-screen panel fit
+- Keeps v0.89 restored design and stabilization.
+- Adds tighter small-screen breakpoints to prevent clipped panels when switching to smaller screens.

@@ -13142,3 +13142,258 @@ html[data-wf-aspect="wide"] .battlefield {
     border-radius: 8px !important;
   }
 }
+
+
+/* v0.90 SMALL-SCREEN PANEL FIT
+   Keeps v0.89 restored design + stabilization.
+   Adds tighter small-screen rules so panels shrink instead of clipping.
+*/
+
+.gameShell,
+.leftRail,
+.mainStage,
+.rightRail,
+.topBar,
+.rackCard {
+  min-width: 0 !important;
+  min-height: 0 !important;
+}
+
+.gameShell {
+  grid-template-columns:
+    clamp(190px, 16vw, 285px)
+    minmax(0, 1fr)
+    clamp(178px, 14vw, 260px) !important;
+  gap: clamp(4px, .42vw, 6px) !important;
+  padding: clamp(3px, .35vw, 5px) !important;
+}
+
+.leftRail {
+  grid-template-rows:
+    clamp(62px, 9.2vh, 88px)
+    clamp(86px, 13vh, 128px)
+    clamp(108px, 17vh, 178px)
+    clamp(96px, 15.5vh, 160px)
+    minmax(0, 1fr)
+    clamp(82px, 13vh, 126px) !important;
+  gap: clamp(4px, .42vw, 6px) !important;
+}
+
+.mainStage {
+  grid-template-rows:
+    clamp(62px, 9.2vh, 88px)
+    minmax(0, 1fr)
+    clamp(104px, 16.5vh, 150px) !important;
+  gap: clamp(4px, .42vw, 6px) !important;
+}
+
+.rightRail {
+  grid-template-rows:
+    clamp(96px, 15.5vh, 160px)
+    clamp(78px, 12vh, 112px)
+    minmax(0, 1fr) !important;
+  gap: clamp(4px, .42vw, 6px) !important;
+}
+
+.boardPanel,
+.boardCard {
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.battlefield,
+.board {
+  width: min(100%, calc((var(--wf-vh, 100vh) - clamp(190px, 26vh, 255px)) * .92), 580px) !important;
+  height: min(100%, calc((var(--wf-vh, 100vh) - clamp(190px, 26vh, 255px)) * .92), 580px) !important;
+  max-width: 580px !important;
+  max-height: 580px !important;
+}
+
+.lobbyCard,
+.scoreCard,
+.botCard,
+.rulesCard,
+.controlCard,
+.legendCard {
+  padding: clamp(8px, .82vw, 16px) !important;
+}
+
+.brandBlock {
+  padding: clamp(8px, .82vw, 16px) !important;
+}
+
+.lobbyCard h2 {
+  font-size: clamp(20px, 1.85vw, 30px) !important;
+}
+
+.scoreCard h3,
+.botCard h3 {
+  font-size: clamp(15px, 1.25vw, 22px) !important;
+}
+
+.scoreCard b,
+.botCard b {
+  font-size: clamp(20px, 1.85vw, 30px) !important;
+}
+
+.rackCard {
+  grid-template-columns:
+    clamp(108px, 12.5vw, 230px)
+    minmax(0, 1fr)
+    clamp(152px, 16vw, 310px) !important;
+  gap: clamp(5px, .55vw, 12px) !important;
+  padding: clamp(6px, .75vw, 14px) !important;
+}
+
+.rackCard .rack,
+.rack {
+  grid-template-columns: repeat(13, clamp(24px, min(2.15vw, 4.35vh), 40px)) !important;
+  gap: clamp(2px, .33vw, 6px) !important;
+}
+
+.letterTile {
+  width: clamp(24px, min(2.15vw, 4.35vh), 40px) !important;
+  min-width: clamp(24px, min(2.15vw, 4.35vh), 40px) !important;
+  max-width: clamp(24px, min(2.15vw, 4.35vh), 40px) !important;
+  height: clamp(24px, min(2.15vw, 4.35vh), 40px) !important;
+  min-height: clamp(24px, min(2.15vw, 4.35vh), 40px) !important;
+  max-height: clamp(24px, min(2.15vw, 4.35vh), 40px) !important;
+}
+
+.letterTile span {
+  font-size: clamp(12px, 1.15vw, 20px) !important;
+}
+
+.wfFooterActionDock {
+  min-width: clamp(136px, 15vw, 220px) !important;
+  width: min(100%, 285px) !important;
+  grid-template-columns: minmax(54px, .82fr) minmax(82px, 1.18fr) !important;
+  gap: clamp(5px, .65vw, 14px) !important;
+}
+
+.wfFooterActionDock > button,
+.wfClearButton,
+.wfDeployButton {
+  height: clamp(28px, 5.1vh, 50px) !important;
+  min-height: 28px !important;
+  padding: 0 clamp(4px, .65vw, 10px) !important;
+  font-size: clamp(5px, .66vw, 11px) !important;
+}
+
+/* Smaller Discord iframe / small monitor */
+@media (max-width: 1180px), (max-height: 720px) {
+  .gameShell {
+    grid-template-columns: clamp(176px, 16vw, 220px) minmax(0, 1fr) clamp(158px, 14vw, 205px) !important;
+  }
+
+  .leftRail {
+    grid-template-rows: 60px 82px 104px 94px minmax(0, 1fr) 80px !important;
+  }
+
+  .mainStage {
+    grid-template-rows: 60px minmax(0, 1fr) 104px !important;
+  }
+
+  .rightRail {
+    grid-template-rows: 94px 74px minmax(0, 1fr) !important;
+  }
+
+  .brandBlock .wordmark,
+  .wordmark {
+    font-size: clamp(25px, 2.35vw, 34px) !important;
+  }
+
+  .turnCard h2 {
+    font-size: clamp(30px, 2.8vw, 40px) !important;
+  }
+
+  .timeCard b {
+    font-size: clamp(30px, 2.8vw, 40px) !important;
+  }
+
+  .rackCard {
+    grid-template-columns: 104px minmax(0, 1fr) 146px !important;
+    gap: 5px !important;
+    padding: 6px !important;
+  }
+
+  .wfFooterActionDock {
+    min-width: 140px !important;
+    width: 140px !important;
+    grid-template-columns: 52px 82px !important;
+    gap: 6px !important;
+  }
+
+  .wfFooterActionDock > button,
+  .wfClearButton,
+  .wfDeployButton {
+    height: 28px !important;
+    min-height: 28px !important;
+    max-height: 28px !important;
+    font-size: 5.5px !important;
+    padding: 0 3px !important;
+    border-radius: 7px !important;
+  }
+
+  .rackHeader .eyebrow,
+  .rackCard .eyebrow {
+    font-size: 7px !important;
+    letter-spacing: .14em !important;
+  }
+
+  .hintLine,
+  .rackHeader .hintLine {
+    font-size: 8px !important;
+  }
+
+  .rulesCard li,
+  .legendCard p {
+    font-size: 10px !important;
+    line-height: 1.25 !important;
+  }
+}
+
+/* Too narrow: hide right rail instead of clipping everything */
+@media (max-width: 980px) {
+  .gameShell {
+    grid-template-columns: clamp(165px, 20vw, 205px) minmax(0, 1fr) !important;
+  }
+
+  .rightRail {
+    display: none !important;
+  }
+
+  .rackCard {
+    grid-template-columns: 96px minmax(0, 1fr) 140px !important;
+  }
+}
+
+/* Very short screens */
+@media (max-height: 650px) {
+  .leftRail {
+    grid-template-rows: 54px 74px 96px 86px minmax(0, 1fr) 72px !important;
+  }
+
+  .mainStage {
+    grid-template-rows: 54px minmax(0, 1fr) 96px !important;
+  }
+
+  .brandBlock p {
+    display: none !important;
+  }
+
+  .lobbyCard p:not(.eyebrow),
+  .scoreCard label,
+  .botCard label {
+    font-size: 8px !important;
+  }
+
+  .bottomButtons button {
+    min-height: 30px !important;
+    font-size: 10px !important;
+  }
+
+  .rackCard {
+    grid-template-columns: 88px minmax(0, 1fr) 136px !important;
+  }
+}
