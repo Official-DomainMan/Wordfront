@@ -212,3 +212,58 @@ html.wf-ultra-narrow .rackCard { grid-template-columns: 92px minmax(0,1fr) 138px
 @media (max-width: 760px) {
   .wfHelpBody { grid-template-columns: 1fr; }
 }
+
+
+/* v1.0.1 BLUE SCREEN BOOT FIX
+   Safety overrides: never let the app render as an empty blue screen.
+   Keeps v1.0 responsive foundation, but restores hard visibility and valid sizing.
+*/
+
+html,
+body,
+#root,
+.app {
+  display: block !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  background:
+    radial-gradient(circle at 0% 100%, rgba(182,106,255,.16), transparent 28%),
+    radial-gradient(circle at 100% 100%, rgba(185,255,25,.07), transparent 24%),
+    linear-gradient(135deg, #02040a 0%, #050914 52%, #02040a 100%) !important;
+}
+
+.gameShell,
+.homeShell {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.gameShell {
+  display: grid !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  transform: none !important;
+  zoom: 1 !important;
+  overflow: hidden !important;
+}
+
+.boardPanel,
+.rackCard,
+.leftRail,
+.mainStage,
+.rightRail {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* temporary: help overlay removed in v1.0.1 to eliminate JSX/modal crash source */
+.wfHelpOverlay {
+  display: none !important;
+}

@@ -357,3 +357,8 @@ yarn dev
 - Preserves Wordfront neon visual design.
 - Uses ResizeObserver only for iframe/container size classes.
 - No transform scaling, no fixed canvas, no forced 16:9 wrapper.
+
+
+## v1.0.1 Blue screen boot fix
+- Fixes v1.0 launch blue screen by simplifying the resize hook and removing the Help modal injection for this recovery build.
+- Adds visibility/sizing safety CSS for the app root and game shell.

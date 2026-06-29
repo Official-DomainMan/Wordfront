@@ -143,53 +143,7 @@ function makeBoardKey(next) {
         setDragLetter(null);
       }
     });
-  
-  useEffect(() => {
-    let rafId = 0;
-
-    function updateWordfrontFrameV100() {
-      cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        const root = document.documentElement;
-        const shell = document.querySelector(".gameShell") || document.body || root;
-        const width = Math.max(1, shell.clientWidth || root.clientWidth || window.innerWidth || 1);
-        const height = Math.max(1, shell.clientHeight || root.clientHeight || window.innerHeight || 1);
-        const aspect = width / height;
-
-        root.style.setProperty("--wf-frame-w", `${width}px`);
-        root.style.setProperty("--wf-frame-h", `${height}px`);
-        root.classList.toggle("wf-compact", width < 1280 || height < 760);
-        root.classList.toggle("wf-short", height < 690);
-        root.classList.toggle("wf-narrow", width < 1120);
-        root.classList.toggle("wf-ultra-narrow", width < 980);
-        root.dataset.wfAspect = aspect < 1.55 ? "tall" : aspect > 2.05 ? "wide" : "balanced";
-      });
-    }
-
-    updateWordfrontFrameV100();
-
-    const observer = typeof ResizeObserver !== "undefined" ? new ResizeObserver(updateWordfrontFrameV100) : null;
-    if (observer) {
-      observer.observe(document.documentElement);
-      if (document.body) observer.observe(document.body);
-      const rootNode = document.getElementById("root");
-      if (rootNode) observer.observe(rootNode);
-    }
-
-    window.addEventListener("resize", updateWordfrontFrameV100);
-    window.addEventListener("orientationchange", updateWordfrontFrameV100);
-    window.visualViewport?.addEventListener("resize", updateWordfrontFrameV100);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      observer?.disconnect();
-      window.removeEventListener("resize", updateWordfrontFrameV100);
-      window.removeEventListener("orientationchange", updateWordfrontFrameV100);
-      window.visualViewport?.removeEventListener("resize", updateWordfrontFrameV100);
-    };
-  }, []);
-
-  return () => socket.off("gameState");
+return () => socket.off("gameState");
   }, [socket]);
 
   function saveName() { localStorage.setItem("wordfrontName", name.trim() || "Player"); }
@@ -321,7 +275,51 @@ function makeBoardKey(next) {
   }
 
   if (!game) {
-    return (
+  
+  useEffect(() => {
+    let rafId = 0;
+
+    const updateWordfrontFrameV101 = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const root = document.documentElement;
+        const width = Math.max(1, window.innerWidth || root.clientWidth || 1);
+        const height = Math.max(1, window.innerHeight || root.clientHeight || 1);
+        const aspect = width / height;
+
+        root.style.setProperty("--wf-frame-w", `${width}px`);
+        root.style.setProperty("--wf-frame-h", `${height}px`);
+        root.classList.toggle("wf-compact", width < 1280 || height < 760);
+        root.classList.toggle("wf-short", height < 690);
+        root.classList.toggle("wf-narrow", width < 1120);
+        root.classList.toggle("wf-ultra-narrow", width < 980);
+        root.dataset.wfAspect = aspect < 1.55 ? "tall" : aspect > 2.05 ? "wide" : "balanced";
+      });
+    };
+
+    updateWordfrontFrameV101();
+
+    let observer = null;
+    if (typeof ResizeObserver !== "undefined") {
+      observer = new ResizeObserver(updateWordfrontFrameV101);
+      observer.observe(document.documentElement);
+      if (document.body) observer.observe(document.body);
+    }
+
+    window.addEventListener("resize", updateWordfrontFrameV101);
+    window.addEventListener("orientationchange", updateWordfrontFrameV101);
+    window.visualViewport?.addEventListener("resize", updateWordfrontFrameV101);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      observer?.disconnect();
+      window.removeEventListener("resize", updateWordfrontFrameV101);
+      window.removeEventListener("orientationchange", updateWordfrontFrameV101);
+      window.visualViewport?.removeEventListener("resize", updateWordfrontFrameV101);
+    };
+  }, []);
+
+  return (
       <main className="homeShell">
         <section className="hero card">
           <p className="eyebrow">LETTER WARFARE DETECTED</p>
@@ -377,7 +375,7 @@ function makeBoardKey(next) {
       <aside className="leftRail">
         <section className="brandBlock">
           <h1 className="wordmark" data-text="WORDFRONT">WORDFRONT</h1>
-          <p>v1.0.0</p>
+          <p>v1.0.1</p>
         </section>
         <section className="card lobbyCard">
           <p className="eyebrow">LOBBY</p>
@@ -534,62 +532,7 @@ function makeBoardKey(next) {
           </div>
         </div>
       )}
-
-
-      {helpOpen && (
-        <div className="wfHelpOverlay" role="dialog" aria-modal="true" aria-labelledby="wf-help-title">
-          <div className="wfHelpModal">
-            <div className="wfHelpHeader">
-              <div>
-                <p className="eyebrow">FIELD MANUAL</p>
-                <h2 id="wf-help-title">How to Play Wordfront</h2>
-              </div>
-              <button type="button" className="wfHelpClose" onClick={() => setHelpOpen(false)} aria-label="Close help">×</button>
-            </div>
-
-            <div className="wfHelpBody">
-              <section>
-                <h3>Goal</h3>
-                <p>Build words on the board to claim territory. Whoever controls the most territory has the advantage.</p>
-              </section>
-              <section>
-                <h3>Turns</h3>
-                <ul>
-                  <li>Drag letters from your rack onto the grid.</li>
-                  <li>Build one complete word each turn.</li>
-                  <li>After each word, the next word must start with the last letter played.</li>
-                </ul>
-              </section>
-              <section>
-                <h3>Territory</h3>
-                <ul>
-                  <li>Green tiles are your territory.</li>
-                  <li>Purple tiles are your rival or the bot.</li>
-                  <li>Contested tiles are being fought over by both sides.</li>
-                </ul>
-              </section>
-              <section>
-                <h3>Special Tiles</h3>
-                <ul>
-                  <li><strong>2X Influence</strong> gives extra control value.</li>
-                  <li><strong>Fresh Capture</strong> marks newly claimed territory.</li>
-                  <li><strong>Pending Word</strong> shows letters before deployment.</li>
-                </ul>
-              </section>
-              <section>
-                <h3>Actions</h3>
-                <ul>
-                  <li><strong>Clear</strong> removes pending letters.</li>
-                  <li><strong>Deploy Word</strong> locks in your word and ends your turn.</li>
-                  <li><strong>Surrender</strong> ends the match.</li>
-                </ul>
-              </section>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {error && (
+{error && (
         <div className="errorCorner" role="alert">
           <p className="eyebrow">INVALID MOVE</p>
           <strong>{error}</strong>
